@@ -67,7 +67,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           else if (label.includes('refunds by amount')) values.refundsByAmount = line.amount;
           else if (label.includes('gift card sales')) values.giftCardSales = line.amount;
           else if (label === 'invoices') values.invoices = line.amount;
-          else if (label.includes('invoice deposit redeemed')) values.invoiceDepositRedeemed = line.amount;
+          else if (label.includes('deposit redeemed')) values.invoiceDepositRedeemed = line.amount;
           else if (label.includes('square online')) values.squareOnline = line.amount;
         });
       });
@@ -158,8 +158,8 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           data.taxes = scenarioValues.tax;
           data.tips = scenarioValues.tip;
           data.refundsByAmount = scenarioValues.refundsByAmount;
-          // Handle Invoice Deposit Redeemed as negative in deferred sales
-          data.invoices = scenarioValues.invoiceDepositRedeemed || -100.00; // This should be negative
+          // Handle Deposit Redeemed as negative in deferred sales
+          data.invoices = scenarioValues.invoiceDepositRedeemed || -100.00; // Deposit Redeemed shows as negative
           data.totalSales = (scenarioValues.grossSales || 1000.00) + (scenarioValues.invoiceDepositRedeemed || -100.00);
           data.totalPaymentsCollected = scenarioValues.totalCollected || 900.00;
           data.card = scenarioValues.card || 900.00;
@@ -184,7 +184,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           data.grossSales = 1000.00;
           data.items = 1000.00;
           data.netSales = 1000.00;
-          data.invoices = -100.00; // Invoice Deposit Redeemed shows as negative
+          data.invoices = -100.00; // Deposit Redeemed shows as negative
           data.totalPaymentsCollected = 900.00;
           data.card = 900.00;
           data.squarePaymentProcessingFees = 0; // Keep fees at 0 to match summary view

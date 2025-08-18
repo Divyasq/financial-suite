@@ -354,7 +354,7 @@ export function SalesBreakdown() {
             }}
           />
           <SalesLineItem 
-            label="Invoice Deposit Redeemed" 
+            label="Deposit Redeemed" 
             amount={salesData.deferredSales.invoiceDepositRedeemed}
             transactionCount="1 transaction"
             onTransactionCountClick={() => {

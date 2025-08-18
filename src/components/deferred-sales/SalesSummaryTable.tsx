@@ -137,8 +137,8 @@ export function SalesSummaryTable({ salesSections, paymentSections }: SalesSumma
                     // Check if this is a "Gross Sales" line item with a non-zero amount
                     const isGrossSalesClickable = line.label.trim() === 'Gross Sales' && line.amount !== 0;
                     
-                    // Check if this is an "Invoice Deposit Redeemed" line item with a non-zero amount
-                    const isInvoiceDepositClickable = line.label.trim() === 'Invoice Deposit Redeemed' && line.amount !== 0;
+                    // Check if this is a "Deposit Redeemed" line item with a non-zero amount
+                    const isInvoiceDepositClickable = line.label.trim() === 'Deposit Redeemed' && line.amount !== 0;
                     
                     const isClickable = isInvoicesClickable || isGrossSalesClickable || isInvoiceDepositClickable;
                     

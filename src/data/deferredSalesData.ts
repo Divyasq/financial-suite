@@ -200,116 +200,11 @@ export const deferredSalesData: ScenarioGroup[] = [
       }
     ]
   },
-  {
-    id: 'deposits-scheduled',
-    title: 'Tracking Deposits & Completed Payments (Scheduled Order)',
-    description: 'Customer pays deposit towards scheduled order',
-    scenarios: [
-      {
-        id: 'deposit-payment',
-        title: 'Deposit Payment',
-        description: 'Customer pays $100 deposit towards a $1000 item',
-        salesSections: [
-          {
-            title: 'Sales',
-            lines: [
-              { label: 'Gross Sales', amount: 0 },
-              { label: '          Items', amount: 0 },
-              { label: '          Service Charges', amount: 0 },
-              { label: 'Returns', amount: 0 },
-              { label: 'Discounts & Comps', amount: 0 },
-              { label: 'Net Sales', amount: 0 },
-              { label: 'Tax', amount: 0 },
-              { label: 'Tip', amount: 0 },
-              { label: 'Refunds by Amount', amount: 0 }
-            ]
-          },
-          {
-            title: 'Deferred Sales',
-            lines: [
-              { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 0 },
-              { label: '      Square Online', amount: 0 }
-            ],
-            total: 100.00
-          }
-        ],
-        paymentSections: [
-          {
-            title: 'Payments',
-            lines: [
-              { label: 'Payments', amount: 100.00 },
-              { label: 'Prior Payments', amount: 0 },
-              { label: '       Deposit Redeemed', amount: 0 },
-              { label: 'Total Collected', amount: 100.00 },
-              { label: '     Cash', amount: 0 },
-              { label: '     Card', amount: 100.00 },
-              { label: '     External', amount: 0 },
-              { label: '     Other', amount: 0 },
-              { label: '     Gift Card', amount: 0 },
-              { label: '     Bank Transfer', amount: 0 },
-              { label: '     House Account', amount: 0 },
-              { label: '     Fees', amount: 0 }
-            ],
-            total: 100.00
-          }
-        ]
-      },
-      {
-        id: 'remaining-payment',
-        title: 'Remaining Payment (Option 1)',
-        description: 'Customer pays remaining amount - Option 1 approach',
-        salesSections: [
-          {
-            title: 'Sales',
-            lines: [
-              { label: 'Gross Sales', amount: 1000.00 },
-              { label: '          Items', amount: 1000.00 },
-              { label: '          Service Charges', amount: 0 },
-              { label: 'Returns', amount: 0 },
-              { label: 'Discounts & Comps', amount: 0 },
-              { label: 'Net Sales', amount: 1000.00 },
-              { label: 'Tax', amount: 0 },
-              { label: 'Tip', amount: 0 },
-              { label: 'Refunds by Amount', amount: 0 }
-            ]
-          },
-          {
-            title: 'Deferred Sales',
-            lines: [
-              { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Square Online', amount: 0 }
-            ],
-            total: 1000.00
-          }
-        ],
-        paymentSections: [
-          {
-            title: 'Payments',
-            lines: [
-              { label: 'Payments', amount: 1000.00 },
-              { label: 'Prior Payments', amount: 0 },
-              { label: '       Deposit Redeemed', amount: 100.00 },
-              { label: 'Total Collected', amount: 900.00 },
-              { label: '     Cash', amount: 0 },
-              { label: '     Card', amount: 900.00 },
-              { label: '     External', amount: 0 },
-              { label: '     Other', amount: 0 },
-              { label: '     Gift Card', amount: 0 },
-              { label: '     Bank Transfer', amount: 0 },
-              { label: '     House Account', amount: 0 },
-              { label: '     Fees', amount: 0 }
-            ],
-            total: 900.00
-          }
-        ]
-      }
-    ]
-  },
+
 
   {
     id: 'invoices-option-b',
-    title: 'Tracking Invoices',
+    title: 'Tracking Partial payments/Deposits',
     description: 'Alternative approach tracking deposits as negative amounts in deferred sales',
     scenarios: [
       {
@@ -383,7 +278,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
               { label: '      Invoices', amount: 0 },
-              { label: '      Invoice Deposit Redeemed', amount: -100.00 },
+              { label: '      Deposit Redeemed', amount: -100.00 },
               { label: '      Square Online', amount: 0 }
             ],
             total: 900.00
@@ -431,7 +326,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
               { label: '      Invoices', amount: 100.00 },
-              { label: '      Invoice Deposit Redeemed', amount: -100.00 },
+              { label: '      Deposit Redeemed', amount: -100.00 },
               { label: '      Square Online', amount: 0 }
             ],
             total: 1000.00
