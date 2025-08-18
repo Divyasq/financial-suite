@@ -207,6 +207,7 @@ export function SalesBreakdown() {
   const [isGrossSalesModalOpen, setIsGrossSalesModalOpen] = useState(false);
   const [isSalesModalOpen, setIsSalesModalOpen] = useState(false);
   const [isExchangesModalOpen, setIsExchangesModalOpen] = useState(false);
+  const [isNetSalesModalOpen, setIsNetSalesModalOpen] = useState(false);
   const [isReturnsModalOpen, setIsReturnsModalOpen] = useState(false);
   const [isDeferredSalesModalOpen, setIsDeferredSalesModalOpen] = useState(false);
   const [deferredSalesType, setDeferredSalesType] = useState<'gift-card' | 'invoice' | 'square-online'>('gift-card');
@@ -304,12 +305,13 @@ export function SalesBreakdown() {
           label="Net sales"
           amount={salesData.netSales}
           transactionCount="30 transactions"
+          onTransactionCountClick={() => setIsNetSalesModalOpen(true)}
           isExpandable={true}
           isExpanded={expandedSections.netSales}
           onToggle={() => toggleSection('netSales')}
           hasRedDot={true}
           isClickable={true}
-          onClick={() => handleNavigateToTransactions()}
+          onClick={() => setIsNetSalesModalOpen(true)}
         />
 
         {/* Deferred Sales */}
@@ -502,6 +504,15 @@ export function SalesBreakdown() {
         title="Exchange Transactions"
         transactions={[]}
         filterType="exchanges"
+      />
+
+      {/* Net Sales Modal - Shows net sales transactions */}
+      <TransactionsModal
+        isOpen={isNetSalesModalOpen}
+        onClose={() => setIsNetSalesModalOpen(false)}
+        title="Net Sales Transactions"
+        transactions={[]}
+        filterType="net-sales"
       />
 
       {/* Returns Modal */}

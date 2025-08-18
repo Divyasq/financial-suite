@@ -32,7 +32,7 @@ interface TransactionsModalProps {
   onClose: () => void;
   title: string;
   transactions: Transaction[];
-  filterType: 'gross-sales' | 'sales' | 'exchanges' | 'returns' | 'deferred-sales';
+  filterType: 'gross-sales' | 'sales' | 'exchanges' | 'net-sales' | 'returns' | 'deferred-sales';
 }
 
 const mockTransactions: Transaction[] = [
@@ -846,6 +846,9 @@ export function TransactionsModal({ isOpen, onClose, title, transactions, filter
       case 'exchanges':
         // Exchanges should only include exchange transactions
         return transaction.status === 'Completed' && transaction.id.startsWith('EXC-');
+      case 'net-sales':
+        // Net sales should include all completed transactions (sales, exchanges, returns)
+        return transaction.status === 'Completed';
       case 'returns':
         // Returns should only include completed transactions with returns > 0
         return transaction.status === 'Completed' && transaction.returns > 0;
@@ -898,6 +901,13 @@ export function TransactionsModal({ isOpen, onClose, title, transactions, filter
           filterType: 'exchanges', 
           status: 'Completed',
           transactionTypes: ['exchanges']
+        };
+      case 'net-sales':
+        return {
+          ...baseState,
+          filterType: 'all',
+          status: 'Completed',
+          transactionTypes: ['payments', 'exchanges', 'refunds']
         };
       case 'returns':
         return {
