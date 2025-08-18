@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/financial-suite/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -12,6 +13,10 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true
+  },
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets'
   },
   define: {
     // Suppress React Router future flag warnings in development

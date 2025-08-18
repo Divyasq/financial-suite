@@ -1,189 +1,190 @@
-# Financial Suite Dashboard
+# Financial Suite
 
-A comprehensive React-based financial dashboard application built with TypeScript, Vite, and Tailwind CSS.
+A comprehensive financial reporting application built with React, TypeScript, and Tailwind CSS. Features interactive sales breakdowns, transaction management, and dual-clickable sales analytics.
 
-## Features
+## 🚀 Live Demo
 
-### 🏦 Financial Suite Dashboard
-- **Key Metrics**: Gross Sales, Net Sales, Returns, Transaction Count
-- **Quick Actions**: Create Custom Reports, View All Reports
-- **Recent Reports**: Overview of latest generated reports
+**[View Live Application](https://divyasq.github.io/financial-suite/)**
 
-### 📊 Sales Summary
-- **Comprehensive Analytics**: Sales performance with interactive charts
-- **Transaction Modal**: Detailed transaction view with customer information
-- **External Linkouts**: Direct links to product details and full transactions
-- **Visual Charts**: Bar charts for hourly sales and pie charts for top products
+## ✨ Key Features
 
-### 💳 Deferred Sales Management
-- **Payment Tracking**: Monitor pending and overdue payments
-- **Customer Management**: Detailed customer and invoice information
-- **Payment Processing**: In-app payment handling with amount validation
-- **Status Monitoring**: Visual status indicators for payment states
+### 🎯 **Dual-Clickable Sales Breakdown**
+- **"20 sales + 8 exchanges"** format with separate click handlers
+- **"20 sales"** → Opens modal with 20 payment transactions
+- **"8 exchanges"** → Opens modal with 8 exchange transactions
+- Each modal row is clickable for detailed transaction view
 
-### 📈 Custom Reports
-- **Report Builder**: Create custom reports with filters and metrics
-- **Search & Filter**: Advanced filtering by report type and content
-- **Report Management**: Edit, delete, and organize custom reports
-- **Metrics Tracking**: Various financial metrics and KPIs
+### 📊 **Interactive Sales Dashboard**
+- Real-time sales metrics and KPIs
+- Visual sales gauge with progress indicators
+- Expandable/collapsible sales categories
+- Comprehensive transaction filtering
 
-### 🔄 Transaction Management
-- **Transaction History**: Complete transaction log with search and filtering
-- **Status Tracking**: Real-time transaction status monitoring
-- **Export Functionality**: Export transaction data
-- **Detailed Views**: Comprehensive transaction details in modal format
+### 🔍 **Advanced Transaction Management**
+- **Sales Transactions**: Payment-only filtering with "Completed" status
+- **Exchange Transactions**: Exchange-only filtering with "Completed" status  
+- **Returns Transactions**: Refund filtering with "Completed" status
+- **Deferred Sales**: All status filtering including "Partially Paid"
 
-## Tech Stack
+### 🎨 **Modern UI Components**
+- Responsive design with Tailwind CSS
+- Interactive modals and tables
+- Smooth hover effects and transitions
+- Professional financial reporting interface
+
+## 🛠️ Technical Stack
 
 - **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS with custom design system
-- **Routing**: React Router DOM v6
-- **Charts**: Recharts for data visualization
+- **Styling**: Tailwind CSS
 - **Icons**: Lucide React
-- **Utilities**: clsx + tailwind-merge for conditional styling
-- **Date Handling**: date-fns
+- **Charts**: Recharts
+- **Routing**: React Router DOM
+- **Build Tool**: Vite
+- **Deployment**: GitHub Pages
 
-## Project Structure
+## 🏗️ Architecture
 
+### **Component Structure**
 ```
 src/
 ├── components/
-│   ├── ui/                 # Reusable UI components
-│   │   ├── Button.tsx
-│   │   ├── Card.tsx
-│   │   ├── Input.tsx
-│   │   ├── Modal.tsx
-│   │   └── Table.tsx
-│   └── layout/            # Layout components
-│       ├── AppLayout.tsx
-│       ├── Header.tsx
-│       └── LeftNav.tsx
-├── data/
-│   └── mockData.ts        # Mock data for development
-├── pages/                 # Page components
-│   ├── FinancialSuitePage.tsx
-│   ├── SalesSummaryPage.tsx
-│   ├── DeferredSalesPage.tsx
-│   ├── CustomReportsPage.tsx
-│   └── TransactionsPage.tsx
-├── types/
-│   └── index.ts           # TypeScript type definitions
-├── utils/
-│   └── cn.ts              # Utility functions
-├── App.tsx                # Main app component with routing
-└── main.tsx               # App entry point
+│   ├── reports/           # Sales breakdown & reporting
+│   │   ├── SalesBreakdown.tsx     # Main dual-click component
+│   │   ├── TransactionsModal.tsx  # Modal system
+│   │   └── GrossSalesTableModal.tsx
+│   ├── transactions/      # Transaction management
+│   ├── ui/               # Reusable UI components
+│   └── layout/           # Layout components
+├── pages/                # Page components
+├── context/              # React contexts
+├── types/                # TypeScript definitions
+└── utils/                # Utility functions
 ```
 
-## Getting Started
+### **Key Implementation Details**
 
-### Prerequisites
-- Node.js (v16 or higher)
+#### **Dual-Click Sales Logic**
+```typescript
+// Dynamic parsing of "X sales + Y exchanges" format
+const parseSalesAndExchanges = (text: string) => {
+  const match = text.match(/(\d+)\s+sales\s+\+\s+(\d+)\s+exchanges/);
+  return match ? { salesCount: match[1], exchangesCount: match[2] } : null;
+};
+
+// Separate click handlers
+onSalesClick={() => setIsSalesModalOpen(true)}
+onExchangesClick={() => setIsExchangesModalOpen(true)}
+```
+
+#### **Transaction Filtering**
+```typescript
+// Sales: Only payments with completed status
+filterType: 'payments', status: 'Completed', transactionTypes: ['payments']
+
+// Exchanges: Only exchanges with completed status  
+filterType: 'exchanges', status: 'Completed', transactionTypes: ['exchanges']
+
+// Deferred Sales: All status including partially paid
+filterType: 'all', status: 'All Status', transactionTypes: ['invoices', 'appointments', 'gift-cards']
+```
+
+## 🚀 Getting Started
+
+### **Prerequisites**
+- Node.js 18+ 
 - npm or yarn
 
-### Installation
+### **Installation**
+```bash
+# Clone the repository
+git clone https://github.com/Divyasq/financial-suite.git
+cd financial-suite
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+# Start development server
+npm run dev
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Build for production
+npm run build
+```
 
-### Available Scripts
+### **Development**
+```bash
+npm run dev          # Start dev server at http://localhost:3000
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+```
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview production build
+## 📱 Usage Examples
 
-## Features in Detail
+### **Sales Breakdown Navigation**
+1. **Click "20 sales"** → View 20 payment transactions in modal
+2. **Click "8 exchanges"** → View 8 exchange transactions in modal
+3. **Click any modal row** → Navigate to detailed transaction view
+4. **Click "View All Transactions"** → Navigate with proper filters applied
 
-### Navigation Structure
-- **Home**: Dashboard overview
-- **Items & Services**: Product/service management
-- **Financial Suite**: Main financial dashboard with sub-navigation
-  - Dashboard
-  - Deferred Sales
-  - Reports (with nested menu)
-    - All Reports
-    - Sales Summary
-    - Custom Reports
-  - Migration Status
-- **Transactions**: Transaction history and management
+### **Transaction Filtering**
+- **Sales Modal** → Transactions page with "Payments" + "Completed" filters
+- **Exchanges Modal** → Transactions page with "Exchanges" + "Completed" filters
+- **Returns Modal** → Transactions page with "Refunds" + "Completed" filters
+- **Deferred Sales Modal** → Transactions page with "All Status" filters
 
-### Key Components
+## 🎯 Core Features Implemented
 
-#### Sales Summary with Linkouts
-- Interactive charts showing sales by hour and top products
-- External link functionality to product details
-- Transaction modal with detailed item breakdown
-- Export capabilities for reports
+### ✅ **Modal System**
+- **Clickable table rows** with hover effects
+- **Dynamic transaction filtering** by type and status
+- **Proper navigation state** management
+- **Export functionality** for transaction data
 
-#### Deferred Sales Management
-- Real-time payment status tracking
-- Customer information management
-- Payment processing interface
-- Overdue payment alerts
+### ✅ **Status Management**
+- **Completed transactions** show green status badges
+- **Partially paid transactions** show yellow status badges (deferred sales only)
+- **No partially paid references** in non-deferred sales modals
 
-#### Transaction Modal System
-- Detailed transaction views
-- Customer and payment information
-- Item-level breakdown
-- Status and payment method tracking
+### ✅ **Data Architecture**
+- **20 realistic payment transactions** (PAY-001 to PAY-020)
+- **8 realistic exchange transactions** (EXC-001 to EXC-008)
+- **3 return transactions** with proper negative values
+- **3 deferred sales transactions** with partial payment status
 
-#### Custom Reports Builder
-- Dynamic report creation
-- Filter and metric selection
-- Search and categorization
-- Report management interface
+## 🔧 Configuration
 
-## Design System
+### **Vite Configuration**
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  base: '/financial-suite/',  // GitHub Pages deployment
+  build: { outDir: 'dist' }
+});
+```
 
-### Colors
-- **Primary**: Blue scale (50-900)
-- **Gray**: Neutral scale (50-900)
-- **Status Colors**: Green (success), Yellow (warning), Red (error)
+### **GitHub Pages Deployment**
+Automatic deployment via GitHub Actions on push to `main` branch.
 
-### Components
-- Consistent button variants and sizes
-- Card-based layout system
-- Modal system for detailed views
-- Table components with sorting and filtering
-- Form components with validation
-
-## Mock Data
-
-The application includes comprehensive mock data for:
-- Transactions with various types and statuses
-- Sales summaries with hourly breakdowns
-- Deferred sales with customer information
-- Custom reports with filters and metrics
-
-## Future Enhancements
-
-- Real-time data integration
-- Advanced analytics and reporting
-- User authentication and authorization
-- Mobile responsiveness improvements
-- Export functionality for all data types
-- Integration with payment processors
-- Advanced search and filtering capabilities
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- **React Team** for the excellent framework
+- **Tailwind CSS** for the utility-first CSS framework
+- **Lucide React** for beautiful icons
+- **Recharts** for data visualization components
+
+---
+
+**Built with ❤️ using React + TypeScript + Tailwind CSS**
