@@ -8,9 +8,10 @@ interface ModalProps {
   title: string;
   children: React.ReactNode;
   className?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
+export function Modal({ isOpen, onClose, title, children, className, size = 'md' }: ModalProps) {
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -33,6 +34,21 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
 
   if (!isOpen) return null;
 
+  const getSizeClasses = () => {
+    switch (size) {
+      case 'sm':
+        return 'max-w-md mx-auto';
+      case 'md':
+        return 'max-w-lg mx-auto';
+      case 'lg':
+        return 'max-w-2xl mx-auto';
+      case 'xl':
+        return 'max-w-4xl mx-auto';
+      default:
+        return 'max-w-lg mx-auto';
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
@@ -47,8 +63,9 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
       {/* Modal Content */}
       <div
         className={cn(
-          "absolute inset-x-0 bottom-0 bg-white rounded-t-xl transform transition-transform duration-300 ease-out flex flex-col",
+          "absolute inset-x-4 bottom-0 bg-white rounded-t-xl transform transition-transform duration-300 ease-out flex flex-col",
           isOpen ? "translate-y-0" : "translate-y-full",
+          getSizeClasses(),
           className
         )}
         style={{ height: '95vh' }}

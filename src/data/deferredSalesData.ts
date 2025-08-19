@@ -29,7 +29,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 50.00 },
-              { label: '      Invoices', amount: 0 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: 50.00
           }
@@ -76,7 +76,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
               { label: '      GC Refund', amount: -50 },
-              { label: '      Invoices', amount: 0 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: 0
           }
@@ -129,7 +129,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 0 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: 50.00
           }
@@ -175,7 +175,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 0 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: -50.00
           }
@@ -203,12 +203,12 @@ export const deferredSalesData: ScenarioGroup[] = [
 
 
   {
-    id: 'invoices-option-b',
-    title: 'Tracking Partial payments/Deposits',
-    description: 'Alternative approach tracking deposits as negative amounts in deferred sales',
+    id: 'invoices-deposits',
+    title: 'Tracking Partial payments/Deposits - Partial Payments',
+    description: 'Invoice deposits tracking with negative amounts in deferred sales',
     scenarios: [
       {
-        id: 'deposit-day',
+        id: 'invoice-deposit-day',
         title: 'Deposit Day',
         description: 'Customer pays $100 deposit towards a $1000 invoice',
         salesSections: [
@@ -230,8 +230,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 100.00 },
-              { label: '      Square Online', amount: 0 }
+              { label: '      Partial Payments Deposit', amount: 100.00 }
             ],
             total: 100.00
           }
@@ -255,7 +254,7 @@ export const deferredSalesData: ScenarioGroup[] = [
         ]
       },
       {
-        id: 'remaining-payment-option-b',
+        id: 'invoice-remaining-payment',
         title: 'Remaining Payment',
         description: 'Customer pays remaining $900 - deposit tracked as negative in deferred sales',
         salesSections: [
@@ -277,9 +276,8 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 0 },
-              { label: '      Deposit Redeemed', amount: -100.00 },
-              { label: '      Square Online', amount: 0 }
+              { label: '      Partial Payments', amount: 0 },
+              { label: '      Partial Payments Deposit Redeemed', amount: -100.00 }
             ],
             total: 900.00
           }
@@ -303,7 +301,7 @@ export const deferredSalesData: ScenarioGroup[] = [
         ]
       },
       {
-        id: 'full-cycle-option-b',
+        id: 'invoice-full-cycle',
         title: 'Full Cycle',
         description: 'Complete transaction showing both deposit and final payment',
         salesSections: [
@@ -325,9 +323,8 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 100.00 },
-              { label: '      Deposit Redeemed', amount: -100.00 },
-              { label: '      Square Online', amount: 0 }
+              { label: '      Partial Payments Deposit', amount: 100.00 },
+              { label: '      Partial Payments Deposit Redeemed', amount: -100.00 }
             ],
             total: 1000.00
           }
@@ -347,6 +344,164 @@ export const deferredSalesData: ScenarioGroup[] = [
               { label: '     Fees', amount: 0 }
             ],
             total: 1000.00
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'appointments-deposits',
+    title: 'Tracking Partial payments/Deposits - Appointments',
+    description: 'Customer pays deposit towards scheduled appointments',
+    scenarios: [
+      {
+        id: 'appointment-deposit-day',
+        title: 'Appointment Deposit Day',
+        description: 'Customer pays $50 deposit towards a $200 appointment',
+        salesSections: [
+          {
+            title: 'Sales',
+            lines: [
+              { label: 'Gross Sales', amount: 0 },
+              { label: '          Items', amount: 0 },
+              { label: '          Service Charges', amount: 0 },
+              { label: 'Returns', amount: 0 },
+              { label: 'Discounts & Comps', amount: 0 },
+              { label: 'Net Sales', amount: 0 },
+              { label: 'Tax', amount: 0 },
+              { label: 'Tip', amount: 0 },
+              { label: 'Refunds by Amount', amount: 0 }
+            ]
+          },
+          {
+            title: 'Deferred Sales',
+            lines: [
+              { label: '      Gift Card Sales', amount: 0 },
+              { label: '      Partial Payments', amount: 0 },
+              { label: '      Appointments Deposit', amount: 50.00 }
+            ],
+            total: 50.00
+          }
+        ],
+        paymentSections: [
+          {
+            title: 'Payments',
+            lines: [
+              { label: 'Payments', amount: 50.00 },
+              { label: 'Prior Payments', amount: 0 },
+              { label: '       Appointments Deposit Redeemed', amount: 0 },
+              { label: 'Total Collected', amount: 50.00 },
+              { label: '     Cash', amount: 0 },
+              { label: '     Card', amount: 50.00 },
+              { label: '     External', amount: 0 },
+              { label: '     Other', amount: 0 },
+              { label: '     Gift Card', amount: 0 },
+              { label: '     Bank Transfer', amount: 0 },
+              { label: '     House Account', amount: 0 },
+              { label: '     Fees', amount: 0 }
+            ],
+            total: 50.00
+          }
+        ]
+      },
+      {
+        id: 'appointment-remaining-payment',
+        title: 'Remaining Payment',
+        description: 'Customer pays remaining amount with appointment deposit redeemed',
+        salesSections: [
+          {
+            title: 'Sales',
+            lines: [
+              { label: 'Gross Sales', amount: 200.00 },
+              { label: '          Items', amount: 0 },
+              { label: '          Service Charges', amount: 200.00 },
+              { label: 'Returns', amount: 0 },
+              { label: 'Discounts & Comps', amount: 0 },
+              { label: 'Net Sales', amount: 200.00 },
+              { label: 'Tax', amount: 0 },
+              { label: 'Tip', amount: 0 },
+              { label: 'Refunds by Amount', amount: 0 }
+            ]
+          },
+          {
+            title: 'Deferred Sales',
+            lines: [
+              { label: '      Gift Card Sales', amount: 0 },
+              { label: '      Partial Payments', amount: 0 },
+              { label: '      Appointments Deposit Redeemed', amount: -50.00 }
+            ],
+            total: 150.00
+          }
+        ],
+        paymentSections: [
+          {
+            title: 'Payments',
+            lines: [
+              { label: 'Payments', amount: 200.00 },
+              { label: 'Prior Payments', amount: 0 },
+              { label: '       Appointments Deposit Redeemed', amount: 50.00 },
+              { label: 'Total Collected', amount: 150.00 },
+              { label: '     Cash', amount: 0 },
+              { label: '     Card', amount: 150.00 },
+              { label: '     External', amount: 0 },
+              { label: '     Other', amount: 0 },
+              { label: '     Gift Card', amount: 0 },
+              { label: '     Bank Transfer', amount: 0 },
+              { label: '     House Account', amount: 0 },
+              { label: '     Fees', amount: 0 }
+            ],
+            total: 150.00
+          }
+        ]
+      },
+      {
+        id: 'appointment-full-cycle',
+        title: 'Full Cycle',
+        description: 'Shows both appointment deposit and appointment deposit redeemed',
+        salesSections: [
+          {
+            title: 'Sales',
+            lines: [
+              { label: 'Gross Sales', amount: 200.00 },
+              { label: '          Items', amount: 0 },
+              { label: '          Service Charges', amount: 200.00 },
+              { label: 'Returns', amount: 0 },
+              { label: 'Discounts & Comps', amount: 0 },
+              { label: 'Net Sales', amount: 200.00 },
+              { label: 'Tax', amount: 0 },
+              { label: 'Tip', amount: 0 },
+              { label: 'Refunds by Amount', amount: 0 }
+            ]
+          },
+          {
+            title: 'Deferred Sales',
+            lines: [
+              { label: '      Gift Card Sales', amount: 0 },
+              { label: '      Partial Payments', amount: 0 },
+              { label: '      Appointments Deposit', amount: 50.00 },
+              { label: '      Appointments Deposit Redeemed', amount: -50.00 }
+            ],
+            total: 200.00
+          }
+        ],
+        paymentSections: [
+          {
+            title: 'Payments',
+            lines: [
+              { label: 'Payments', amount: 250.00 },
+              { label: 'Prior Payments', amount: 0 },
+              { label: '       Appointments Deposit Redeemed', amount: 50.00 },
+              { label: 'Total Collected', amount: 200.00 },
+              { label: '     Cash', amount: 0 },
+              { label: '     Card', amount: 200.00 },
+              { label: '     External', amount: 0 },
+              { label: '     Other', amount: 0 },
+              { label: '     Gift Card', amount: 0 },
+              { label: '     Bank Transfer', amount: 0 },
+              { label: '     House Account', amount: 0 },
+              { label: '     Fees', amount: 0 }
+            ],
+            total: 200.00
           }
         ]
       }
@@ -380,8 +535,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Square Online', amount: 1000.00 },
-              { label: '      Invoices', amount: 0 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: 1000.00
           }
@@ -430,8 +584,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             title: 'Deferred Sales',
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
-              { label: '      Invoices', amount: 0 },
-              { label: '      Square Online', amount: -1000.00 }
+              { label: '      Partial Payments', amount: 0 }
             ],
             total: 0
           }

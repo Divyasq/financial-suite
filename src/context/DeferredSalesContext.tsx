@@ -65,8 +65,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
               title: 'Deferred Sales',
               lines: [
                 { label: '      Gift Card Sales', amount: 0 },
-                { label: '      Invoices', amount: 0 },
-                { label: '      Square Online', amount: 0 }
+                { label: '      Partial Payments', amount: 0 }
               ],
               total: 100.00
             }
@@ -117,8 +116,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
             {
               title: 'Deferred Sales',
               lines: [
-                { label: '      Gift Card Sales', amount: 0 },
-                { label: '      Square Online', amount: 0 }
+                { label: '      Gift Card Sales', amount: 0 }
               ],
               total: 1000.00
             }
@@ -170,8 +168,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
               title: 'Deferred Sales',
               lines: [
                 { label: 'Gift Card Sales', amount: 0 },
-                { label: 'Deposit', amount: 0 }, // Net zero: +100 on July 5, -100 on July 10
-                { label: 'Square Online', amount: 0 }
+                { label: 'Deposit', amount: 0 } // Net zero: +100 on July 5, -100 on July 10
               ],
               total: 1000.00
             }
@@ -232,8 +229,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
               title: 'Deferred Sales',
               lines: [
                 { label: '      Gift Card Sales', amount: 0 },
-                { label: '      Invoices', amount: 100.00 },
-                { label: '      Square Online', amount: 0 }
+                { label: '      Partial Payments', amount: 100.00 }
               ],
               total: 100.00
             }
@@ -285,8 +281,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
               title: 'Deferred Sales',
               lines: [
                 { label: '      Gift Card Sales', amount: 0 },
-                { label: '      Invoices', amount: 0 },
-                { label: '      Square Online', amount: 0 }
+                { label: '      Partial Payments', amount: 0 }
               ],
               total: 1000.00
             }
@@ -338,8 +333,7 @@ export function DeferredSalesProvider({ children }: { children: React.ReactNode 
               title: 'Deferred Sales',
               lines: [
                 { label: '      Gift Card Sales', amount: 0 },
-                { label: '      Invoices', amount: 0 }, // Net zero: +100 on July 5, -100 on July 10
-                { label: '      Square Online', amount: 0 }
+                { label: '      Partial Payments', amount: 0 } // Net zero: +100 on July 5, -100 on July 10
               ],
               total: 1000.00
             }

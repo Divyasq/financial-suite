@@ -3,6 +3,9 @@ import { ItemsTable } from '../components/ui/ItemsTable';
 import { Modal } from '../components/ui/Modal';
 import { ProductForm } from '../components/ui/ProductForm';
 import { useItems } from '../context/ItemsContext';
+import { ItemsNavigation } from '../components/items/ItemsNavigation';
+import { CategoriesView } from '../components/items/CategoriesView';
+import { ItemLibraryView } from '../components/items/ItemLibraryView';
 
 interface ProductFormData {
   name: string;
@@ -39,6 +42,7 @@ interface Item {
 export function ItemsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
+  const [currentView, setCurrentView] = useState<string>('items');
   const { state, addItem, updateItem, deleteItem } = useItems();
 
   const handleCreateItem = () => {
@@ -133,39 +137,50 @@ export function ItemsPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Items
-        </h2>
-        <p className="text-gray-600">
-          Manage your inventory items and services
-        </p>
-      </div>
+    <div className="flex h-full">
+      <ItemsNavigation currentView={currentView} onViewChange={setCurrentView} />
       
-      <ItemsTable 
-        items={state.items}
-        onCreateItem={handleCreateItem}
-        onEditItem={handleEditItem}
-        onDeleteItem={handleDeleteItem}
-        onImportLibrary={handleImportLibrary}
-      />
+      <div className="flex-1">
+        {currentView === 'items' && (
+          <div className="p-8">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Items
+              </h2>
+              <p className="text-gray-600">
+                Manage your inventory items and services
+              </p>
+            </div>
+            
+            <ItemsTable 
+              items={state.items}
+              onCreateItem={handleCreateItem}
+              onEditItem={handleEditItem}
+              onDeleteItem={handleDeleteItem}
+              onImportLibrary={handleImportLibrary}
+            />
+          </div>
+        )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        title={editingItem ? "Edit item" : "Create item"}
-      >
-        <ProductForm 
-          initialData={editingItem ? getInitialFormData(editingItem) : undefined}
-          onSubmit={handleFormSubmit} 
-          onCancel={handleCloseModal}
-          onSaveAsDraft={(data) => {
-            console.log('Save as draft:', data);
-            // Could implement draft functionality here
-          }}
-        />
-      </Modal>
+        {currentView === 'item-library' && <ItemLibraryView />}
+        {currentView === 'categories' && <CategoriesView />}
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          title={editingItem ? "Edit item" : "Create item"}
+        >
+          <ProductForm 
+            initialData={editingItem ? getInitialFormData(editingItem) : undefined}
+            onSubmit={handleFormSubmit} 
+            onCancel={handleCloseModal}
+            onSaveAsDraft={(data) => {
+              console.log('Save as draft:', data);
+              // Could implement draft functionality here
+            }}
+          />
+        </Modal>
+      </div>
     </div>
   );
 }

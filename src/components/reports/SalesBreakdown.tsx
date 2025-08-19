@@ -317,7 +317,7 @@ export function SalesBreakdown() {
         {/* Deferred Sales */}
         <SalesLineItem
           label="Deferred Sales"
-          amount={salesData.deferredSales.giftCardSales + salesData.deferredSales.invoices + salesData.deferredSales.invoiceDepositRedeemed + salesData.deferredSales.squareOnline}
+          amount={salesData.deferredSales.giftCardSales + salesData.deferredSales.invoices + salesData.deferredSales.invoiceDepositRedeemed}
           isExpandable={true}
           isExpanded={expandedSections.deferredSales}
           onToggle={() => toggleSection('deferredSales')}
@@ -339,7 +339,7 @@ export function SalesBreakdown() {
             }}
           />
           <SalesLineItem 
-            label="Invoices" 
+            label="Partial Payments" 
             amount={salesData.deferredSales.invoices}
             transactionCount="1 transaction"
             onTransactionCountClick={() => {
@@ -350,37 +350,6 @@ export function SalesBreakdown() {
             isClickable={true}
             onClick={() => {
               setDeferredSalesType('invoice');
-              setIsDeferredSalesModalOpen(true);
-            }}
-          />
-          <SalesLineItem 
-            label="Deposit Redeemed" 
-            amount={salesData.deferredSales.invoiceDepositRedeemed}
-            transactionCount="1 transaction"
-            onTransactionCountClick={() => {
-              setDeferredSalesType('invoice');
-              setIsDeferredSalesModalOpen(true);
-            }}
-            level={1}
-            hasRedDot={true}
-            isClickable={true}
-            onClick={() => {
-              setDeferredSalesType('invoice');
-              setIsDeferredSalesModalOpen(true);
-            }}
-          />
-          <SalesLineItem 
-            label="Square Online" 
-            amount={salesData.deferredSales.squareOnline}
-            transactionCount="0 transactions"
-            onTransactionCountClick={() => {
-              setDeferredSalesType('square-online');
-              setIsDeferredSalesModalOpen(true);
-            }}
-            level={1}
-            isClickable={true}
-            onClick={() => {
-              setDeferredSalesType('square-online');
               setIsDeferredSalesModalOpen(true);
             }}
           />
@@ -528,7 +497,7 @@ export function SalesBreakdown() {
       <TransactionsModal
         isOpen={isDeferredSalesModalOpen}
         onClose={() => setIsDeferredSalesModalOpen(false)}
-        title={`${deferredSalesType === 'gift-card' ? 'Gift Card' : deferredSalesType === 'invoice' ? 'Invoice' : 'Square Online'} Transactions`}
+        title={`${deferredSalesType === 'gift-card' ? 'Gift Card' : deferredSalesType === 'invoice' ? 'Partial Payments' : 'Square Online'} Transactions`}
         transactions={[]}
         filterType="deferred-sales"
       />

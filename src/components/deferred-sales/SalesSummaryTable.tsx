@@ -131,8 +131,8 @@ export function SalesSummaryTable({ salesSections, paymentSections }: SalesSumma
                 
                 <div className="space-y-0">
                   {section.lines.map((line, lineIndex) => {
-                    // Check if this is an "Invoices" line item with a non-zero amount
-                    const isInvoicesClickable = line.label.trim() === 'Invoices' && line.amount !== 0;
+                    // Check if this is a "Partial Payments" line item with a non-zero amount
+                    const isPartialPaymentsClickable = line.label.trim() === 'Partial Payments' && line.amount !== 0;
                     
                     // Check if this is a "Gross Sales" line item with a non-zero amount
                     const isGrossSalesClickable = line.label.trim() === 'Gross Sales' && line.amount !== 0;
@@ -140,10 +140,10 @@ export function SalesSummaryTable({ salesSections, paymentSections }: SalesSumma
                     // Check if this is a "Deposit Redeemed" line item with a non-zero amount
                     const isInvoiceDepositClickable = line.label.trim() === 'Deposit Redeemed' && line.amount !== 0;
                     
-                    const isClickable = isInvoicesClickable || isGrossSalesClickable || isInvoiceDepositClickable;
+                    const isClickable = isPartialPaymentsClickable || isGrossSalesClickable || isInvoiceDepositClickable;
                     
                     const handleClick = () => {
-                      if (isInvoicesClickable) {
+                      if (isPartialPaymentsClickable) {
                         handleInvoicesClick();
                       } else if (isGrossSalesClickable) {
                         handleGrossSalesClick();

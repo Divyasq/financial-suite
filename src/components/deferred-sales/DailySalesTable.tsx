@@ -67,7 +67,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           else if (label.includes('refunds by amount')) values.refundsByAmount = line.amount;
           else if (label.includes('gift card sales')) values.giftCardSales = line.amount;
           else if (label === 'invoices') values.invoices = line.amount;
-          else if (label.includes('deposit redeemed')) values.invoiceDepositRedeemed = line.amount;
+          else if (label.includes('deposit redeemed') || label.includes('appointments deposit redeemed') || label.includes('invoices deposit redeemed')) values.invoiceDepositRedeemed = line.amount;
           else if (label.includes('square online')) values.squareOnline = line.amount;
         });
       });
@@ -133,62 +133,72 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
       };
 
       // Apply scenario-specific logic for specific days
-      if (scenario.id === 'deposit-day') {
-        // Deposit Day: Show $100 deposit on the first day of the range
+      if (scenario.id === 'deposit-day' || scenario.id === 'invoice-deposit-day' || scenario.id === 'appointment-deposit-day') {
+        // Deposit Day: Show deposit on the first day of the range
         if (dayNumber === 1) {
-          data.invoices = scenarioValues.invoices || 100.00; // Fallback to 100 if not extracted
-          data.totalPaymentsCollected = scenarioValues.totalCollected || 100.00;
-          data.card = scenarioValues.card || 100.00;
+          const depositAmount = scenario.id === 'appointment-deposit-day' ? 50.00 : 100.00;
+          data.invoices = scenarioValues.invoices || depositAmount;
+          data.totalPaymentsCollected = scenarioValues.totalCollected || depositAmount;
+          data.card = scenarioValues.card || depositAmount;
           data.cash = scenarioValues.cash;
           data.bankTransfer = scenarioValues.bankTransfer;
           data.giftCardRedeemed = scenarioValues.giftCard;
           data.houseAccount = scenarioValues.houseAccount;
           data.other = scenarioValues.other;
-          data.netTotal = scenarioValues.totalCollected || 100.00;
+          data.netTotal = scenarioValues.totalCollected || depositAmount;
         }
-      } else if (scenario.id === 'remaining-payment-option-b') {
-        // Remaining Payment: Show $1000 gross sales and $900 payment on the first day
+      } else if (scenario.id === 'remaining-payment-option-b' || scenario.id === 'invoice-remaining-payment' || scenario.id === 'appointment-remaining-payment') {
+        // Remaining Payment: Show gross sales and remaining payment on the first day
         if (dayNumber === 1) {
-          data.grossSales = scenarioValues.grossSales || 1000.00;
-          data.items = scenarioValues.items || 1000.00;
-          data.serviceCharges = scenarioValues.serviceCharges;
+          const totalAmount = scenario.id === 'appointment-remaining-payment' ? 200.00 : 1000.00;
+          const remainingAmount = scenario.id === 'appointment-remaining-payment' ? 150.00 : 900.00;
+          const depositAmount = scenario.id === 'appointment-remaining-payment' ? -50.00 : -100.00;
+          
+          data.grossSales = scenarioValues.grossSales || totalAmount;
+          data.items = scenario.id === 'appointment-remaining-payment' ? 0 : (scenarioValues.items || totalAmount);
+          data.serviceCharges = scenario.id === 'appointment-remaining-payment' ? totalAmount : scenarioValues.serviceCharges;
           data.returns = scenarioValues.returns;
           data.discountsComps = scenarioValues.discountsComps;
-          data.netSales = scenarioValues.netSales || 1000.00;
+          data.netSales = scenarioValues.netSales || totalAmount;
           data.taxes = scenarioValues.tax;
           data.tips = scenarioValues.tip;
           data.refundsByAmount = scenarioValues.refundsByAmount;
           // Handle Deposit Redeemed as negative in deferred sales
-          data.invoices = scenarioValues.invoiceDepositRedeemed || -100.00; // Deposit Redeemed shows as negative
-          data.totalSales = (scenarioValues.grossSales || 1000.00) + (scenarioValues.invoiceDepositRedeemed || -100.00);
-          data.totalPaymentsCollected = scenarioValues.totalCollected || 900.00;
-          data.card = scenarioValues.card || 900.00;
+          data.invoices = scenarioValues.invoiceDepositRedeemed || depositAmount;
+          data.totalSales = totalAmount + depositAmount;
+          data.totalPaymentsCollected = scenarioValues.totalCollected || remainingAmount;
+          data.card = scenarioValues.card || remainingAmount;
           data.cash = scenarioValues.cash;
           data.bankTransfer = scenarioValues.bankTransfer;
           data.giftCardRedeemed = scenarioValues.giftCard;
           data.houseAccount = scenarioValues.houseAccount;
           data.other = scenarioValues.other;
           data.squarePaymentProcessingFees = 0; // Keep fees at 0 to match summary view
-          data.netTotal = scenarioValues.totalCollected || 900.00; // No fees deducted
+          data.netTotal = scenarioValues.totalCollected || remainingAmount; // No fees deducted
         }
-      } else if (scenario.id === 'full-cycle-option-b') {
-        // Full Cycle: Show deposit on first day (July 5) and remaining payment on 6th day (July 10)
+      } else if (scenario.id === 'full-cycle-option-b' || scenario.id === 'invoice-full-cycle' || scenario.id === 'appointment-full-cycle') {
+        // Full Cycle: Show deposit on first day and remaining payment on 6th day
+        const totalAmount = scenario.id === 'appointment-full-cycle' ? 200.00 : 1000.00;
+        const depositAmount = scenario.id === 'appointment-full-cycle' ? 50.00 : 100.00;
+        const remainingAmount = scenario.id === 'appointment-full-cycle' ? 150.00 : 900.00;
+        
         if (dayNumber === 1) {
-          // Deposit day values - matches "Deposit Day" scenario (July 5 = 7/5)
-          data.invoices = 100.00;
-          data.totalPaymentsCollected = 100.00;
-          data.card = 100.00;
-          data.netTotal = 100.00;
+          // Deposit day values
+          data.invoices = depositAmount;
+          data.totalPaymentsCollected = depositAmount;
+          data.card = depositAmount;
+          data.netTotal = depositAmount;
         } else if (dayNumber === 6) {
-          // Final payment day values - matches "Remaining Payment" scenario (July 10 = 7/10)
-          data.grossSales = 1000.00;
-          data.items = 1000.00;
-          data.netSales = 1000.00;
-          data.invoices = -100.00; // Deposit Redeemed shows as negative
-          data.totalPaymentsCollected = 900.00;
-          data.card = 900.00;
+          // Final payment day values
+          data.grossSales = totalAmount;
+          data.items = scenario.id === 'appointment-full-cycle' ? 0 : totalAmount;
+          data.serviceCharges = scenario.id === 'appointment-full-cycle' ? totalAmount : 0;
+          data.netSales = totalAmount;
+          data.invoices = -depositAmount; // Deposit Redeemed shows as negative
+          data.totalPaymentsCollected = remainingAmount;
+          data.card = remainingAmount;
           data.squarePaymentProcessingFees = 0; // Keep fees at 0 to match summary view
-          data.netTotal = 900.00; // No fees deducted, matches summary
+          data.netTotal = remainingAmount; // No fees deducted, matches summary
         }
       } else {
         // For other scenarios, show values on the first day
@@ -406,7 +416,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
             </td>
             {dailyData.map((day) => (
               <td key={day.date} className="text-center p-2 border-r">
-                {formatCurrency(day.invoices + day.squareOnline + day.giftCardSales)}
+                {formatCurrency(day.invoices + day.giftCardSales)}
               </td>
             ))}
           </tr>
@@ -421,19 +431,10 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           </tr>
 
           <tr>
-            <td className="p-2 pl-6 text-gray-600 sticky left-0 bg-white border-r">Invoices</td>
+            <td className="p-2 pl-6 text-gray-600 sticky left-0 bg-white border-r">Partial Payments</td>
             {dailyData.map((day) => (
               <td key={day.date} className="text-center p-2 border-r">
                 {formatCurrency(day.invoices)}
-              </td>
-            ))}
-          </tr>
-
-          <tr>
-            <td className="p-2 pl-6 text-gray-600 sticky left-0 bg-white border-r">Square Online</td>
-            {dailyData.map((day) => (
-              <td key={day.date} className="text-center p-2 border-r">
-                {formatCurrency(day.squareOnline)}
               </td>
             ))}
           </tr>
