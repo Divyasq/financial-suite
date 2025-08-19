@@ -7,7 +7,7 @@ import { useDeferredSales } from '../../context/DeferredSalesContext';
 export function DeferredSalesNavigation() {
   const navigate = useNavigate();
   const { scenarioGroups, selectedGroup, setSelectedGroup, setSelectedScenario } = useDeferredSales();
-  const [activeTab, setActiveTab] = useState<'appointments' | 'invoices'>('appointments');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'invoices'>('invoices'); // Default to invoices
 
   const handleGroupSelect = (group: any) => {
     setSelectedGroup(group);
@@ -78,12 +78,13 @@ export function DeferredSalesNavigation() {
               </div>
             </button>
             
-            {/* Show tabs for partial payments/deposits */}
+            {/* Show tabs for partial payments/deposits - Hide Appointments tab for now */}
             {(selectedGroup?.id === group.id || 
               (group.id === 'appointments-deposits' && selectedGroup?.id === 'invoices-deposits')) && 
              group.id === 'appointments-deposits' && (
               <div className="ml-4 mt-2 mb-2">
                 <div className="flex bg-gray-200 rounded-md p-1">
+                  {/* Hide Appointments tab for now
                   <button
                     onClick={() => {
                       setActiveTab('appointments');
@@ -98,19 +99,16 @@ export function DeferredSalesNavigation() {
                   >
                     Appointments
                   </button>
+                  */}
                   <button
                     onClick={() => {
                       setActiveTab('invoices');
                       const invoicesGroup = scenarioGroups.find(g => g.id === 'invoices-deposits');
                       if (invoicesGroup) setSelectedGroup(invoicesGroup);
                     }}
-                    className={`flex-1 px-2 py-1 text-xs rounded transition-colors ${
-                      activeTab === 'invoices'
-                        ? 'bg-white text-gray-900 shadow-sm'
-                        : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                    className="w-full px-2 py-1 text-xs rounded transition-colors bg-white text-gray-900 shadow-sm"
                   >
-                    Invoices
+                    Invoices/Appointments
                   </button>
                 </div>
               </div>
