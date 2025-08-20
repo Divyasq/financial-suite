@@ -1,135 +1,186 @@
 import React, { useState } from 'react';
-import { items, Item } from '../data/items';
-import { ItemRow } from '../components/ItemRow';
-import { Sidebar } from '../components/Sidebar';
+import { ItemsTable } from '../components/ui/ItemsTable';
+import { Modal } from '../components/ui/Modal';
+import { ProductForm } from '../components/ui/ProductForm';
+import { useItems } from '../context/ItemsContext';
+import { ItemsNavigation } from '../components/items/ItemsNavigation';
+import { CategoriesView } from '../components/items/CategoriesView';
+import { ItemLibraryView } from '../components/items/ItemLibraryView';
 
-export const ItemsPage: React.FC = () => {
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [locationFilter, setLocationFilter] = useState('All');
-  const [statusFilter, setStatusFilter] = useState('Active');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+interface ProductFormData {
+  name: string;
+  description: string;
+  itemType: string;
+  category: string;
+  locations: string;
+  unit: string;
+  price: string;
+  sku: string;
+  gtin: string;
+  weight: string;
+  skipItemDetails: boolean;
+}
 
-  // Debug: Log items to see if they're properly imported
-  console.log('Items:', items);
+interface Item {
+  id: string;
+  name: string;
+  reportingCategory?: string;
+  stock: string | number;
+  price: string;
+  image?: string;
+  description?: string;
+  itemType?: string;
+  category?: string;
+  locations?: string;
+  unit?: string;
+  sku?: string;
+  gtin?: string;
+  weight?: string;
+  skipItemDetails?: boolean;
+}
 
-  const handleItemSelect = (itemId: string) => {
-    const newSelected = new Set(selectedItems);
-    if (newSelected.has(itemId)) {
-      newSelected.delete(itemId);
-    } else {
-      newSelected.add(itemId);
-    }
-    setSelectedItems(newSelected);
+export function ItemsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<Item | null>(null);
+  const [currentView, setCurrentView] = useState<string>('items');
+  const { state, addItem, updateItem, deleteItem } = useItems();
+
+  const handleCreateItem = () => {
+    setEditingItem(null);
+    setIsModalOpen(true);
   };
 
-  const handleSelectAll = () => {
-    if (selectedItems.size === items.length) {
-      setSelectedItems(new Set());
-    } else {
-      setSelectedItems(new Set(items.map(item => item.id)));
+  const handleEditItem = (item: Item) => {
+    setEditingItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteItem = (itemId: string) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      deleteItem(itemId);
     }
   };
 
-  const filteredItems = items.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = !categoryFilter || item.reportingCategory.includes(categoryFilter);
-    return matchesSearch && matchesCategory;
-  });
+  const handleImportLibrary = () => {
+    console.log('Import library clicked');
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingItem(null);
+  };
+
+  const handleFormSubmit = (formData: ProductFormData) => {
+    if (editingItem) {
+      // Update existing item
+      const updatedItem = {
+        id: editingItem.id,
+        name: formData.name,
+        description: formData.description,
+        reportingCategory: formData.category,
+        stock: editingItem.stock, // Keep existing stock
+        price: formData.price ? `$${formData.price}` : '$0.00',
+        itemType: formData.itemType,
+        category: formData.category,
+        locations: formData.locations,
+        unit: formData.unit,
+        sku: formData.sku,
+        gtin: formData.gtin,
+        weight: formData.weight,
+        skipItemDetails: formData.skipItemDetails,
+      };
+
+      updateItem(editingItem.id, updatedItem);
+      console.log('Item updated:', updatedItem);
+    } else {
+      // Create new item
+      const newItem = {
+        name: formData.name,
+        description: formData.description,
+        reportingCategory: formData.category,
+        stock: 0,
+        price: formData.price ? `$${formData.price}` : '$0.00',
+        itemType: formData.itemType,
+        category: formData.category,
+        locations: formData.locations,
+        unit: formData.unit,
+        sku: formData.sku,
+        gtin: formData.gtin,
+        weight: formData.weight,
+        skipItemDetails: formData.skipItemDetails,
+      };
+
+      addItem(newItem);
+      console.log('Item added:', newItem);
+    }
+    
+    // Close modal
+    setIsModalOpen(false);
+    setEditingItem(null);
+  };
+
+  // Convert item data to form data format
+  const getInitialFormData = (item: Item): Partial<ProductFormData> => {
+    return {
+      name: item.name,
+      description: item.description || '',
+      itemType: item.itemType || 'Physical good',
+      category: item.category || '',
+      locations: item.locations || 'Tech for Product',
+      unit: item.unit || 'Per item',
+      price: item.price ? item.price.replace(/[$\/ea]/g, '') : '',
+      sku: item.sku || '',
+      gtin: item.gtin || '',
+      weight: item.weight || '',
+      skipItemDetails: item.skipItemDetails || false,
+    };
+  };
 
   return (
-    <div className="items-page">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="flex h-full">
+      <ItemsNavigation currentView={currentView} onViewChange={setCurrentView} />
       
-      <div className={`main-content ${sidebarOpen ? 'with-sidebar' : ''}`}>
-        <div className="page-header">
-          <div className="header-controls">
-            <div className="search-filters">
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-              
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="filter-select"
-              >
-                <option value="">Category</option>
-                <option value="General Merchandise">General Merchandise</option>
-                <option value="Tactical">Tactical</option>
-                <option value="Other">Other</option>
-                <option value="Coffee">Coffee</option>
-                <option value="Electronics">Electronics</option>
-                <option value="TVs">TVs</option>
-              </select>
-
-              <select
-                value={locationFilter}
-                onChange={(e) => setLocationFilter(e.target.value)}
-                className="filter-select"
-              >
-                <option value="All">Locations All</option>
-                <option value="Location 1">Location 1</option>
-                <option value="Location 2">Location 2</option>
-              </select>
-
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="filter-select"
-              >
-                <option value="Active">Status Active</option>
-                <option value="Inactive">Status Inactive</option>
-              </select>
-
-              <button className="filter-btn">⚙ All filters</button>
+      <div className="flex-1">
+        {currentView === 'items' && (
+          <div className="p-8">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Items
+              </h2>
+              <p className="text-gray-600">
+                Manage your inventory items and services
+              </p>
             </div>
-
-            <div className="action-buttons">
-              <button className="actions-btn">Actions ▼</button>
-              <button className="create-item-btn">Create Item</button>
-            </div>
+            
+            <ItemsTable 
+              items={state.items}
+              onCreateItem={handleCreateItem}
+              onEditItem={handleEditItem}
+              onDeleteItem={handleDeleteItem}
+              onImportLibrary={handleImportLibrary}
+            />
           </div>
-        </div>
+        )}
 
-        <div className="items-table-container">
-          <table className="items-table">
-            <thead>
-              <tr>
-                <th className="checkbox-header">
-                  <input
-                    type="checkbox"
-                    checked={selectedItems.size === items.length && items.length > 0}
-                    onChange={handleSelectAll}
-                  />
-                </th>
-                <th>Item</th>
-                <th>Reporting category</th>
-                <th>Locations</th>
-                <th>Stock on hand</th>
-                <th>Available to sell</th>
-                <th>Price</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredItems.map((item) => (
-                <ItemRow
-                  key={item.id}
-                  item={item}
-                  isSelected={selectedItems.has(item.id)}
-                  onSelect={handleItemSelect}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {currentView === 'item-library' && <ItemLibraryView />}
+        {currentView === 'categories' && <CategoriesView />}
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          title={editingItem ? "Edit item" : "Create item"}
+        >
+          <ProductForm 
+            initialData={editingItem ? getInitialFormData(editingItem) : undefined}
+            onSubmit={handleFormSubmit} 
+            onCancel={handleCloseModal}
+            onSaveAsDraft={(data) => {
+              console.log('Save as draft:', data);
+              // Could implement draft functionality here
+            }}
+          />
+        </Modal>
       </div>
     </div>
   );
-};
+}
