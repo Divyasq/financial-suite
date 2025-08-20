@@ -134,8 +134,6 @@ export function LeftNav() {
       setCurrentView(item.id);
       if (item.id === 'financial-suite') {
         navigate('/financial-suite');
-      } else if (item.id === 'items') {
-        navigate('/items');
       } else if (item.id === 'fs-prototype') {
         navigate('/fs-prototype');
       }
@@ -150,8 +148,7 @@ export function LeftNav() {
     if (subItem.hasSubmenu) {
       toggleSubmenuItem(subItem.id);
     } else {
-      if (subItem.id === 'items-main') navigate('/items');
-      else if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
+      if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
       else if (subItem.id === 'deferred-sales') navigate('/deferred-sales');
       else if (subItem.id === 'reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
@@ -203,7 +200,6 @@ export function LeftNav() {
               const Icon = item.icon;
               let isActive = false;
               if (item.id === 'home') isActive = location.pathname === '/';
-              else if (item.id === 'items') isActive = location.pathname === '/items' || location.pathname.startsWith('/items');
               else if (item.id === 'reports') isActive = location.pathname.startsWith('/reports');
               else if (item.id === 'education') isActive = location.pathname.startsWith('/education');
               else if (item.id === 'financial-suite')
@@ -254,8 +250,7 @@ export function LeftNav() {
                       onClick={() => handleSubmenuItemClick(subItem, currentNavItem.id)}
                       className={cn(
                         'w-full flex items-center justify-between px-4 py-2.5 text-left transition-colors font-normal',
-                        (subItem.id === 'items-main' && location.pathname === '/items') ||
-                          (subItem.id === 'deferred-sales' && location.pathname === '/deferred-sales') ||
+                        (subItem.id === 'deferred-sales' && location.pathname === '/deferred-sales') ||
                           (subItem.id === 'sales-summary' && location.pathname.includes('sales-summary'))
                           ? 'text-blue-600 bg-blue-100'
                           : 'text-gray-700 hover:bg-gray-100'
