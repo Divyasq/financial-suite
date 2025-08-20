@@ -76,7 +76,7 @@ const mainNavItems: NavItem[] = [
           { id: 'customer-directory', label: 'Customer directory' }
         ]
       },
-      { id: 'custom-reports', label: 'Custom Reports' },
+      { id: 'custom-reports', label: 'Custom Item Reports' },
       { id: 'migration-status', label: 'Migration Status' }
     ]
   },
@@ -112,7 +112,7 @@ const mainNavItems: NavItem[] = [
           { id: 'fs-customer-directory', label: 'Customer directory' }
         ]
       },
-      { id: 'fs-custom-reports', label: 'Custom Reports' }
+      { id: 'fs-custom-reports', label: 'Custom Item Reports' }
     ]
   },
 
