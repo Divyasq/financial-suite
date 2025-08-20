@@ -43,7 +43,7 @@ export function ItemsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [currentView, setCurrentView] = useState<string>('items');
-  const { state, addItem, updateItem, deleteItem } = useItems();
+  const { items, addItem, updateItem, deleteItem } = useItems();
 
   const handleCreateItem = () => {
     setEditingItem(null);
@@ -153,7 +153,7 @@ export function ItemsPage() {
             </div>
             
             <ItemsTable 
-              items={state.items}
+              items={items}
               onCreateItem={handleCreateItem}
               onEditItem={handleEditItem}
               onDeleteItem={handleDeleteItem}
