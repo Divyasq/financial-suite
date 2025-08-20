@@ -59,7 +59,7 @@ const mainNavItems: NavItem[] = [
         label: 'Reports',
         hasSubmenu: true,
         submenuItems: [
-          { id: 'sales-summary', label: 'Sales summary' },
+          { id: 'sales-summary', label: 'Sales summary V3' },
           { id: 'sales-by-location', label: 'Sales by location' },
           { id: 'sales-by-time', label: 'Sales by time' },
           { id: 'sales-by-category', label: 'Sales by category' },
