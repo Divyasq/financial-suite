@@ -46,7 +46,7 @@ export function ItemsTable({
     }
   ];
 
-  const displayItems = items.length > 0 ? items : defaultItems;
+  const displayItems = (items && items.length > 0) ? items : defaultItems;
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
