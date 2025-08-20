@@ -43,7 +43,6 @@ function App() {
                         <Routes>
                           <Route path="/" element={<AppLayout />}>
                             <Route index element={<DashboardPage />} />
-                            <Route path="items" element={<ItemsPage />} />
                             <Route path="chatbot" element={<ChatbotPage />} />
                             <Route path="reports" element={<ReportsPage />} />
                             <Route path="transactions" element={<TransactionsPage />} />

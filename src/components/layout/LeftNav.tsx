@@ -41,28 +41,6 @@ interface SubMenuItem {
 
 const mainNavItems: NavItem[] = [
   { id: 'home', label: 'Home', icon: Home },
-  {
-    id: 'items',
-    label: 'Items & services',
-    icon: Package,
-    hasSubmenu: true,
-    submenuItems: [
-      { id: 'items-main', label: 'Items' },
-      { id: 'item-library', label: 'Item library' },
-      { id: 'channel-listings', label: 'Channel listings' },
-      { id: 'service-library', label: 'Service library' },
-      { id: 'image-library', label: 'Image library' },
-      { id: 'modifiers', label: 'Modifiers' },
-      { id: 'categories', label: 'Categories' },
-      { id: 'discounts', label: 'Discounts' },
-      { id: 'options', label: 'Options' },
-      { id: 'units', label: 'Units' },
-      { id: 'custom-attributes', label: 'Custom attributes' },
-      { id: 'settings', label: 'Settings', hasSubmenu: true },
-      { id: 'gift-cards', label: 'Gift Cards', hasSubmenu: true },
-      { id: 'subscription-plans', label: 'Subscription plans' }
-    ]
-  },
   { id: 'invoices', label: 'Invoices & payments', icon: FileText },
   { id: 'online', label: 'Online', icon: Globe },
   { id: 'customers', label: 'Customers', icon: CreditCard },
