@@ -163,7 +163,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           data.taxes = scenarioValues.tax;
           data.tips = scenarioValues.tip;
           data.refundsByAmount = scenarioValues.refundsByAmount;
-          // Handle Partial Payments Redeemed as negative in deferred sales
+          // Handle Deposit Redeemed as negative in deferred sales
           data.invoices = scenarioValues.invoiceDepositRedeemed || depositAmount;
           data.totalSales = totalAmount + depositAmount;
           data.totalPaymentsCollected = scenarioValues.totalCollected || remainingAmount;
@@ -194,7 +194,7 @@ export function DailySalesTable({ scenario, dateRange }: DailySalesTableProps) {
           data.items = scenario.id === 'appointment-full-cycle' ? 0 : totalAmount;
           data.serviceCharges = scenario.id === 'appointment-full-cycle' ? totalAmount : 0;
           data.netSales = totalAmount;
-          data.invoices = -depositAmount; // Partial Payments Redeemed shows as negative
+          data.invoices = -depositAmount; // Deposit Redeemed shows as negative
           data.totalPaymentsCollected = remainingAmount;
           data.card = remainingAmount;
           data.squarePaymentProcessingFees = 0; // Keep fees at 0 to match summary view

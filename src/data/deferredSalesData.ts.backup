@@ -277,7 +277,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
               { label: '      Partial Payments', amount: 0 },
-              { label: '      Partial Payments Redeemed', amount: -100.00 }
+              { label: '      Payments Redeemed', amount: -100.00 }
             ],
             total: 900.00
           }
@@ -324,7 +324,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: '      Gift Card Sales', amount: 0 },
               { label: '      Partial Payments', amount: 100.00 },
-              { label: '      Partial Payments Redeemed', amount: -100.00 }
+              { label: '      Payments Redeemed', amount: -100.00 }
             ],
             total: 1000.00
           }
@@ -546,7 +546,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: 'Payments', amount: 1000.00 },
               { label: 'Prior Payments', amount: 0 },
-              { label: '       Partial Payments Redeemed', amount: 0 },
+              { label: '       Deposit Redeemed', amount: 0 },
               { label: 'Total Collected', amount: 1000.00 },
               { label: '     Cash', amount: 0 },
               { label: '     Card', amount: 1000.00 },
@@ -595,7 +595,7 @@ export const deferredSalesData: ScenarioGroup[] = [
             lines: [
               { label: 'Payments', amount: 0 },
               { label: 'Prior Payments', amount: 0 },
-              { label: '       Partial Payments Redeemed', amount: 0 },
+              { label: '       Deposit Redeemed', amount: 0 },
               { label: 'Total Collected', amount: 0 },
               { label: '     Cash', amount: 0 },
               { label: '     Card', amount: 0 },

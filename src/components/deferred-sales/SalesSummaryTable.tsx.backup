@@ -137,17 +137,17 @@ export function SalesSummaryTable({ salesSections, paymentSections }: SalesSumma
                     // Check if this is a "Gross Sales" line item with a non-zero amount
                     const isGrossSalesClickable = line.label.trim() === 'Gross Sales' && line.amount !== 0;
                     
-                    // Check if this is a "Partial Payments Redeemed" line item with a non-zero amount
-                    const isPartialPaymentsRedeemedClickable = line.label.trim() === 'Partial Payments Redeemed' && line.amount !== 0;
+                    // Check if this is a "Deposit Redeemed" line item with a non-zero amount
+                    const isInvoiceDepositClickable = line.label.trim() === 'Deposit Redeemed' && line.amount !== 0;
                     
-                    const isClickable = isPartialPaymentsClickable || isGrossSalesClickable || isPartialPaymentsRedeemedClickable;
+                    const isClickable = isPartialPaymentsClickable || isGrossSalesClickable || isInvoiceDepositClickable;
                     
                     const handleClick = () => {
                       if (isPartialPaymentsClickable) {
                         handleInvoicesClick();
                       } else if (isGrossSalesClickable) {
                         handleGrossSalesClick();
-                      } else if (isPartialPaymentsRedeemedClickable) {
+                      } else if (isInvoiceDepositClickable) {
                         handleInvoiceDetailClick();
                       }
                     };
