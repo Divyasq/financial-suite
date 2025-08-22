@@ -27,6 +27,7 @@ import { DeferredSalesPage } from './pages/DeferredSalesPage';
 import { InvoiceTransactionDetailPage } from './pages/InvoiceTransactionDetailPage';
 import { FullCycleTransactionPage } from './pages/FullCycleTransactionPage';
 import { MigrationStatusPage } from './pages/MigrationStatusPage';
+import ItemSales from './pages/ItemSales';
 
 function App() {
   return (
@@ -61,6 +62,9 @@ function App() {
                             <Route path="deferred-sales/full-cycle" element={<FullCycleTransactionPage />} />
 
                             <Route path="migration-status" element={<MigrationStatusPage />} />
+                            
+                            {/* Item Sales Project */}
+                            <Route path="item-sales" element={<ItemSales />} />
 
                             {/* FS Prototype Routes */}
                             <Route path="fs-prototype" element={<FinancialSuitePage />} />
