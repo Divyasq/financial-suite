@@ -53,7 +53,6 @@ const mainNavItems: NavItem[] = [
     hasSubmenu: true,
     submenuItems: [
       { id: 'financial-dashboard', label: 'Dashboard' },
-      { id: 'deferred-sales', label: 'Deferred Sales' },
       {
         id: 'reports',
         label: 'Reports',
@@ -76,8 +75,7 @@ const mainNavItems: NavItem[] = [
           { id: 'customer-directory', label: 'Customer directory' }
         ]
       },
-      { id: 'custom-reports', label: 'Custom Item Reports' },
-      { id: 'migration-status', label: 'Migration Status' }
+      { id: 'custom-reports', label: 'Custom Item Reports' }
     ]
   },
 
@@ -149,10 +147,8 @@ export function LeftNav() {
       toggleSubmenuItem(subItem.id);
     } else {
       if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
-      else if (subItem.id === 'deferred-sales') navigate('/deferred-sales');
       else if (subItem.id === 'reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
-      else if (subItem.id === 'migration-status') navigate('/migration-status');
       else if (subItem.id === 'sales-summary') navigate('/financial-suite/reports/sales-summary');
       else if (subItem.id === 'fs-dashboard') navigate('/fs-prototype');
       else if (subItem.id === 'fs-deferred-sales') navigate('/fs-prototype/deferred-sales');
@@ -250,8 +246,7 @@ export function LeftNav() {
                       onClick={() => handleSubmenuItemClick(subItem, currentNavItem.id)}
                       className={cn(
                         'w-full flex items-center justify-between px-4 py-2.5 text-left transition-colors font-normal',
-                        (subItem.id === 'deferred-sales' && location.pathname === '/deferred-sales') ||
-                          (subItem.id === 'sales-summary' && location.pathname.includes('sales-summary'))
+                        (subItem.id === 'sales-summary' && location.pathname.includes('sales-summary'))
                           ? 'text-blue-600 bg-blue-100'
                           : 'text-gray-700 hover:bg-gray-100'
                       )}
