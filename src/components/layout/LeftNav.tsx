@@ -87,7 +87,6 @@ const mainNavItems: NavItem[] = [
     hasSubmenu: true,
     submenuItems: [
       { id: 'fs-dashboard', label: 'Dashboard' },
-      { id: 'fs-deferred-sales', label: 'Deferred Sales' },
       {
         id: 'fs-reports',
         label: 'Reports',
@@ -151,7 +150,6 @@ export function LeftNav() {
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
       else if (subItem.id === 'sales-summary') navigate('/financial-suite/reports/sales-summary');
       else if (subItem.id === 'fs-dashboard') navigate('/fs-prototype');
-      else if (subItem.id === 'fs-deferred-sales') navigate('/fs-prototype/deferred-sales');
       else if (subItem.id === 'fs-reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'fs-custom-reports') navigate('/fs-prototype/custom-reports');
       else if (subItem.id.startsWith('fs-')) {
@@ -199,10 +197,7 @@ export function LeftNav() {
               else if (item.id === 'reports') isActive = location.pathname.startsWith('/reports');
               else if (item.id === 'education') isActive = location.pathname.startsWith('/education');
               else if (item.id === 'financial-suite')
-                isActive =
-                  location.pathname.startsWith('/financial-suite') ||
-                  location.pathname.startsWith('/deferred-sales') ||
-                  location.pathname.startsWith('/migration-status');
+                isActive = location.pathname.startsWith('/financial-suite');
               else if (item.id === 'fs-prototype') isActive = location.pathname.startsWith('/fs-prototype');
 
               return (
