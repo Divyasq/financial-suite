@@ -27,6 +27,7 @@ import { DeferredSalesPage } from './pages/DeferredSalesPage';
 import { InvoiceTransactionDetailPage } from './pages/InvoiceTransactionDetailPage';
 import { FullCycleTransactionPage } from './pages/FullCycleTransactionPage';
 import { MigrationStatusPage } from './pages/MigrationStatusPage';
+import { StandardReportsPage } from './pages/StandardReportsPage';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
                             <Route path="education/:moduleId" element={<ModuleDetailPage />} />
 
                             <Route path="financial-suite" element={<FinancialSuitePage />} />
+                            <Route path="financial-suite/standard-reports" element={<StandardReportsPage />} />
                             <Route path="financial-suite/custom-reports" element={<CustomReportsPage />} />
                             <Route path="financial-suite/custom-reports/create" element={<CustomReportBuilderPage />} />
                             <Route path="financial-suite/custom-reports/edit/:id" element={<CustomReportBuilderPage />} />
