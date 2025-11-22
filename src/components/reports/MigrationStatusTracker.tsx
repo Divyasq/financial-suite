@@ -363,6 +363,5 @@ export function MigrationStatusTracker() {
           </div>
         )}
       </div>
-    </div>
   );
 }
