@@ -156,13 +156,7 @@ export function MigrationStatusTracker() {
   const notStartedPercentage = Math.round((notStartedCount / totalReports) * 100);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">SDP Migration Status Tracker</h1>
-          <p className="text-gray-600">Track the progress of report migrations to the new SDP platform</p>
-        </div>
+    <div className="max-w-7xl mx-auto">
 
         {/* Progress Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
