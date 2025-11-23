@@ -331,52 +331,107 @@ export const reportCategories: ReportCategory[] = [
 export const businessTypePresets: BusinessTypePreset[] = [
   {
     id: 'restaurant',
-    name: 'Restaurant',
-    description: 'Full-service restaurant with kitchen operations',
-    icon: '🍕',
+    name: 'Full-Service Restaurant',
+    description: 'Sit-down restaurants with table service and kitchen operations',
+    icon: '🍽️',
     categories: ['sales', 'accounting', 'payments', 'operations'],
     recommendedReports: [
       'sales-summary', 'item-analysis', 'employee-performance', 
-      'kitchen-performance', 'labor-vs-sales', 'payment-methods'
+      'kitchen-performance', 'labor-vs-sales', 'section-sales', 'modifier-sales'
     ]
   },
   {
-    id: 'retail',
-    name: 'Retail',
-    description: 'Retail store with inventory management',
+    id: 'quick-service',
+    name: 'Quick Service Restaurant',
+    description: 'Fast food, fast casual, and counter service restaurants',
+    icon: '🍔',
+    categories: ['sales', 'operations', 'payments', 'accounting'],
+    recommendedReports: [
+      'sales-summary', 'sales-trends', 'item-analysis', 'modifier-sales',
+      'employee-performance', 'payment-methods', 'kitchen-performance'
+    ]
+  },
+  {
+    id: 'coffee-shop',
+    name: 'Coffee Shop & Cafe',
+    description: 'Coffee shops, cafes, and beverage-focused businesses',
+    icon: '☕',
+    categories: ['sales', 'operations', 'payments', 'accounting'],
+    recommendedReports: [
+      'sales-summary', 'sales-trends', 'item-analysis', 'modifier-sales',
+      'employee-performance', 'payment-methods'
+    ]
+  },
+  {
+    id: 'bar-nightlife',
+    name: 'Bar & Nightlife',
+    description: 'Bars, pubs, nightclubs, and entertainment venues',
+    icon: '🍻',
+    categories: ['sales', 'operations', 'payments', 'accounting'],
+    recommendedReports: [
+      'sales-summary', 'sales-trends', 'item-analysis', 'employee-performance',
+      'section-sales', 'modifier-sales', 'comps'
+    ]
+  },
+  {
+    id: 'retail-store',
+    name: 'Retail Store',
+    description: 'Physical retail stores with inventory management',
     icon: '🛍️',
-    categories: ['sales', 'inventory', 'payments', 'online'],
+    categories: ['sales', 'inventory', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'item-analysis', 'category-performance',
-      'inventory-by-category', 'cost-of-goods-sold', 'traffic-sources'
+      'sales-summary', 'item-analysis', 'category-performance', 'vendor-sales',
+      'inventory-by-category', 'cost-of-goods-sold', 'gift-cards'
     ]
   },
   {
-    id: 'service',
-    name: 'Service Business',
-    description: 'Service-based business model',
-    icon: '🎪',
-    categories: ['sales', 'operations', 'payments'],
+    id: 'beauty-wellness',
+    name: 'Beauty & Wellness',
+    description: 'Salons, spas, fitness studios, and wellness services',
+    icon: '💅',
+    categories: ['sales', 'operations', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'employee-performance', 'team-performance',
-      'payment-methods', 'future-bookings'
+      'sales-summary', 'employee-performance', 'service-charges',
+      'gift-cards', 'future-bookings', 'team-performance'
+    ]
+  },
+  {
+    id: 'food-truck',
+    name: 'Food Truck & Mobile',
+    description: 'Mobile food vendors and pop-up businesses',
+    icon: '🚚',
+    categories: ['sales', 'payments', 'accounting'],
+    recommendedReports: [
+      'sales-summary', 'sales-trends', 'item-analysis', 'payment-methods',
+      'modifier-sales', 'reconciliation'
+    ]
+  },
+  {
+    id: 'professional-services',
+    name: 'Professional Services',
+    description: 'Consulting, legal, medical, and other professional services',
+    icon: '💼',
+    categories: ['sales', 'operations', 'payments', 'accounting'],
+    recommendedReports: [
+      'sales-summary', 'employee-performance', 'service-charges',
+      'future-bookings', 'team-performance', 'fees'
     ]
   },
   {
     id: 'multi-location',
-    name: 'Multi-Location',
-    description: 'Multiple locations or franchises',
+    name: 'Multi-Location Business',
+    description: 'Multiple locations, franchises, or enterprise operations',
     icon: '🏢',
-    categories: ['sales', 'accounting', 'payments', 'operations', 'online', 'inventory'],
+    categories: ['sales', 'accounting', 'payments', 'operations', 'inventory'],
     recommendedReports: [
-      'sales-summary', 'item-analysis', 'category-performance',
-      'employee-performance', 'reconciliation', 'inventory-by-category'
+      'sales-summary', 'item-analysis', 'category-performance', 'employee-performance',
+      'reconciliation', 'inventory-by-category', 'labor-vs-sales'
     ]
   },
   {
     id: 'custom',
     name: 'Custom Setup',
-    description: 'Choose your own categories and reports',
+    description: 'Choose your own categories and reports based on your specific needs',
     icon: '🎯',
     categories: ['sales', 'accounting', 'payments', 'operations', 'online', 'inventory'],
     recommendedReports: []
