@@ -46,12 +46,20 @@ export const standardReports: StandardReport[] = [
     usageCount: 98
   },
   {
-    id: 'modifier-sales',
-    name: 'Modifier Sales',
-    description: 'Performance of item modifiers and add-ons',
+    id: 'modifier-analysis',
+    name: 'Modifier Analysis',
+    description: 'Analysis of modifier sales and performance',
     category: 'sales',
     icon: '🔧',
     usageCount: 67
+  },
+  {
+    id: 'order-analysis',
+    name: 'Order Analysis',
+    description: 'Detailed analysis of order patterns and performance',
+    category: 'sales',
+    icon: '🛒',
+    usageCount: 85
   },
   {
     id: 'section-sales',
@@ -138,9 +146,17 @@ export const standardReports: StandardReport[] = [
     usageCount: 123
   },
   {
-    id: 'discounts',
-    name: 'Discounts',
-    description: 'Discount usage and impact analysis',
+    id: 'payment-analysis',
+    name: 'Payment Analysis',
+    description: 'Analysis of payment methods and transaction fees',
+    category: 'payments',
+    icon: '💳',
+    usageCount: 125
+  },
+  {
+    id: 'discount-analysis',
+    name: 'Discount Analysis',
+    description: 'Analysis of discount usage and impact',
     category: 'payments',
     icon: '🏷️',
     usageCount: 89
@@ -194,6 +210,14 @@ export const standardReports: StandardReport[] = [
     category: 'operations',
     icon: '👥',
     usageCount: 87
+  },
+  {
+    id: 'customer-analysis',
+    name: 'Customer Analysis',
+    description: 'Analysis of customer behavior and spending patterns',
+    category: 'operations',
+    icon: '👤',
+    usageCount: 78
   },
   {
     id: 'future-bookings',
