@@ -627,6 +627,114 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
     ]
   },
 
+  'section-sales': {
+    id: 'section-sales',
+    name: 'Section Sales',
+    description: 'Sales performance by restaurant sections',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'section',
+    defaultMetrics: ['gross_sales', 'net_sales', 'transaction_count', 'average_cover_count'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Section Sales',
+            description: 'Sales performance by restaurant sections',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'section', name: 'Section' },
+              { id: 'order_name', name: 'Order Name' },
+              { id: 'device', name: 'Device' },
+              { id: 'channel', name: 'Channel' },
+              { id: 'employee', name: 'Employee' },
+              { id: 'location', name: 'Location' },
+              { id: 'customer', name: 'Customer' },
+              { id: 'customer_type', name: 'Customer Type' },
+              { id: 'order_created', name: 'Order Created' }
+            ],
+            availableMetrics: [
+              { id: 'gross_sales', name: 'Gross Sales' },
+              { id: 'net_sales', name: 'Net Sales' },
+              { id: 'refunds', name: 'Refunds' },
+              { id: 'transaction_count', name: 'Transaction Count' },
+              { id: 'discount', name: 'Discount' },
+              { id: 'returns', name: 'Returns' },
+              { id: 'service_charges', name: 'Service Charges' },
+              { id: 'tax', name: 'Tax' },
+              { id: 'tip', name: 'Tip' },
+              { id: 'average_cover_count', name: 'Average Cover Count' },
+              { id: 'covers', name: 'Covers' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'section-performance',
+                type: 'bar',
+                title: 'Section Performance',
+                groupBy: 'section',
+                metrics: ['gross_sales', 'transaction_count'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
   'order-analysis': {
     id: 'order-analysis',
     name: 'Order Analysis',
