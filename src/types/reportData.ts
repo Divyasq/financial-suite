@@ -192,6 +192,58 @@ export const REPORT_GRAINS: Record<string, ReportGrain> = {
       { id: 'customer_name', name: 'Customer Name', type: 'string' },
       { id: 'transaction_timestamp', name: 'Transaction Timestamp', type: 'date' }
     ]
+  },
+  modifiers: {
+    id: 'modifiers',
+    name: 'Modifiers',
+    metrics: [
+      { id: 'modifier_qty_sold', name: 'Modifier Qty Sold', type: 'count' },
+      { id: 'modifier_gross_sales', name: 'Modifier Gross Sales', type: 'currency' },
+      { id: 'modifier_net_sales', name: 'Modifier Net Sales', type: 'currency' },
+      { id: 'modifier_qty_refunded', name: 'Modifier Qty Refunded', type: 'count' },
+      { id: 'modifier_refunds', name: 'Modifier Refunds', type: 'currency' },
+      { id: 'modifier_price', name: 'Modifier Price', type: 'currency' }
+    ],
+    dimensions: [
+      { id: 'modifier_name', name: 'Modifier Name', type: 'string' },
+      { id: 'modifier_set', name: 'Modifier Set', type: 'category' },
+      { id: 'category', name: 'Category', type: 'category' },
+      { id: 'item_name', name: 'Item Name', type: 'string' },
+      { id: 'channel', name: 'Channel', type: 'category' },
+      { id: 'device', name: 'Device', type: 'string' },
+      { id: 'employee_collected', name: 'Employee (Collected)', type: 'string' },
+      { id: 'employee_attributed', name: 'Employee (Attributed)', type: 'string' },
+      { id: 'location', name: 'Location', type: 'category' },
+      { id: 'customer_name', name: 'Customer Name', type: 'string' },
+      { id: 'customer_type', name: 'Customer Type', type: 'category' },
+      { id: 'order_created', name: 'Order Created', type: 'date' }
+    ]
+  },
+  customers: {
+    id: 'customers',
+    name: 'Customers',
+    metrics: [
+      { id: 'new_visit_count', name: 'New Visit Count', type: 'count' },
+      { id: 'repeat_visit_count', name: 'Repeat Visit Count', type: 'count' },
+      { id: 'amount_spend', name: 'Amount Spend', type: 'currency' },
+      { id: 'average_spend', name: 'Average Spend', type: 'currency' },
+      { id: 'spend_distribution_count', name: 'Spend Distribution Count', type: 'count' },
+      { id: 'visit_frequency_percent', name: 'Visit Frequency %', type: 'percentage' },
+      { id: 'loyalty_visit_count', name: 'Loyalty Visit Count', type: 'count' }
+    ],
+    dimensions: [
+      { id: 'customer_type', name: 'Customer Type (New vs Returning)', type: 'category' },
+      { id: 'customer', name: 'Customer', type: 'string' },
+      { id: 'device', name: 'Device', type: 'string' },
+      { id: 'channel', name: 'Channel', type: 'category' },
+      { id: 'employee', name: 'Employee', type: 'string' },
+      { id: 'location', name: 'Location', type: 'category' },
+      { id: 'order_created', name: 'Order Created', type: 'date' },
+      { id: 'order_completed', name: 'Order Completed/Fulfilled', type: 'date' },
+      { id: 'spend_distribution', name: 'Spend Distribution', type: 'category' },
+      { id: 'visit_frequency', name: 'Visit Frequency', type: 'category' },
+      { id: 'loyalty_visit', name: 'Loyalty Visit (Loyalty vs non Loyalty)', type: 'category' }
+    ]
   }
 };
 

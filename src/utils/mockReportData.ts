@@ -18,7 +18,13 @@ const SAMPLE_DATA = {
   channels: ['In-Store', 'Online', 'Mobile App', 'Phone Order'],
   paymentMethods: ['Credit Card', 'Debit Card', 'Cash', 'Gift Card', 'Apple Pay', 'Google Pay'],
   cardBrands: ['Visa', 'Mastercard', 'American Express', 'Discover'],
-  discountNames: ['Happy Hour 20%', 'Student Discount', 'Senior Discount', 'Employee Meal', 'Loyalty Reward', 'Birthday Special']
+  discountNames: ['Happy Hour 20%', 'Student Discount', 'Senior Discount', 'Employee Meal', 'Loyalty Reward', 'Birthday Special'],
+  modifierNames: ['Extra Cheese', 'No Onions', 'Extra Sauce', 'Gluten Free', 'Spicy', 'Large Size', 'Medium Rare', 'Side Salad', 'Extra Bacon', 'No Pickles'],
+  modifierSets: ['Pizza Toppings', 'Burger Options', 'Salad Dressings', 'Steak Temperature', 'Drink Sizes', 'Side Options'],
+  sections: ['Dining Room', 'Bar', 'Patio', 'Private Room', 'Counter Service', 'Drive Thru'],
+  customerTypes: ['New Customer', 'Returning Customer', 'Loyalty Member', 'VIP Member'],
+  orderNames: ['Order #1001', 'Order #1002', 'Order #1003', 'Order #1004', 'Order #1005'],
+  devices: ['POS Terminal 1', 'POS Terminal 2', 'Mobile Device', 'Tablet', 'Kiosk']
 };
 
 function randomFromArray<T>(array: T[]): T {
@@ -78,8 +84,32 @@ export function generateMockReportData(reportId: string): ReportData {
       case 'discount_name':
         row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.discountNames);
         break;
+      case 'modifier_name':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.modifierNames);
+        break;
+      case 'modifier_set':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.modifierSets);
+        break;
+      case 'section':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.sections);
+        break;
+      case 'customer_type':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.customerTypes);
+        break;
+      case 'channel':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.channels);
+        break;
+      case 'device':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.devices);
+        break;
+      case 'card_brand':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.cardBrands);
+        break;
+      case 'order_name':
+        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.orderNames);
+        break;
       default:
-        row[template.defaultGroupBy] = `Sample ${template.defaultGroupBy} ${i + 1}`;
+        row[template.defaultGroupBy] = `Sample ${template.defaultGroupBy.replace('_', ' ')} ${i + 1}`;
     }
 
     // Generate metric values based on grain type
