@@ -11,6 +11,7 @@ export function StandardReportsPage() {
     setSearchTerm,
     selectedBusinessType,
     businessTypePresets,
+    preferences,
     toggleCategoryVisibility,
     reorderCategories,
     toggleReportPin,
