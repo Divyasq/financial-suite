@@ -1,4 +1,5 @@
-import { ReportData, ReportRow, REPORT_TEMPLATES, REPORT_GRAINS } from '../types/reportData';
+import { ReportData, ReportRow, REPORT_GRAINS } from '../types/reportData';
+import { REPORT_TEMPLATES } from '../data/reportTemplates';
 
 // Sample data pools for generating realistic mock data
 const SAMPLE_DATA = {
