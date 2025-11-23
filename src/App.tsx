@@ -29,6 +29,7 @@ import { FullCycleTransactionPage } from './pages/FullCycleTransactionPage';
 import { MigrationStatusPage } from './pages/MigrationStatusPage';
 import { StandardReportsPage } from './pages/StandardReportsPage';
 import { ReportPage } from './pages/ReportPage';
+import { CustomBuilderPage } from './pages/CustomBuilderPage';
 
 function App() {
   return (
@@ -54,8 +55,8 @@ function App() {
                             <Route path="financial-suite" element={<FinancialSuitePage />} />
                             <Route path="financial-suite/standard-reports" element={<StandardReportsPage />} />
                             <Route path="financial-suite/custom-reports" element={<CustomReportsPage />} />
-                            <Route path="financial-suite/custom-reports/create" element={<CustomReportBuilderPage />} />
-                            <Route path="financial-suite/custom-reports/edit/:id" element={<CustomReportBuilderPage />} />
+                            <Route path="financial-suite/custom-reports/create" element={<CustomBuilderPage />} />
+                            <Route path="financial-suite/custom-reports/edit/:id" element={<CustomBuilderPage />} />
                             <Route path="financial-suite/reports/sales-summary-v3" element={<ReportsPage />} />
                             <Route path="financial-suite/reports/reconciliation-v3" element={<ReportsPage />} />
                             <Route path="financial-suite/reports/:reportId" element={<ReportPage />} />
