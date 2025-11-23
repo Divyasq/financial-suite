@@ -20,7 +20,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
             description: 'Track sales performance over time with multiple chart views',
             showDataFreshness: true,
             showOptions: true,
-            options: ['export', 'print', 'customize']
+            options: ['export', 'print']
           }
         },
         visible: true,
@@ -39,20 +39,6 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         },
         visible: true,
         order: 2
-      },
-      {
-        id: 'metrics',
-        type: 'metrics',
-        config: {
-          metrics: {
-            maxMetrics: 4,
-            layout: 'horizontal',
-            showComparison: true,
-            showTrends: true
-          }
-        },
-        visible: true,
-        order: 3
       },
       {
         id: 'visualization',
@@ -91,7 +77,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 4
+        order: 3
       }
     ]
   },
@@ -115,7 +101,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
             description: 'Detailed breakdown of individual item performance',
             showDataFreshness: true,
             showOptions: true,
-            options: ['export', 'customize']
+            options: ['export']
           }
         },
         visible: true,
@@ -150,20 +136,6 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         order: 2
       },
       {
-        id: 'metrics',
-        type: 'metrics',
-        config: {
-          metrics: {
-            maxMetrics: 4,
-            layout: 'horizontal',
-            showComparison: false,
-            showTrends: false
-          }
-        },
-        visible: true,
-        order: 3
-      },
-      {
         id: 'visualization',
         type: 'visualization',
         config: {
@@ -185,7 +157,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 4
+        order: 3
       },
       {
         id: 'table',
@@ -203,7 +175,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 5
+        order: 4
       }
     ]
   },
@@ -227,7 +199,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
             description: 'Sales performance by product categories',
             showDataFreshness: true,
             showOptions: true,
-            options: ['export', 'customize']
+            options: ['export']
           }
         },
         visible: true,
@@ -255,20 +227,6 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         order: 2
       },
       {
-        id: 'metrics',
-        type: 'metrics',
-        config: {
-          metrics: {
-            maxMetrics: 4,
-            layout: 'horizontal',
-            showComparison: false,
-            showTrends: false
-          }
-        },
-        visible: true,
-        order: 3
-      },
-      {
         id: 'visualization',
         type: 'visualization',
         config: {
@@ -290,7 +248,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 4
+        order: 3
       },
       {
         id: 'table',
@@ -308,7 +266,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 5
+        order: 4
       }
     ]
   },
@@ -332,7 +290,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
             description: 'Sales performance by team members',
             showDataFreshness: true,
             showOptions: true,
-            options: ['export', 'customize']
+            options: ['export']
           }
         },
         visible: true,
@@ -360,20 +318,6 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         order: 2
       },
       {
-        id: 'metrics',
-        type: 'metrics',
-        config: {
-          metrics: {
-            maxMetrics: 4,
-            layout: 'horizontal',
-            showComparison: true,
-            showTrends: true
-          }
-        },
-        visible: true,
-        order: 3
-      },
-      {
         id: 'visualization',
         type: 'visualization',
         config: {
@@ -395,7 +339,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 4
+        order: 3
       },
       {
         id: 'table',
@@ -413,7 +357,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
           }
         },
         visible: true,
-        order: 5
+        order: 4
       }
     ]
   }

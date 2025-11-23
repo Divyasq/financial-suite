@@ -155,14 +155,8 @@ export function ReportCanvas({ template, onBack, onCustomize }: ReportCanvasProp
               );
 
             case 'metrics':
-              return (
-                <MetricsBlock
-                  key={block.id}
-                  config={block.config.metrics!}
-                  metrics={metricsData}
-                  grain={template.grain}
-                />
-              );
+              // Skip metrics blocks - not needed for standard reports
+              return null;
 
             case 'visualization':
               return (

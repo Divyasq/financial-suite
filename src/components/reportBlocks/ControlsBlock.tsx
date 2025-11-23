@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, MapPin, Users, Filter, ChevronDown, BarChart3 } from 'lucide-react';
 import { ControlsBlockConfig, ReportFilter } from '../../types/reportBlocks';
 
@@ -21,6 +21,9 @@ export function ControlsBlock({
   onGroupByChange,
   onMetricsChange
 }: ControlsBlockProps) {
+  const [showGroupByDropdown, setShowGroupByDropdown] = useState(false);
+  const [showMetricsDropdown, setShowMetricsDropdown] = useState(false);
+
   const getControlIcon = (control: string) => {
     switch (control) {
       case 'time_period':
@@ -101,31 +104,87 @@ export function ControlsBlock({
               if (control === 'group_by' && config.showGroupBy) {
                 const groupByOption = config.availableGroupBy?.find(g => g.id === groupBy);
                 return (
-                  <button
-                    key={control}
-                    className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors"
-                    onClick={() => {
-                      console.log('Opening group by selector');
-                    }}
-                  >
-                    <span className="text-sm">Group by: {groupByOption?.name || 'None'}</span>
-                    <ChevronDown className="h-4 w-4 text-gray-400" />
-                  </button>
+                  <div key={control} className="relative">
+                    <button
+                      className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors"
+                      onClick={() => {
+                        setShowGroupByDropdown(!showGroupByDropdown);
+                        setShowMetricsDropdown(false);
+                      }}
+                    >
+                      <BarChart3 className="h-4 w-4" />
+                      <span className="text-sm">Group by: {groupByOption?.name || 'Item Name'}</span>
+                      <ChevronDown className="h-4 w-4 text-gray-400" />
+                    </button>
+
+                    {/* Group By Dropdown */}
+                    {showGroupByDropdown && config.availableGroupBy && (
+                      <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                        <div className="p-2">
+                          {config.availableGroupBy.map((option) => (
+                            <button
+                              key={option.id}
+                              onClick={() => {
+                                onGroupByChange(option.id);
+                                setShowGroupByDropdown(false);
+                              }}
+                              className={`w-full text-left px-3 py-2 text-sm rounded hover:bg-gray-100 ${
+                                groupBy === option.id ? 'bg-blue-50 text-blue-700' : 'text-gray-700'
+                              }`}
+                            >
+                              {option.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               }
 
               if (control === 'metrics' && config.showMetricSelector) {
                 return (
-                  <button
-                    key={control}
-                    className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors"
-                    onClick={() => {
-                      console.log('Opening metrics selector');
-                    }}
-                  >
-                    <span className="text-sm">Metrics: {selectedMetrics.length} selected</span>
-                    <ChevronDown className="h-4 w-4 text-gray-400" />
-                  </button>
+                  <div key={control} className="relative">
+                    <button
+                      className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors"
+                      onClick={() => {
+                        setShowMetricsDropdown(!showMetricsDropdown);
+                        setShowGroupByDropdown(false);
+                      }}
+                    >
+                      <BarChart3 className="h-4 w-4" />
+                      <span className="text-sm">Metrics: {selectedMetrics.length} selected</span>
+                      <ChevronDown className="h-4 w-4 text-gray-400" />
+                    </button>
+
+                    {/* Metrics Dropdown */}
+                    {showMetricsDropdown && config.availableMetrics && (
+                      <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                        <div className="p-2">
+                          <div className="text-xs font-medium text-gray-500 mb-2 px-3">Select Metrics</div>
+                          {config.availableMetrics.map((metric) => (
+                            <label
+                              key={metric.id}
+                              className="flex items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedMetrics.includes(metric.id)}
+                                onChange={(e) => {
+                                  const newMetrics = e.target.checked
+                                    ? [...selectedMetrics, metric.id]
+                                    : selectedMetrics.filter(m => m !== metric.id);
+                                  onMetricsChange(newMetrics);
+                                }}
+                                className="mr-3 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                              />
+                              <span className="text-gray-700">{metric.name}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 );
               }
 
