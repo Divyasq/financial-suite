@@ -196,6 +196,7 @@ export const REPORT_GRAINS: Record<string, ReportGrain> = {
 };
 
 // Report Templates - maps report IDs to their grain and default configuration
+// Note: sales-summary uses the old format and is not included here
 export const REPORT_TEMPLATES: Record<string, {
   grain: string;
   defaultGroupBy: string;
@@ -203,13 +204,6 @@ export const REPORT_TEMPLATES: Record<string, {
   name: string;
   description: string;
 }> = {
-  'sales-summary': {
-    grain: 'orders',
-    defaultGroupBy: 'location',
-    defaultMetrics: ['gross_sales', 'net_sales', 'transaction_count', 'tax', 'tip'],
-    name: 'Sales Summary',
-    description: 'Overview of total sales, transactions, and key metrics'
-  },
   'item-analysis': {
     grain: 'items',
     defaultGroupBy: 'item_name',

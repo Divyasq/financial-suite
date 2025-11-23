@@ -56,6 +56,7 @@ function App() {
                             <Route path="financial-suite/custom-reports" element={<CustomReportsPage />} />
                             <Route path="financial-suite/custom-reports/create" element={<CustomReportBuilderPage />} />
                             <Route path="financial-suite/custom-reports/edit/:id" element={<CustomReportBuilderPage />} />
+                            <Route path="financial-suite/reports/sales-summary-v3" element={<ReportsPage />} />
                             <Route path="financial-suite/reports/:reportId" element={<ReportPage />} />
 
                             <Route path="deferred-sales" element={<DeferredSalesPage />} />

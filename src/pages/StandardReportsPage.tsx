@@ -40,8 +40,14 @@ export function StandardReportsPage() {
 
   const handleViewReport = (reportId: string) => {
     trackReportUsage(reportId);
-    // Navigate to the report page using the dynamic route
-    navigate(`/financial-suite/reports/${reportId}`);
+    
+    // Sales Summary uses the old format/route, others use the new grain-based system
+    if (reportId === 'sales-summary') {
+      navigate('/financial-suite/reports/sales-summary-v3');
+    } else {
+      // Navigate to the new grain-based report page
+      navigate(`/financial-suite/reports/${reportId}`);
+    }
   };
 
   const handleCustomizeReport = (reportId: string) => {
