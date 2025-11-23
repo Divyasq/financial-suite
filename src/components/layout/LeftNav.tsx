@@ -54,28 +54,6 @@ const mainNavItems: NavItem[] = [
     submenuItems: [
       { id: 'financial-dashboard', label: 'Dashboard' },
       { id: 'standard-reports', label: 'Standard Reports' },
-      {
-        id: 'reports',
-        label: 'Reports',
-        hasSubmenu: true,
-        submenuItems: [
-          { id: 'sales-summary', label: 'Sales summary V3' },
-          { id: 'sales-by-location', label: 'Sales by location' },
-          { id: 'sales-by-time', label: 'Sales by time' },
-          { id: 'sales-by-category', label: 'Sales by category' },
-          { id: 'sales-by-item', label: 'Sales by item' },
-          { id: 'discounts-comps', label: 'Discounts & comps' },
-          { id: 'taxes', label: 'Taxes' },
-          { id: 'payments', label: 'Payments' },
-          { id: 'cash-drawer', label: 'Cash drawer' },
-          { id: 'deposits', label: 'Deposits' },
-          { id: 'employee-timecards', label: 'Employee timecards' },
-          { id: 'gratuity', label: 'Gratuity' },
-          { id: 'items-sold', label: 'Items sold' },
-          { id: 'modifier-sold', label: 'Modifier sold' },
-          { id: 'customer-directory', label: 'Customer directory' }
-        ]
-      },
       { id: 'custom-reports', label: 'Custom Reports' }
     ]
   },
@@ -148,9 +126,7 @@ export function LeftNav() {
     } else {
       if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
       else if (subItem.id === 'standard-reports') navigate('/financial-suite/standard-reports');
-      else if (subItem.id === 'reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
-      else if (subItem.id === 'sales-summary') navigate('/financial-suite/reports/sales-summary');
       else if (subItem.id === 'fs-dashboard') navigate('/fs-prototype');
       else if (subItem.id === 'fs-reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'fs-custom-reports') navigate('/fs-prototype/custom-reports');

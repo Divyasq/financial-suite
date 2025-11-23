@@ -37,8 +37,52 @@ export function StandardReportsPage() {
 
   const handleViewReport = (reportId: string) => {
     trackReportUsage(reportId);
-    // Navigate to report view
-    console.log('Viewing report:', reportId);
+    
+    // Map report IDs to their actual report pages
+    const reportRoutes: Record<string, string> = {
+      'sales-summary': '/financial-suite/reports/sales-summary',
+      'item-analysis': '/financial-suite/reports/item-analysis',
+      'sales-trends': '/financial-suite/reports/sales-trends',
+      'category-performance': '/financial-suite/reports/category-performance',
+      'employee-performance': '/financial-suite/reports/employee-performance',
+      'modifier-sales': '/financial-suite/reports/modifier-sales',
+      'section-sales': '/financial-suite/reports/section-sales',
+      'vendor-sales': '/financial-suite/reports/vendor-sales',
+      'gift-cards': '/financial-suite/reports/gift-cards',
+      'sales-taxes': '/financial-suite/reports/sales-taxes',
+      'fees': '/financial-suite/reports/fees',
+      'service-charges': '/financial-suite/reports/service-charges',
+      'reconciliation': '/financial-suite/reports/reconciliation',
+      'payment-methods': '/financial-suite/reports/payment-methods',
+      'transaction-status': '/financial-suite/reports/transaction-status',
+      'cash-reports': '/financial-suite/reports/cash-reports',
+      'discounts': '/financial-suite/reports/discounts',
+      'comps': '/financial-suite/reports/comps',
+      'voids': '/financial-suite/reports/voids',
+      'activity-log': '/financial-suite/reports/activity-log',
+      'labor-vs-sales': '/financial-suite/reports/labor-vs-sales',
+      'kitchen-performance': '/financial-suite/reports/kitchen-performance',
+      'team-performance': '/financial-suite/reports/team-performance',
+      'future-bookings': '/financial-suite/reports/future-bookings',
+      'traffic-sources': '/financial-suite/reports/traffic-sources',
+      'purchase-funnel': '/financial-suite/reports/purchase-funnel',
+      'cost-of-goods-sold': '/financial-suite/reports/cost-of-goods-sold',
+      'inventory-by-category': '/financial-suite/reports/inventory-by-category',
+      'projected-profit': '/financial-suite/reports/projected-profit',
+      'inventory-sell-through': '/financial-suite/reports/inventory-sell-through',
+      'aging-inventory': '/financial-suite/reports/aging-inventory'
+    };
+
+    const route = reportRoutes[reportId];
+    if (route) {
+      // For now, we'll navigate to a generic report page with the report ID
+      // In a real app, each report would have its own dedicated page
+      window.open(`${route}?reportId=${reportId}`, '_blank');
+    } else {
+      // Fallback - open in new tab with report ID
+      console.log('Opening report:', reportId);
+      alert(`Opening ${reportId} report (placeholder - would navigate to actual report)`);
+    }
   };
 
   const handleCustomizeReport = (reportId: string) => {
