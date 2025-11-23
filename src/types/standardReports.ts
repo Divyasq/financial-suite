@@ -52,6 +52,7 @@ export interface BusinessTypePreset {
 export interface UserPreferences {
   categories: ReportCategory[];
   pinnedReports: string[];
+  hiddenReports?: string[];
   businessType?: string;
   lastUsedReports: string[];
   customizations: Record<string, ReportCustomization[]>;

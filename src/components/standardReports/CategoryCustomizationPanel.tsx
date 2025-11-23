@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { X, Settings, Eye, EyeOff, GripVertical, RotateCcw } from 'lucide-react';
-import { ReportCategory, BusinessTypePreset } from '../../types/standardReports';
+import { ReportCategory, BusinessTypePreset, StandardReport, UserPreferences } from '../../types/standardReports';
 
 interface CategoryCustomizationPanelProps {
   categories: ReportCategory[];
+  reports: StandardReport[];
+  preferences: UserPreferences;
   businessTypePresets: BusinessTypePreset[];
   selectedBusinessType: string;
   onToggleVisibility: (categoryId: string) => void;
+  onToggleReportVisibility: (reportId: string) => void;
   onReorderCategories: (startIndex: number, endIndex: number) => void;
   onApplyPreset: (presetId: string) => void;
   onReset: () => void;
@@ -16,9 +19,12 @@ interface CategoryCustomizationPanelProps {
 
 export function CategoryCustomizationPanel({
   categories,
+  reports,
+  preferences,
   businessTypePresets,
   selectedBusinessType,
   onToggleVisibility,
+  onToggleReportVisibility,
   onReorderCategories,
   onApplyPreset,
   onReset,
@@ -92,50 +98,83 @@ export function CategoryCustomizationPanel({
         {/* Content */}
         <div className="p-6 max-h-96 overflow-y-auto">
           {activeTab === 'organize' && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               <p className="text-sm text-gray-600 mb-4">
-                Show or hide categories, and drag to reorder them. Changes are saved automatically.
+                Show or hide individual reports by category. Changes are saved automatically.
               </p>
 
-              <div className="space-y-2">
-                {categories.map((category, index) => (
-                  <div
-                    key={category.id}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-all"
-                  >
-                    <div className="flex items-center gap-3">
-                      <GripVertical className="h-5 w-5 text-gray-400 cursor-move" />
-                      <span className="text-2xl">{category.icon}</span>
-                      <div>
-                        <h3 className="font-medium text-gray-900">{category.name}</h3>
-                        <p className="text-sm text-gray-500">
-                          {category.reportCount} reports
-                        </p>
+              {categories.map((category) => {
+                const categoryReports = reports.filter(report => report.category === category.id);
+                const hiddenReports = preferences.hiddenReports || [];
+                
+                return (
+                  <div key={category.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                    {/* Category Header */}
+                    <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{category.icon}</span>
+                          <div>
+                            <h3 className="font-medium text-gray-900">{category.name}</h3>
+                            <p className="text-sm text-gray-500">
+                              {categoryReports.length - hiddenReports.filter(id => 
+                                categoryReports.some(r => r.id === id)
+                              ).length} of {categoryReports.length} reports visible
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => onToggleVisibility(category.id)}
+                          className={`p-2 rounded-lg transition-colors ${
+                            category.isVisible
+                              ? 'text-blue-600 hover:bg-blue-100'
+                              : 'text-gray-400 hover:bg-gray-200'
+                          }`}
+                        >
+                          {category.isVisible ? (
+                            <Eye className="h-5 w-5" />
+                          ) : (
+                            <EyeOff className="h-5 w-5" />
+                          )}
+                        </button>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getCategoryColor(category.color)}`}>
-                        {category.name}
-                      </span>
-                      <button
-                        onClick={() => onToggleVisibility(category.id)}
-                        className={`p-2 rounded-lg transition-colors ${
-                          category.isVisible
-                            ? 'text-blue-600 hover:bg-blue-100'
-                            : 'text-gray-400 hover:bg-gray-200'
-                        }`}
-                      >
-                        {category.isVisible ? (
-                          <Eye className="h-5 w-5" />
-                        ) : (
-                          <EyeOff className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
+                    {/* Reports List */}
+                    {category.isVisible && (
+                      <div className="divide-y divide-gray-100">
+                        {categoryReports.map((report) => (
+                          <div key={report.id} className="px-4 py-3 hover:bg-gray-50 transition-colors">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <span className="text-lg">{report.icon}</span>
+                                <div>
+                                  <h4 className="text-sm font-medium text-gray-900">{report.name}</h4>
+                                  <p className="text-xs text-gray-500">{report.description}</p>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => onToggleReportVisibility(report.id)}
+                                className={`p-1.5 rounded transition-colors ${
+                                  !hiddenReports.includes(report.id)
+                                    ? 'text-green-600 hover:bg-green-100'
+                                    : 'text-gray-400 hover:bg-gray-200'
+                                }`}
+                              >
+                                {!hiddenReports.includes(report.id) ? (
+                                  <Eye className="h-4 w-4" />
+                                ) : (
+                                  <EyeOff className="h-4 w-4" />
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           )}
 

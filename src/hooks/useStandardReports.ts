@@ -71,6 +71,16 @@ export function useStandardReports() {
     savePreferences({ pinnedReports: updatedPinned });
   };
 
+  // Toggle individual report visibility
+  const toggleReportVisibility = (reportId: string) => {
+    const hiddenReports = preferences.hiddenReports || [];
+    const updatedHidden = hiddenReports.includes(reportId)
+      ? hiddenReports.filter(id => id !== reportId)
+      : [...hiddenReports, reportId];
+    
+    savePreferences({ hiddenReports: updatedHidden });
+  };
+
   // Apply business type preset
   const applyBusinessTypePreset = (presetId: string) => {
     const preset = businessTypePresets.find(p => p.id === presetId);
@@ -123,14 +133,16 @@ export function useStandardReports() {
 
   // Get filtered reports
   const getFilteredReports = () => {
+    const hiddenReports = preferences.hiddenReports || [];
     return reports.filter(report => {
       const matchesSearch = searchTerm === '' ||
         report.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         report.description.toLowerCase().includes(searchTerm.toLowerCase());
       
       const categoryVisible = categories.find(cat => cat.id === report.category)?.isVisible !== false;
+      const reportVisible = !hiddenReports.includes(report.id);
       
-      return matchesSearch && categoryVisible;
+      return matchesSearch && categoryVisible && reportVisible;
     });
   };
 
@@ -204,6 +216,7 @@ export function useStandardReports() {
     toggleCategoryVisibility,
     reorderCategories,
     toggleReportPin,
+    toggleReportVisibility,
     applyBusinessTypePreset,
     resetToDefaults,
     trackReportUsage,

@@ -7,6 +7,7 @@ import { ReportCard } from '../components/standardReports/ReportCard';
 
 export function StandardReportsPage() {
   const {
+    reports,
     searchTerm,
     setSearchTerm,
     selectedBusinessType,
@@ -15,6 +16,7 @@ export function StandardReportsPage() {
     toggleCategoryVisibility,
     reorderCategories,
     toggleReportPin,
+    toggleReportVisibility,
     applyBusinessTypePreset,
     resetToDefaults,
     trackReportUsage,
@@ -176,37 +178,17 @@ export function StandardReportsPage() {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Usage
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                          onChange={(e) => {
-                            // Toggle all reports visibility
-                            const allReports = visibleCategories.flatMap(cat => getReportsByCategory(cat.id));
-                            allReports.forEach(report => {
-                              if (e.target.checked) {
-                                if (!preferences.pinnedReports.includes(report.id)) {
-                                  toggleReportPin(report.id);
-                                }
-                              } else {
-                                if (preferences.pinnedReports.includes(report.id)) {
-                                  toggleReportPin(report.id);
-                                }
-                              }
-                            });
-                          }}
-                        />
-                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {visibleCategories.map((category) => {
                       const categoryReports = getReportsByCategory(category.id);
                       return categoryReports.map((report, index) => (
-                        <tr key={report.id} className="hover:bg-gray-50">
+                        <tr 
+                          key={report.id} 
+                          className="hover:bg-gray-50 cursor-pointer transition-colors"
+                          onClick={() => handleViewReport(report.id)}
+                        >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <span className="text-2xl mr-3">{report.icon}</span>
@@ -225,30 +207,6 @@ export function StandardReportsPage() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {report.usageCount || 0} uses
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div className="flex items-center space-x-2">
-                              <button
-                                onClick={() => handleViewReport(report.id)}
-                                className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors"
-                              >
-                                View Report
-                              </button>
-                              <button
-                                onClick={() => handleCustomizeReport(report.id)}
-                                className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-xs hover:bg-gray-200 transition-colors"
-                              >
-                                Customize
-                              </button>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <input
-                              type="checkbox"
-                              checked={preferences.pinnedReports.includes(report.id)}
-                              onChange={() => toggleReportPin(report.id)}
-                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                            />
                           </td>
                         </tr>
                       ));
@@ -343,9 +301,12 @@ export function StandardReportsPage() {
       {showCustomization && (
         <CategoryCustomizationPanel
           categories={visibleCategories}
+          reports={reports}
+          preferences={preferences}
           businessTypePresets={businessTypePresets}
           selectedBusinessType={selectedBusinessType}
           onToggleVisibility={toggleCategoryVisibility}
+          onToggleReportVisibility={toggleReportVisibility}
           onReorderCategories={reorderCategories}
           onApplyPreset={applyBusinessTypePreset}
           onReset={resetToDefaults}
