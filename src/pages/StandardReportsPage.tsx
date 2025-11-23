@@ -41,9 +41,11 @@ export function StandardReportsPage() {
   const handleViewReport = (reportId: string) => {
     trackReportUsage(reportId);
     
-    // Sales Summary uses the old format/route, others use the new grain-based system
+    // Some reports use the old format/route, others use the new grain-based system
     if (reportId === 'sales-summary') {
       navigate('/financial-suite/reports/sales-summary-v3');
+    } else if (reportId === 'reconciliation') {
+      navigate('/financial-suite/reports/reconciliation-v3');
     } else {
       // Navigate to the new grain-based report page
       navigate(`/financial-suite/reports/${reportId}`);
