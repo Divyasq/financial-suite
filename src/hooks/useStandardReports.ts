@@ -141,11 +141,13 @@ export function useStandardReports() {
 
   // Get pinned reports
   const getPinnedReports = () => {
+    if (!preferences.pinnedReports) return [];
     return reports.filter(report => preferences.pinnedReports.includes(report.id));
   };
 
   // Get recent reports
   const getRecentReports = () => {
+    if (!preferences.lastUsedReports) return [];
     return preferences.lastUsedReports
       .map(id => reports.find(report => report.id === id))
       .filter(Boolean) as StandardReport[];
@@ -154,16 +156,26 @@ export function useStandardReports() {
   // Get visible categories
   const getVisibleCategories = () => {
     return categories
-      .filter(cat => cat.isVisible)
-      .sort((a, b) => a.order - b.order);
+      .filter(cat => cat.isVisible !== false)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
   };
 
   // Get suggestions for business type
   const getSuggestionsForBusinessType = () => {
-    if (!selectedBusinessType) return [];
+    if (!selectedBusinessType) {
+      return {
+        hiddenCategories: [],
+        unpinnedRecommended: []
+      };
+    }
     
     const preset = businessTypePresets.find(p => p.id === selectedBusinessType);
-    if (!preset) return [];
+    if (!preset) {
+      return {
+        hiddenCategories: [],
+        unpinnedRecommended: []
+      };
+    }
 
     const hiddenCategories = categories.filter(cat => 
       !cat.isVisible && preset.categories.includes(cat.id)
