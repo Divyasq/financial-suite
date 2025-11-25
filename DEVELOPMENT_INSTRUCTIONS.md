@@ -1,7 +1,8 @@
 # Financial Suite - Development Instructions & Learnings
 
 **Created**: 2025-11-25 07:35:00  
-**Based on**: Extensive debugging and feature development experience  
+**Updated**: 2025-11-25 10:00:00  
+**Based on**: Extensive debugging and feature development experience including v1.0.8-stable route parameter fixes  
 **Purpose**: Prevent future issues and accelerate development
 
 ---
@@ -16,6 +17,9 @@
 3. **Route Configuration**: Incorrect route paths in `App.tsx`
 4. **Case Sensitivity**: `sales-summary` vs `Sales-Summary`
 5. **Template Key Mismatch**: Key in `REPORT_TEMPLATES` doesn't match route parameter
+6. **🆕 Multiple Route Patterns**: Standard reports use `:reportId`, custom reports use `:id`
+7. **🆕 Incomplete Testing**: Testing only standard reports but not custom reports
+8. **🆕 Console Log Overload**: Too many debug logs masking real issues
 
 #### **✅ Systematic Fix Process:**
 ```bash
@@ -50,7 +54,53 @@ console.log('pathname:', location.pathname);
 
 ---
 
-### **2. Multiple Sales Summary Links - ARCHITECTURE**
+### **🆕 2. CRITICAL LESSON: Multiple Route Patterns Issue (v1.0.8-stable)**
+
+#### **🚨 The Problem:**
+**Standard reports** and **custom reports** use different route patterns:
+- **Standard**: `/financial-suite/reports/:reportId` → `useParams<{ reportId }>()`
+- **Custom**: `/financial-suite/custom-reports/view/:id` → `useParams<{ id }>()`
+
+**The Bug**: `ReportPage.tsx` was only extracting `reportId`, causing custom reports to show `reportId: undefined`.
+
+#### **✅ The Solution:**
+```typescript
+// ❌ WRONG - Only handles standard reports
+const { reportId } = useParams<{ reportId: string }>();
+
+// ✅ CORRECT - Handles both route patterns  
+const params = useParams<{ reportId?: string; id?: string }>();
+const reportId = params.reportId || params.id;
+```
+
+#### **🔍 Debug Process That Led to Discovery:**
+```javascript
+// Console logs revealed the issue:
+console.log('params:', JSON.stringify(params));           // { "id": "1" }
+console.log('reportId (extracted):', JSON.stringify(reportId)); // undefined
+console.log('pathname:', location.pathname);              // /custom-reports/view/1
+```
+
+#### **🎯 Prevention Protocol:**
+1. **Always test BOTH report types** when making changes to report loading
+2. **Use comprehensive parameter extraction** for components handling multiple routes
+3. **Add debug logging** to identify parameter extraction issues early
+4. **Document route patterns** clearly in code comments
+
+#### **🧪 Testing Commands:**
+```bash
+# Test standard reports
+curl "http://localhost:3000/financial-suite/reports/sales-summary-v3"
+
+# Test custom reports  
+curl "http://localhost:3000/financial-suite/custom-reports/view/1"
+
+# Both should return page content, not "Report Not Found"
+```
+
+---
+
+### **3. Multiple Sales Summary Links - ARCHITECTURE**
 
 #### **🏗️ Current Implementation:**
 - **`sales-summary`**: Original template (simple grid layout)
@@ -403,18 +453,46 @@ tail -f dev.log
 ```bash
 # Standard functionality
 http://localhost:3000/financial-suite/standard-reports
-http://localhost:3000/financial-suite/reports/sales-summary
 http://localhost:3000/financial-suite/reports/sales-summary-v3
 http://localhost:3000/financial-suite/reports/item-analysis
+http://localhost:3000/financial-suite/reports/reconciliation
 
 # Custom functionality  
 http://localhost:3000/financial-suite/custom-reports/create
 http://localhost:3000/financial-suite/custom-reports
+http://localhost:3000/financial-suite/custom-reports/view/1
+http://localhost:3000/financial-suite/custom-reports/view/2
 http://localhost:3000/financial-suite/templates
 
 # Additional features
 http://localhost:3000/financial-suite/benchmarking
 http://localhost:3000/financial-suite
+```
+
+### **🆕 Comprehensive Testing Protocol (Post v1.0.8-stable):**
+```bash
+# 1. Test Standard Reports (Sample)
+echo "=== TESTING STANDARD REPORTS ==="
+for report in "sales-summary-v3" "item-analysis" "vendor-sales" "reconciliation" "kitchen-performance"; do
+  result=$(curl -s "http://localhost:3000/financial-suite/reports/$report" | grep -o "Report.*Not Found" || echo "✅ WORKING")
+  echo "  $report: $result"
+done
+
+# 2. Test Custom Reports (All Mock Reports)
+echo "=== TESTING CUSTOM REPORTS ==="
+for id in {1..6}; do
+  result=$(curl -s "http://localhost:3000/financial-suite/custom-reports/view/$id" | grep -o "Report.*Not Found" || echo "✅ WORKING")
+  echo "  Custom Report $id: $result"
+done
+
+# 3. Check Template Consistency
+echo "=== CHECKING TEMPLATE CONSISTENCY ==="
+missing=$(comm -23 <(grep "id: '" src/data/standardReportsData.ts | sed "s/.*id: '//" | sed "s/',//" | grep -v -E "(sales|accounting|payments|operations|online|inventory|profitability|restaurant|quick-service|coffee-shop|bar-nightlife|retail-store|beauty-wellness|food-truck|professional-services|multi-location|custom)$" | sort) <(grep -o "'[^']*': {" src/data/reportTemplates.ts | sed "s/'//g" | sed "s/: {//" | sort))
+if [ -z "$missing" ]; then
+  echo "✅ All templates consistent"
+else
+  echo "❌ Missing templates: $missing"
+fi
 ```
 
 ---
