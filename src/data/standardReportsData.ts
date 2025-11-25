@@ -286,6 +286,32 @@ export const standardReports: StandardReport[] = [
     category: 'inventory',
     icon: '⏰',
     usageCount: 54
+  },
+
+  // Profitability Reports
+  {
+    id: 'item-profitability',
+    name: 'Item Profitability',
+    description: 'Unit cost analysis and profit margins by item',
+    category: 'profitability',
+    icon: '💰',
+    usageCount: 89
+  },
+  {
+    id: 'category-profitability',
+    name: 'Category Profitability',
+    description: 'Profitability analysis by product category',
+    category: 'profitability',
+    icon: '📊',
+    usageCount: 76
+  },
+  {
+    id: 'prime-cost-analysis',
+    name: 'Prime Cost Analysis',
+    description: 'Combined food and labor cost analysis',
+    category: 'profitability',
+    icon: '🎯',
+    usageCount: 65
   }
 ];
 
@@ -349,6 +375,16 @@ export const reportCategories: ReportCategory[] = [
     order: 6,
     reportCount: 5,
     color: 'red'
+  },
+  {
+    id: 'profitability',
+    name: 'Profitability',
+    description: 'Cost analysis and profit margin reporting',
+    icon: '💰',
+    isVisible: true,
+    order: 7,
+    reportCount: 3,
+    color: 'emerald'
   }
 ];
 
@@ -358,10 +394,10 @@ export const businessTypePresets: BusinessTypePreset[] = [
     name: 'Full-Service Restaurant',
     description: 'Sit-down restaurants with table service and kitchen operations',
     icon: '🍽️',
-    categories: ['sales', 'accounting', 'payments', 'operations'],
+    categories: ['sales', 'accounting', 'payments', 'operations', 'profitability'],
     recommendedReports: [
       'sales-summary', 'item-analysis', 'employee-performance', 
-      'kitchen-performance', 'labor-vs-sales', 'section-sales', 'modifier-sales'
+      'kitchen-performance', 'labor-vs-sales', 'section-sales', 'item-profitability', 'prime-cost-analysis'
     ]
   },
   {
@@ -369,10 +405,10 @@ export const businessTypePresets: BusinessTypePreset[] = [
     name: 'Quick Service Restaurant',
     description: 'Fast food, fast casual, and counter service restaurants',
     icon: '🍔',
-    categories: ['sales', 'operations', 'payments', 'accounting'],
+    categories: ['sales', 'operations', 'payments', 'accounting', 'profitability'],
     recommendedReports: [
       'sales-summary', 'sales-trends', 'item-analysis', 'modifier-sales',
-      'employee-performance', 'payment-methods', 'kitchen-performance'
+      'employee-performance', 'payment-methods', 'kitchen-performance', 'item-profitability'
     ]
   },
   {
@@ -402,10 +438,10 @@ export const businessTypePresets: BusinessTypePreset[] = [
     name: 'Retail Store',
     description: 'Physical retail stores with inventory management',
     icon: '🛍️',
-    categories: ['sales', 'inventory', 'payments', 'accounting'],
+    categories: ['sales', 'inventory', 'payments', 'accounting', 'profitability'],
     recommendedReports: [
       'sales-summary', 'item-analysis', 'category-performance', 'vendor-sales',
-      'inventory-by-category', 'cost-of-goods-sold', 'gift-cards'
+      'inventory-by-category', 'cost-of-goods-sold', 'gift-cards', 'item-profitability', 'category-profitability'
     ]
   },
   {
@@ -446,10 +482,10 @@ export const businessTypePresets: BusinessTypePreset[] = [
     name: 'Multi-Location Business',
     description: 'Multiple locations, franchises, or enterprise operations',
     icon: '🏢',
-    categories: ['sales', 'accounting', 'payments', 'operations', 'inventory'],
+    categories: ['sales', 'accounting', 'payments', 'operations', 'inventory', 'profitability'],
     recommendedReports: [
       'sales-summary', 'item-analysis', 'category-performance', 'employee-performance',
-      'reconciliation', 'inventory-by-category', 'labor-vs-sales'
+      'reconciliation', 'inventory-by-category', 'labor-vs-sales', 'prime-cost-analysis'
     ]
   },
   {
@@ -457,7 +493,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     name: 'Custom Setup',
     description: 'Choose your own categories and reports based on your specific needs',
     icon: '🎯',
-    categories: ['sales', 'accounting', 'payments', 'operations', 'online', 'inventory'],
+    categories: ['sales', 'accounting', 'payments', 'operations', 'online', 'inventory', 'profitability'],
     recommendedReports: []
   }
 ];

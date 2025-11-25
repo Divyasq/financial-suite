@@ -25,7 +25,45 @@ const SAMPLE_DATA = {
   sections: ['Dining Room', 'Bar', 'Patio', 'Private Room', 'Counter Service', 'Drive Thru'],
   customerTypes: ['New Customer', 'Returning Customer', 'Loyalty Member', 'VIP Member'],
   orderNames: ['Order #1001', 'Order #1002', 'Order #1003', 'Order #1004', 'Order #1005'],
-  devices: ['POS Terminal 1', 'POS Terminal 2', 'Mobile Device', 'Tablet', 'Kiosk']
+  devices: ['POS Terminal 1', 'POS Terminal 2', 'Mobile Device', 'Tablet', 'Kiosk'],
+  itemTypes: ['Food', 'Beverage', 'Dessert', 'Appetizer', 'Main Course', 'Side Dish'],
+  
+  // Cost data for profitability analysis
+  unitCosts: {
+    'Margherita Pizza': 4.50,
+    'Pepperoni Pizza': 5.25,
+    'Caesar Salad': 3.75,
+    'Chicken Wings': 6.80,
+    'Burger Deluxe': 5.90,
+    'Fish Tacos': 7.25,
+    'Pasta Carbonara': 4.10,
+    'Grilled Salmon': 12.50,
+    'Ribeye Steak': 18.75,
+    'Veggie Wrap': 3.40,
+    'Chocolate Cake': 2.80,
+    'Tiramisu': 3.60,
+    'Coffee': 0.85,
+    'Craft Beer': 2.25,
+    'House Wine': 3.50
+  },
+  laborRates: {
+    'Morning': 15.50,    // $/hour
+    'Afternoon': 16.00,
+    'Evening': 17.25,
+    'Late Night': 18.50
+  },
+  categoryMargins: {
+    'Pizza': 0.65,       // 65% margin
+    'Salads': 0.72,      // 72% margin
+    'Appetizers': 0.68,  // 68% margin
+    'Burgers': 0.62,     // 62% margin
+    'Seafood': 0.58,     // 58% margin
+    'Pasta': 0.70,       // 70% margin
+    'Steaks': 0.55,      // 55% margin
+    'Wraps': 0.75,       // 75% margin
+    'Desserts': 0.78,    // 78% margin
+    'Beverages': 0.85    // 85% margin
+  }
 };
 
 function randomFromArray<T>(array: T[]): T {
@@ -52,8 +90,52 @@ function formatPercentage(num: number): string {
   return `${(num * 100).toFixed(1)}%`;
 }
 
-export function generateMockReportData(reportId: string): ReportData {
-  const template = REPORT_TEMPLATES[reportId];
+function getDimensionValue(dimensionId: string): string {
+  switch (dimensionId) {
+    case 'item_name':
+      return randomFromArray(SAMPLE_DATA.items);
+    case 'category':
+    case 'category_rollup':
+      return randomFromArray(SAMPLE_DATA.categories);
+    case 'employee_name':
+      return randomFromArray(SAMPLE_DATA.employees);
+    case 'location':
+      return randomFromArray(SAMPLE_DATA.locations);
+    case 'payment_method':
+      return randomFromArray(SAMPLE_DATA.paymentMethods);
+    case 'discount_name':
+      return randomFromArray(SAMPLE_DATA.discountNames);
+    case 'modifier_name':
+      return randomFromArray(SAMPLE_DATA.modifierNames);
+    case 'modifier_set':
+      return randomFromArray(SAMPLE_DATA.modifierSets);
+    case 'section':
+      return randomFromArray(SAMPLE_DATA.sections);
+    case 'customer_type':
+      return randomFromArray(SAMPLE_DATA.customerTypes);
+    case 'channel':
+      return randomFromArray(SAMPLE_DATA.channels);
+    case 'device':
+      return randomFromArray(SAMPLE_DATA.devices);
+    case 'card_brand':
+      return randomFromArray(SAMPLE_DATA.cardBrands);
+    case 'order_name':
+      return randomFromArray(SAMPLE_DATA.orderNames);
+    case 'item_type':
+      return randomFromArray(SAMPLE_DATA.itemTypes);
+    default:
+      return `Sample ${dimensionId.replace('_', ' ')} ${randomNumber(1, 10)}`;
+  }
+}
+
+export function generateMockReportData(reportId: string, customTemplate?: any): ReportData {
+  let template = REPORT_TEMPLATES[reportId];
+  
+  // Handle custom templates
+  if (!template && customTemplate) {
+    template = customTemplate;
+  }
+  
   if (!template) {
     throw new Error(`No template found for report: ${reportId}`);
   }
@@ -62,66 +144,71 @@ export function generateMockReportData(reportId: string): ReportData {
   const rowCount = randomNumber(15, 50);
   const data: ReportRow[] = [];
 
+  // Handle both single defaultGroupBy and multiple dimensions
+  const dimensions = template.selectedDimensions || (template.defaultGroupBy ? [template.defaultGroupBy] : []);
+  const metrics = template.selectedMetrics || template.defaultMetrics || [];
+
   for (let i = 0; i < rowCount; i++) {
     const row: ReportRow = {};
     
-    // Set the grouping dimension
-    switch (template.defaultGroupBy) {
-      case 'item_name':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.items);
-        break;
-      case 'category':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.categories);
-        break;
-      case 'employee_name':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.employees);
-        break;
-      case 'location':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.locations);
-        break;
-      case 'payment_method':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.paymentMethods);
-        break;
-      case 'discount_name':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.discountNames);
-        break;
-      case 'modifier_name':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.modifierNames);
-        break;
-      case 'modifier_set':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.modifierSets);
-        break;
-      case 'section':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.sections);
-        break;
-      case 'customer_type':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.customerTypes);
-        break;
-      case 'channel':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.channels);
-        break;
-      case 'device':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.devices);
-        break;
-      case 'card_brand':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.cardBrands);
-        break;
-      case 'order_name':
-        row[template.defaultGroupBy] = randomFromArray(SAMPLE_DATA.orderNames);
-        break;
-      default:
-        row[template.defaultGroupBy] = `Sample ${template.defaultGroupBy.replace('_', ' ')} ${i + 1}`;
-    }
+    // Set all dimension values
+    dimensions.forEach(dimensionId => {
+      row[dimensionId] = getDimensionValue(dimensionId);
+    });
 
     // Generate metric values based on grain type
-    template.defaultMetrics.forEach(metricId => {
+    metrics.forEach(metricId => {
       const metric = grain.metrics.find(m => m.id === metricId);
       if (!metric) return;
+
+      // Handle profitability metrics with realistic calculations
+      if (metricId === 'unit_cost' && row['item_name']) {
+        const itemName = row['item_name'] as string;
+        row[metricId] = SAMPLE_DATA.unitCosts[itemName] || randomCurrency(2, 15);
+        return;
+      }
+
+      if (metricId === 'profit_margin' && row['item_sales'] && row['unit_cost']) {
+        const sales = Number(row['item_sales']);
+        const cost = Number(row['unit_cost']);
+        row[metricId] = sales - cost;
+        return;
+      }
+
+      if (metricId === 'profit_margin_percentage' && row['item_sales'] && row['unit_cost']) {
+        const sales = Number(row['item_sales']);
+        const cost = Number(row['unit_cost']);
+        row[metricId] = sales > 0 ? (sales - cost) / sales : 0;
+        return;
+      }
+
+      if (metricId === 'food_cost_percentage' && row['category']) {
+        const category = row['category'] as string;
+        const margin = SAMPLE_DATA.categoryMargins[category] || 0.65;
+        row[metricId] = 1 - margin; // Food cost = 1 - margin
+        return;
+      }
+
+      if (metricId === 'labor_cost_percentage') {
+        row[metricId] = randomCurrency(0.25, 0.35); // 25-35% labor cost
+        return;
+      }
+
+      if (metricId === 'prime_cost_percentage' && row['food_cost_percentage'] && row['labor_cost_percentage']) {
+        const foodCost = Number(row['food_cost_percentage']);
+        const laborCost = Number(row['labor_cost_percentage']);
+        row[metricId] = foodCost + laborCost;
+        return;
+      }
 
       switch (metric.type) {
         case 'currency':
           if (metricId.includes('sales') || metricId.includes('collected') || metricId.includes('amount')) {
             row[metricId] = randomCurrency(50, 2000);
+          } else if (metricId.includes('cost')) {
+            row[metricId] = randomCurrency(2, 15);
+          } else if (metricId.includes('margin') || metricId.includes('profit')) {
+            row[metricId] = randomCurrency(10, 800);
           } else if (metricId.includes('tax')) {
             row[metricId] = randomCurrency(5, 150);
           } else if (metricId.includes('tip')) {
@@ -151,7 +238,11 @@ export function generateMockReportData(reportId: string): ReportData {
           }
           break;
         case 'percentage':
-          row[metricId] = Math.random();
+          if (metricId.includes('margin') || metricId.includes('cost')) {
+            row[metricId] = Math.random() * 0.5 + 0.1; // 10-60% range for costs/margins
+          } else {
+            row[metricId] = Math.random();
+          }
           break;
       }
     });
@@ -160,15 +251,18 @@ export function generateMockReportData(reportId: string): ReportData {
   }
 
   // Sort by the first metric in descending order
-  const firstMetric = template.defaultMetrics[0];
-  data.sort((a, b) => (Number(b[firstMetric]) || 0) - (Number(a[firstMetric]) || 0));
+  const firstMetric = metrics[0] || template.defaultMetrics?.[0];
+  if (firstMetric) {
+    data.sort((a, b) => (Number(b[firstMetric]) || 0) - (Number(a[firstMetric]) || 0));
+  }
 
   return {
     reportId,
     reportName: template.name,
     grain: template.grain,
-    groupByDimension: template.defaultGroupBy,
-    selectedMetrics: template.defaultMetrics,
+    groupByDimension: dimensions[0] || template.defaultGroupBy,
+    selectedMetrics: metrics,
+    selectedDimensions: dimensions,
     filters: [
       {
         dimension: 'date_range',

@@ -3,6 +3,7 @@ import { StandardReport, ReportCategory, UserPreferences, BusinessTypePreset } f
 import { standardReports, reportCategories, businessTypePresets } from '../data/standardReportsData';
 
 const STORAGE_KEY = 'standardReportsPreferences';
+const STORAGE_VERSION = '1.1'; // Increment this when data structure changes
 
 export function useStandardReports() {
   const [reports, setReports] = useState<StandardReport[]>(standardReports);
@@ -15,25 +16,33 @@ export function useStandardReports() {
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBusinessType, setSelectedBusinessType] = useState<string>('');
+  const [isInitialized, setIsInitialized] = useState(false);
+
+
 
   // Load preferences from localStorage
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsedPreferences = JSON.parse(stored);
-        setPreferences(parsedPreferences);
-        setCategories(parsedPreferences.categories || reportCategories);
-        setSelectedBusinessType(parsedPreferences.businessType || '');
-      } catch (error) {
-        console.error('Error loading preferences:', error);
-      }
-    }
+    // FORCE RESET - Clear any corrupted localStorage
+    localStorage.removeItem(STORAGE_KEY);
+    
+    // Set fresh defaults
+    setCategories(reportCategories);
+    const defaultPreferences = {
+      version: STORAGE_VERSION,
+      categories: reportCategories,
+      pinnedReports: [],
+      lastUsedReports: [],
+      customizations: {}
+    };
+    setPreferences(defaultPreferences);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultPreferences));
+    
+    setIsInitialized(true);
   }, []);
 
   // Save preferences to localStorage
   const savePreferences = (newPreferences: Partial<UserPreferences>) => {
-    const updated = { ...preferences, ...newPreferences };
+    const updated = { ...preferences, ...newPreferences, version: STORAGE_VERSION };
     setPreferences(updated);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   };

@@ -1,9 +1,13 @@
-import React from 'react';
-import { ChevronLeft, Download, Printer, Share2, Save, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, Download, Printer, Share2, Save, Settings, Sparkles } from 'lucide-react';
 import { HeaderBlockConfig } from '../../types/reportBlocks';
+import { AISummarizerModal } from './AISummarizerModal';
 
 interface HeaderBlockProps {
   config: HeaderBlockConfig;
+  reportData?: any;
+  reportType?: string;
+  reportGrain?: string;
   onBack?: () => void;
   onExport?: () => void;
   onPrint?: () => void;
@@ -14,6 +18,9 @@ interface HeaderBlockProps {
 
 export function HeaderBlock({
   config,
+  reportData,
+  reportType = 'analysis',
+  reportGrain = 'orders',
   onBack,
   onExport,
   onPrint,
@@ -21,6 +28,8 @@ export function HeaderBlock({
   onSave,
   onCustomize
 }: HeaderBlockProps) {
+  const [showAISummarizer, setShowAISummarizer] = useState(false);
+
   const handleOptionClick = (option: string) => {
     switch (option) {
       case 'export':
@@ -38,6 +47,9 @@ export function HeaderBlock({
       case 'customize':
         onCustomize?.();
         break;
+      case 'ai-insights':
+        setShowAISummarizer(true);
+        break;
     }
   };
 
@@ -53,6 +65,8 @@ export function HeaderBlock({
         return <Save className="h-4 w-4" />;
       case 'customize':
         return <Settings className="h-4 w-4" />;
+      case 'ai-insights':
+        return <Sparkles className="h-4 w-4" />;
       default:
         return null;
     }
@@ -70,6 +84,8 @@ export function HeaderBlock({
         return 'Save';
       case 'customize':
         return 'Customize';
+      case 'ai-insights':
+        return 'AI Insights';
       default:
         return option;
     }
@@ -101,26 +117,47 @@ export function HeaderBlock({
             </div>
           </div>
           
-          {config.showOptions && (
-            <div className="flex items-center gap-2">
-              {config.options.map((option) => (
-                <button
-                  key={option}
-                  onClick={() => handleOptionClick(option)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                    option === 'customize'
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'text-gray-600 hover:text-gray-800 border border-gray-300 hover:bg-gray-50'
-                  }`}
-                >
-                  {getOptionIcon(option)}
-                  {getOptionLabel(option)}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            {/* AI Insights Button - Always visible */}
+            <button
+              onClick={() => setShowAISummarizer(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700"
+            >
+              <Sparkles className="h-4 w-4" />
+              AI Insights
+            </button>
+
+            {config.showOptions && (
+              <>
+                {config.options.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => handleOptionClick(option)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                      option === 'customize'
+                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                        : 'text-gray-600 hover:text-gray-800 border border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {getOptionIcon(option)}
+                    {getOptionLabel(option)}
+                  </button>
+                ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* AI Summarizer Modal */}
+      <AISummarizerModal
+        isOpen={showAISummarizer}
+        onClose={() => setShowAISummarizer(false)}
+        reportTitle={config.title}
+        reportData={reportData}
+        reportType={reportType}
+        reportGrain={reportGrain}
+      />
     </div>
   );
 }

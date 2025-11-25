@@ -59,7 +59,14 @@ export const REPORT_GRAINS: Record<string, ReportGrain> = {
       { id: 'tip', name: 'Tip', type: 'currency' },
       { id: 'average_cover_count', name: 'Average Cover Count', type: 'number' },
       { id: 'covers', name: 'Covers', type: 'count' },
-      { id: 'customer_frequency', name: 'Customer Frequency', type: 'percentage' }
+      { id: 'customer_frequency', name: 'Customer Frequency', type: 'percentage' },
+      
+      // Labor and profitability metrics
+      { id: 'labor_cost_percentage', name: 'Labor Cost %', type: 'percentage' },
+      { id: 'prime_cost_percentage', name: 'Prime Cost %', type: 'percentage' },
+      { id: 'labor_cost', name: 'Labor Cost', type: 'currency' },
+      { id: 'food_cost', name: 'Food Cost', type: 'currency' },
+      { id: 'prime_cost', name: 'Prime Cost', type: 'currency' }
     ],
     dimensions: [
       { id: 'order_name', name: 'Order Name', type: 'string' },
@@ -92,7 +99,13 @@ export const REPORT_GRAINS: Record<string, ReportGrain> = {
       { id: 'units_sold', name: 'Units Sold', type: 'count' },
       { id: 'units_refunded', name: 'Units Refunded', type: 'count' },
       { id: 'returns', name: 'Returns', type: 'currency' },
-      { id: 'variation_unit_cost', name: 'Variation Unit Cost', type: 'currency' }
+      { id: 'variation_unit_cost', name: 'Variation Unit Cost', type: 'currency' },
+      
+      // Profitability metrics
+      { id: 'unit_cost', name: 'Unit Cost', type: 'currency' },
+      { id: 'profit_margin', name: 'Profit Margin', type: 'currency' },
+      { id: 'profit_margin_percentage', name: 'Profit Margin %', type: 'percentage' },
+      { id: 'food_cost_percentage', name: 'Food Cost %', type: 'percentage' }
     ],
     dimensions: [
       { id: 'item_name', name: 'Item Name', type: 'string' },
@@ -290,5 +303,26 @@ export const REPORT_TEMPLATES: Record<string, {
     defaultMetrics: ['amount_discounted', 'discounts_applied', 'orders_discounted', 'items_discounted'],
     name: 'Discounts',
     description: 'Discount usage and impact analysis'
+  },
+  'item-profitability': {
+    grain: 'items',
+    defaultGroupBy: 'item_name',
+    defaultMetrics: ['item_sales', 'unit_cost', 'profit_margin', 'profit_margin_percentage'],
+    name: 'Item Profitability',
+    description: 'Profit margins and cost analysis by menu item'
+  },
+  'category-profitability': {
+    grain: 'items',
+    defaultGroupBy: 'category',
+    defaultMetrics: ['item_sales', 'unit_cost', 'profit_margin', 'food_cost_percentage'],
+    name: 'Category Profitability',
+    description: 'Profit margins and food costs by menu category'
+  },
+  'prime-cost-analysis': {
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['gross_sales', 'food_cost', 'labor_cost', 'prime_cost', 'prime_cost_percentage'],
+    name: 'Prime Cost Analysis',
+    description: 'Food cost + labor cost analysis by location'
   }
 };

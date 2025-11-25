@@ -54,7 +54,8 @@ const mainNavItems: NavItem[] = [
     submenuItems: [
       { id: 'financial-dashboard', label: 'Dashboard' },
       { id: 'standard-reports', label: 'Standard Reports' },
-      { id: 'custom-reports', label: 'Custom Reports' }
+      { id: 'custom-reports', label: 'Custom Reports' },
+      { id: 'benchmarking', label: '🏆 Benchmarking' }
     ]
   },
 
@@ -127,6 +128,7 @@ export function LeftNav() {
       if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
       else if (subItem.id === 'standard-reports') navigate('/financial-suite/standard-reports');
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
+      else if (subItem.id === 'benchmarking') navigate('/financial-suite/benchmarking');
       else if (subItem.id === 'fs-dashboard') navigate('/fs-prototype');
       else if (subItem.id === 'fs-reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'fs-custom-reports') navigate('/fs-prototype/custom-reports');

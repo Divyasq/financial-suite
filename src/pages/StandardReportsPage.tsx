@@ -39,17 +39,11 @@ export function StandardReportsPage() {
   const navigate = useNavigate();
 
   const handleViewReport = (reportId: string) => {
+    console.log('Navigating to report:', reportId);
     trackReportUsage(reportId);
     
-    // Some reports use the old format/route, others use the new grain-based system
-    if (reportId === 'sales-summary') {
-      navigate('/financial-suite/reports/sales-summary-v3');
-    } else if (reportId === 'reconciliation') {
-      navigate('/financial-suite/reports/reconciliation-v3');
-    } else {
-      // Navigate to the new grain-based report page
-      navigate(`/financial-suite/reports/${reportId}`);
-    }
+    // Navigate to the report page - all reports use the same route pattern
+    navigate(`/financial-suite/reports/${reportId}`);
   };
 
   const handleCustomizeReport = (reportId: string) => {
@@ -96,32 +90,47 @@ export function StandardReportsPage() {
               {/* View Toggle */}
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
-                  onClick={() => setActiveView('categories')}
-                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveView('categories');
+                  }}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors cursor-pointer ${
                     activeView === 'categories'
                       ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
                   Categories
                 </button>
                 <button
-                  onClick={() => setActiveView('favorites')}
-                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveView('favorites');
+                  }}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors cursor-pointer ${
                     activeView === 'favorites'
                       ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
                   <Star className="h-4 w-4 inline mr-1" />
                   Favorites ({pinnedReports.length})
                 </button>
                 <button
-                  onClick={() => setActiveView('recent')}
-                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveView('recent');
+                  }}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors cursor-pointer ${
                     activeView === 'recent'
                       ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
                   <Clock className="h-4 w-4 inline mr-1" />
@@ -168,6 +177,10 @@ export function StandardReportsPage() {
             </div>
           </div>
         )}
+
+
+
+
 
         {/* Content Views */}
         {activeView === 'categories' && (
@@ -324,6 +337,7 @@ export function StandardReportsPage() {
           onClose={() => setShowCustomization(false)}
         />
       )}
+
     </div>
   );
 }

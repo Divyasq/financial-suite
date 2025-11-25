@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Storage & Test</title>
+</head>
+<body>
+    <h1>Financial Suite Debug</h1>
+    <button onclick="clearStorage()">Clear All Storage</button>
+    <button onclick="testData()">Test Data Loading</button>
+    <button onclick="goToReports()">Go to Standard Reports</button>
+    <pre id="output"></pre>
+
+    <script>
+        function clearStorage() {
+            localStorage.clear();
+            sessionStorage.clear();
+            document.getElementById('output').textContent = 'All storage cleared! Refresh the app.';
+        }
+
+        function testData() {
+            // Test if we can access the data
+            fetch('/src/data/standardReportsData.ts')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').textContent = 'Data file accessible: ' + data.length + ' characters';
+                })
+                .catch(error => {
+                    document.getElementById('output').textContent = 'Error loading data: ' + error;
+                });
+        }
+
+        function goToReports() {
+            window.location.href = 'http://localhost:3000/financial-suite/standard-reports';
+        }
+    </script>
+</body>
+</html>

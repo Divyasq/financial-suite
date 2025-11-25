@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Sparkles, ArrowRight } from 'lucide-react';
+import { Search, Sparkles, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { PromptSuggestion } from '../../types/customBuilder';
 
 interface PromptInterfaceProps {
@@ -11,6 +11,10 @@ interface PromptInterfaceProps {
 
 export function PromptInterface({ value, onChange, onSubmit, suggestions }: PromptInterfaceProps) {
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [expandedSuggestions, setExpandedSuggestions] = useState(false);
+  
+  // Show only first 3 suggestions by default
+  const visibleSuggestions = expandedSuggestions ? suggestions : suggestions.slice(0, 3);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +72,7 @@ export function PromptInterface({ value, onChange, onSubmit, suggestions }: Prom
         <div>
           <h4 className="text-sm font-medium text-gray-700 mb-3">Popular Analysis Ideas:</h4>
           <div className="grid grid-cols-1 gap-2">
-            {suggestions.map((suggestion, index) => (
+            {visibleSuggestions.map((suggestion, index) => (
               <button
                 key={index}
                 onClick={() => handleSuggestionClick(suggestion)}
@@ -86,6 +90,26 @@ export function PromptInterface({ value, onChange, onSubmit, suggestions }: Prom
               </button>
             ))}
           </div>
+          
+          {/* Show More/Less Button */}
+          {suggestions.length > 3 && (
+            <button
+              onClick={() => setExpandedSuggestions(!expandedSuggestions)}
+              className="flex items-center justify-center gap-2 w-full mt-3 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              {expandedSuggestions ? (
+                <>
+                  <span>Show less</span>
+                  <ChevronUp className="h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  <span>Show {suggestions.length - 3} more ideas...</span>
+                  <ChevronDown className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          )}
         </div>
       )}
 

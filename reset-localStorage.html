@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reset Financial Suite localStorage</title>
+</head>
+<body>
+    <h1>Reset Financial Suite localStorage</h1>
+    <button onclick="resetStorage()">Reset localStorage</button>
+    <button onclick="checkStorage()">Check Current Storage</button>
+    <pre id="output"></pre>
+
+    <script>
+        function resetStorage() {
+            localStorage.removeItem('standardReportsPreferences');
+            document.getElementById('output').textContent = 'localStorage cleared!';
+        }
+
+        function checkStorage() {
+            const stored = localStorage.getItem('standardReportsPreferences');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                document.getElementById('output').textContent = JSON.stringify(parsed, null, 2);
+            } else {
+                document.getElementById('output').textContent = 'No localStorage data found';
+            }
+        }
+
+        // Auto-check on load
+        checkStorage();
+    </script>
+</body>
+</html>

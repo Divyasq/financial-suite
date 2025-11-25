@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Template Test</title>
+</head>
+<body>
+    <h1>Template Test</h1>
+    <div id="result"></div>
+    
+    <script type="module">
+        import { REPORT_TEMPLATES } from './src/data/reportTemplates.ts';
+        
+        const result = document.getElementById('result');
+        const templates = Object.keys(REPORT_TEMPLATES);
+        
+        result.innerHTML = `
+            <p>Total templates: ${templates.length}</p>
+            <p>Templates: ${templates.join(', ')}</p>
+            <p>item-profitability exists: ${!!REPORT_TEMPLATES['item-profitability']}</p>
+            <p>sales-summary exists: ${!!REPORT_TEMPLATES['sales-summary']}</p>
+        `;
+    </script>
+</body>
+</html>

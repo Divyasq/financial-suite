@@ -1,6 +1,319 @@
 import { ReportTemplate } from '../types/reportBlocks';
 
 export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
+  'sales-summary': {
+    id: 'sales-summary',
+    name: 'Sales Summary',
+    description: 'Overview of total sales, transactions, and key metrics',
+    type: 'dashboard',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['gross_sales', 'net_sales', 'transaction_count', 'average_cover_count'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Sales Summary',
+            description: 'Overview of total sales, transactions, and key metrics',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export', 'print']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['filters'],
+            showGroupBy: false,
+            showMetricSelector: false
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'metrics',
+        type: 'metrics',
+        config: {
+          metrics: {
+            layout: 'grid',
+            columns: 4,
+            showTrends: true,
+            showComparisons: true,
+            metrics: [
+              {
+                id: 'gross-sales',
+                name: 'Gross Sales',
+                value: '$12,450',
+                trend: '+12.5%',
+                trendDirection: 'up',
+                comparison: 'vs last period'
+              },
+              {
+                id: 'net-sales',
+                name: 'Net Sales',
+                value: '$11,205',
+                trend: '+8.3%',
+                trendDirection: 'up',
+                comparison: 'vs last period'
+              },
+              {
+                id: 'transactions',
+                name: 'Transactions',
+                value: '342',
+                trend: '+15.2%',
+                trendDirection: 'up',
+                comparison: 'vs last period'
+              },
+              {
+                id: 'avg-order',
+                name: 'Avg Order Value',
+                value: '$36.40',
+                trend: '-2.1%',
+                trendDirection: 'down',
+                comparison: 'vs last period'
+              }
+            ]
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'multiple',
+            charts: [
+              {
+                id: 'sales-trend',
+                type: 'line',
+                title: 'Sales Trend',
+                timeframe: 'day',
+                metrics: ['gross_sales', 'net_sales'],
+                size: 'large'
+              },
+              {
+                id: 'transaction-volume',
+                type: 'bar',
+                title: 'Transaction Volume',
+                timeframe: 'day',
+                metrics: ['transaction_count'],
+                size: 'medium'
+              }
+            ],
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'category-performance': {
+    id: 'category-performance',
+    name: 'Category Performance',
+    description: 'Sales performance by product categories',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'category',
+    defaultMetrics: ['item_sales', 'net_item_sales', 'items_sold', 'units_sold'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Category Performance',
+            description: 'Sales performance by product categories',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'category', name: 'Categories' },
+              { id: 'category_rollup', name: 'Category Rollup' },
+              { id: 'item_type', name: 'Item Type' },
+              { id: 'location', name: 'Location' }
+            ],
+            availableMetrics: [
+              { id: 'item_sales', name: 'Item Sales' },
+              { id: 'net_item_sales', name: 'Net Item Sales' },
+              { id: 'items_sold', name: 'Items Sold' },
+              { id: 'units_sold', name: 'Units Sold' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'category-performance',
+                type: 'bar',
+                title: 'Category Performance',
+                groupBy: 'category',
+                metrics: ['item_sales', 'items_sold'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'employee-performance': {
+    id: 'employee-performance',
+    name: 'Employee Performance',
+    description: 'Sales performance by team members',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'employee',
+    defaultMetrics: ['gross_sales', 'net_sales', 'transaction_count', 'tip'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Employee Performance',
+            description: 'Sales performance by team members',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'employee', name: 'Employee' },
+              { id: 'location', name: 'Location' },
+              { id: 'channel', name: 'Channel' },
+              { id: 'section', name: 'Section' }
+            ],
+            availableMetrics: [
+              { id: 'gross_sales', name: 'Gross Sales' },
+              { id: 'net_sales', name: 'Net Sales' },
+              { id: 'transaction_count', name: 'Transaction Count' },
+              { id: 'tip', name: 'Tips' },
+              { id: 'average_cover_count', name: 'Average Cover Count' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'employee-performance',
+                type: 'bar',
+                title: 'Employee Performance',
+                groupBy: 'employee',
+                metrics: ['gross_sales', 'transaction_count'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
   'sales-trends': {
     id: 'sales-trends',
     name: 'Sales Trends',
@@ -815,6 +1128,304 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
                 title: 'Order Performance',
                 groupBy: 'channel',
                 metrics: ['gross_sales', 'transaction_count'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'item-profitability': {
+    id: 'item-profitability',
+    name: 'Item Profitability',
+    description: 'Profit margins and cost analysis by menu item',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'item_name',
+    defaultMetrics: ['item_sales', 'unit_cost', 'profit_margin', 'profit_margin_percentage'],
+    category: 'profitability',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Item Profitability',
+            description: 'Profit margins and cost analysis by menu item',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'item_name', name: 'Item Name' },
+              { id: 'category', name: 'Categories' },
+              { id: 'category_rollup', name: 'Category Rollup' },
+              { id: 'item_type', name: 'Item Type' },
+              { id: 'location', name: 'Location' },
+              { id: 'vendor_name', name: 'Vendor Name' }
+            ],
+            availableMetrics: [
+              { id: 'item_sales', name: 'Item Sales' },
+              { id: 'unit_cost', name: 'Unit Cost' },
+              { id: 'profit_margin', name: 'Profit Margin' },
+              { id: 'profit_margin_percentage', name: 'Profit Margin %' },
+              { id: 'food_cost_percentage', name: 'Food Cost %' },
+              { id: 'units_sold', name: 'Units Sold' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'profitability-chart',
+                type: 'bar',
+                title: 'Item Profitability',
+                groupBy: 'item_name',
+                metrics: ['profit_margin', 'profit_margin_percentage'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'category-profitability': {
+    id: 'category-profitability',
+    name: 'Category Profitability',
+    description: 'Profit margins and food costs by menu category',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'category',
+    defaultMetrics: ['item_sales', 'unit_cost', 'profit_margin', 'food_cost_percentage'],
+    category: 'profitability',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Category Profitability',
+            description: 'Profit margins and food costs by menu category',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'category', name: 'Categories' },
+              { id: 'category_rollup', name: 'Category Rollup' },
+              { id: 'item_type', name: 'Item Type' },
+              { id: 'location', name: 'Location' },
+              { id: 'vendor_name', name: 'Vendor Name' }
+            ],
+            availableMetrics: [
+              { id: 'item_sales', name: 'Item Sales' },
+              { id: 'unit_cost', name: 'Unit Cost' },
+              { id: 'profit_margin', name: 'Profit Margin' },
+              { id: 'profit_margin_percentage', name: 'Profit Margin %' },
+              { id: 'food_cost_percentage', name: 'Food Cost %' },
+              { id: 'units_sold', name: 'Units Sold' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'category-profitability-chart',
+                type: 'bar',
+                title: 'Category Profitability',
+                groupBy: 'category',
+                metrics: ['profit_margin', 'food_cost_percentage'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'prime-cost-analysis': {
+    id: 'prime-cost-analysis',
+    name: 'Prime Cost Analysis',
+    description: 'Food cost + labor cost analysis by location',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['gross_sales', 'food_cost', 'labor_cost', 'prime_cost', 'prime_cost_percentage'],
+    category: 'profitability',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Prime Cost Analysis',
+            description: 'Food cost + labor cost analysis by location',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true,
+            availableGroupBy: [
+              { id: 'location', name: 'Location' },
+              { id: 'channel', name: 'Channel' },
+              { id: 'section', name: 'Section' },
+              { id: 'employee', name: 'Employee' },
+              { id: 'order_created', name: 'Order Created' }
+            ],
+            availableMetrics: [
+              { id: 'gross_sales', name: 'Gross Sales' },
+              { id: 'food_cost', name: 'Food Cost' },
+              { id: 'labor_cost', name: 'Labor Cost' },
+              { id: 'prime_cost', name: 'Prime Cost' },
+              { id: 'prime_cost_percentage', name: 'Prime Cost %' },
+              { id: 'labor_cost_percentage', name: 'Labor Cost %' }
+            ]
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'prime-cost-chart',
+                type: 'bar',
+                title: 'Prime Cost Analysis',
+                groupBy: 'location',
+                metrics: ['prime_cost', 'prime_cost_percentage'],
                 size: 'large'
               }
             ],

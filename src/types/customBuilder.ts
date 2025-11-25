@@ -5,28 +5,68 @@ export interface CustomReportState {
   reportName: string;
   description: string;
   
-  // Data Source
-  selectedGrain: string | null;
+  // Data Source - Now supports multiple grains
+  selectedGrains: string[];
+  primaryGrain: string | null; // The main grain for grouping
   
   // Metrics Selection
   selectedMetrics: string[];
   
-  // Grouping & Dimensions
-  groupBy: string | null;
+  // Dimensions (multiple selection)
+  selectedDimensions: string[];
   
   // Filters
   filters: CustomReportFilter[];
   
-  // Visualization
-  chartType: 'bar' | 'line' | 'pie' | 'area' | 'table';
+  // Block-based Layout
+  blocks: ReportBlock[];
   
-  // Layout Options
-  showTable: boolean;
-  showMetricCards: boolean;
-  dashboardMode: boolean;
-  
-  // Join Configuration (for advanced cross-grain reports)
-  joinGrains?: string[];
+  // Join Configuration
+  joinType: 'inner' | 'left' | 'right' | 'full';
+}
+
+export interface ReportBlock {
+  id: string;
+  type: 'chart' | 'widgets' | 'kpi' | 'table';
+  title: string;
+  config: ChartBlockConfig | WidgetBlockConfig | KPIBlockConfig | TableBlockConfig;
+  order: number;
+}
+
+export interface ChartBlockConfig {
+  chartType: 'bar' | 'line' | 'pie' | 'area';
+  metrics: string[];
+  dimensions: string[];
+  showLegend: boolean;
+  height: number;
+}
+
+export interface WidgetBlockConfig {
+  metrics: string[];
+  layout: 'horizontal' | 'grid';
+  showTrends: boolean;
+  showComparisons: boolean;
+}
+
+export interface KPIBlockConfig {
+  prompt: string;
+  generatedKPIs: {
+    id: string;
+    title: string;
+    metric: string;
+    description: string;
+    format: 'currency' | 'number' | 'percentage';
+  }[];
+  layout: 'horizontal' | 'grid';
+  showTrends: boolean;
+}
+
+export interface TableBlockConfig {
+  metrics: string[];
+  dimensions: string[];
+  showSummary: boolean;
+  pageSize: number;
+  sortable: boolean;
 }
 
 export interface CustomReportFilter {
