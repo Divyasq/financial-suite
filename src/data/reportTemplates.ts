@@ -1634,5 +1634,1277 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         order: 4
       }
     ]
+  },
+
+  'vendor-sales': {
+    id: 'vendor-sales',
+    name: 'Vendor Sales',
+    description: 'Sales performance by vendor or supplier',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'vendor_name',
+    defaultMetrics: ['item_sales', 'net_item_sales', 'items_sold', 'units_sold'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Vendor Sales',
+            description: 'Sales performance by vendor or supplier',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'vendor-performance',
+                type: 'bar',
+                title: 'Vendor Performance',
+                groupBy: 'vendor_name',
+                metrics: ['item_sales', 'items_sold'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'gift-cards': {
+    id: 'gift-cards',
+    name: 'Gift Cards',
+    description: 'Gift card sales and redemption analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['gift_card_sales', 'gift_card_redemptions', 'gift_card_balance'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Gift Cards',
+            description: 'Gift card sales and redemption analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'gift-card-performance',
+                type: 'line',
+                title: 'Gift Card Trends',
+                groupBy: 'order_created',
+                metrics: ['gift_card_sales', 'gift_card_redemptions'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'sales-taxes': {
+    id: 'sales-taxes',
+    name: 'Sales Taxes',
+    description: 'Tax collection and reporting by location and tax type',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['tax', 'gross_sales', 'net_sales', 'transaction_count'],
+    category: 'accounting',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Sales Taxes',
+            description: 'Tax collection and reporting by location and tax type',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'fees': {
+    id: 'fees',
+    name: 'Fees',
+    description: 'Processing fees and charges analysis',
+    type: 'analysis',
+    grain: 'payments',
+    defaultGroupBy: 'payment_method',
+    defaultMetrics: ['fees', 'total_collected', 'payment_amount'],
+    category: 'payments',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Fees',
+            description: 'Processing fees and charges analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'service-charges': {
+    id: 'service-charges',
+    name: 'Service Charges',
+    description: 'Service charges and surcharges analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['service_charges', 'gross_sales', 'transaction_count'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Service Charges',
+            description: 'Service charges and surcharges analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'payment-methods': {
+    id: 'payment-methods',
+    name: 'Payment Methods',
+    description: 'Payment method breakdown and analysis',
+    type: 'analysis',
+    grain: 'payments',
+    defaultGroupBy: 'payment_method',
+    defaultMetrics: ['total_collected', 'payment_amount', 'fees', 'no_of_payments'],
+    category: 'payments',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Payment Methods',
+            description: 'Payment method breakdown and analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'visualization',
+        type: 'visualization',
+        config: {
+          visualization: {
+            type: 'single',
+            charts: [
+              {
+                id: 'payment-methods-chart',
+                type: 'pie',
+                title: 'Payment Methods Distribution',
+                groupBy: 'payment_method',
+                metrics: ['total_collected'],
+                size: 'large'
+              }
+            ],
+            height: 400,
+            showLegend: true,
+            showTooltips: true
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
+  'comps': {
+    id: 'comps',
+    name: 'Comps',
+    description: 'Complimentary items and discounts analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['comps', 'gross_sales', 'transaction_count'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Comps',
+            description: 'Complimentary items and discounts analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'voids': {
+    id: 'voids',
+    name: 'Voids',
+    description: 'Voided transactions and items analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['void', 'gross_sales', 'transaction_count'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Voids',
+            description: 'Voided transactions and items analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'transaction-status': {
+    id: 'transaction-status',
+    name: 'Transaction Status',
+    description: 'Transaction status and completion analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['transaction_count', 'gross_sales', 'net_sales'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Transaction Status',
+            description: 'Transaction status and completion analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'cash-reports': {
+    id: 'cash-reports',
+    name: 'Cash Reports',
+    description: 'Cash handling and drawer management',
+    type: 'analysis',
+    grain: 'payments',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['cash_collected', 'cash_tips', 'cash_change'],
+    category: 'payments',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Cash Reports',
+            description: 'Cash handling and drawer management',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'activity-log': {
+    id: 'activity-log',
+    name: 'Activity Log',
+    description: 'System activity and audit trail',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'employee',
+    defaultMetrics: ['transaction_count', 'gross_sales'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Activity Log',
+            description: 'System activity and audit trail',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'kitchen-performance': {
+    id: 'kitchen-performance',
+    name: 'Kitchen Performance',
+    description: 'Kitchen efficiency and order timing analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['transaction_count', 'average_prep_time', 'gross_sales'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Kitchen Performance',
+            description: 'Kitchen efficiency and order timing analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'team-performance': {
+    id: 'team-performance',
+    name: 'Team Performance',
+    description: 'Team and shift performance analysis',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'employee',
+    defaultMetrics: ['gross_sales', 'transaction_count', 'tip'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Team Performance',
+            description: 'Team and shift performance analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'future-bookings': {
+    id: 'future-bookings',
+    name: 'Future Bookings',
+    description: 'Upcoming reservations and bookings',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'booking_date',
+    defaultMetrics: ['booking_count', 'estimated_revenue', 'covers'],
+    category: 'operations',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Future Bookings',
+            description: 'Upcoming reservations and bookings',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'inventory-by-category': {
+    id: 'inventory-by-category',
+    name: 'Inventory by Category',
+    description: 'Inventory levels and performance by product category',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'category',
+    defaultMetrics: ['current_stock', 'units_sold', 'inventory_value'],
+    category: 'inventory',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Inventory by Category',
+            description: 'Inventory levels and performance by product category',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'cost-of-goods-sold': {
+    id: 'cost-of-goods-sold',
+    name: 'Cost of Goods Sold',
+    description: 'COGS analysis and inventory cost tracking',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'category',
+    defaultMetrics: ['cogs', 'item_sales', 'gross_margin'],
+    category: 'inventory',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Cost of Goods Sold',
+            description: 'COGS analysis and inventory cost tracking',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'inventory-sell-through': {
+    id: 'inventory-sell-through',
+    name: 'Inventory Sell-Through',
+    description: 'Inventory turnover and sell-through rates',
+    type: 'analysis',
+    grain: 'items',
+    defaultGroupBy: 'item_name',
+    defaultMetrics: ['sell_through_rate', 'units_sold', 'current_stock'],
+    category: 'inventory',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Inventory Sell-Through',
+            description: 'Inventory turnover and sell-through rates',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'projected-profit': {
+    id: 'projected-profit',
+    name: 'Projected Profit',
+    description: 'Profit projections and forecasting',
+    type: 'analysis',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['projected_revenue', 'projected_costs', 'projected_profit'],
+    category: 'inventory',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Projected Profit',
+            description: 'Profit projections and forecasting',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'traffic-sources': {
+    id: 'traffic-sources',
+    name: 'Traffic Sources',
+    description: 'Customer acquisition and traffic source analysis',
+    type: 'analysis',
+    grain: 'customers',
+    defaultGroupBy: 'traffic_source',
+    defaultMetrics: ['new_customers', 'total_visits', 'conversion_rate'],
+    category: 'online',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Traffic Sources',
+            description: 'Customer acquisition and traffic source analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
+  'purchase-funnel': {
+    id: 'purchase-funnel',
+    name: 'Purchase Funnel',
+    description: 'Customer journey and conversion funnel analysis',
+    type: 'analysis',
+    grain: 'customers',
+    defaultGroupBy: 'funnel_stage',
+    defaultMetrics: ['visitors', 'conversions', 'conversion_rate'],
+    category: 'online',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Purchase Funnel',
+            description: 'Customer journey and conversion funnel analysis',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export']
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['group_by', 'metrics', 'filters'],
+            showGroupBy: true,
+            showMetricSelector: true
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'table',
+        type: 'table',
+        config: {
+          table: {
+            collapsible: true,
+            defaultCollapsed: false,
+            sortable: true,
+            filterable: false,
+            exportable: true,
+            pagination: true,
+            pageSize: 25,
+            showSummaryRow: true
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
   }
 };
