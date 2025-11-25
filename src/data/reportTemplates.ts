@@ -1,6 +1,149 @@
 import { ReportTemplate } from '../types/reportBlocks';
 
 export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
+  'sales-summary-v3': {
+    id: 'sales-summary-v3',
+    name: 'Sales Summary v3',
+    description: 'Enhanced sales summary with detailed breakdown and migration notice',
+    type: 'dashboard',
+    grain: 'orders',
+    defaultGroupBy: 'location',
+    defaultMetrics: ['gross_sales', 'net_sales', 'transaction_count', 'average_cover_count'],
+    category: 'sales',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Sales Summary',
+            description: 'Enhanced sales summary with detailed breakdown',
+            showDataFreshness: true,
+            showOptions: true,
+            options: ['export', 'print'],
+            showMigrationNotice: true,
+            migrationNotice: {
+              title: 'System Migration Notice',
+              date: 'May 2026',
+              message: 'Starting May 2026, we\'re moving to a new, more powerful reporting system. The reports below will no longer be available in their current form.',
+              actions: [
+                { text: 'Auto-Generate New Reports (15)', type: 'secondary' },
+                { text: 'Explore New System', type: 'primary' }
+              ]
+            }
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['filters'],
+            showGroupBy: false,
+            showMetricSelector: false,
+            timeframe: 'Sat, Jun 21 – Fri, Jun 27, 2025'
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'metrics',
+        type: 'metrics',
+        config: {
+          metrics: {
+            layout: 'detailed',
+            showTrends: true,
+            showComparisons: true,
+            primaryMetrics: [
+              {
+                id: 'total-sales',
+                name: 'Total sales',
+                value: '$1065.79',
+                description: '32 transactions',
+                showChart: true,
+                chartData: [200, 250, 180, 320, 280, 150, 220]
+              }
+            ],
+            detailedBreakdown: [
+              {
+                section: 'Gross sales',
+                amount: '$1641.20',
+                description: '28 transactions',
+                items: [
+                  { name: 'Items', amount: '$1634.00', description: '20 sales + 8 exchanges' },
+                  { name: 'Service charges', amount: '$7.20', description: '3 transactions' }
+                ]
+              },
+              {
+                section: 'Returns',
+                amount: '($577.00)',
+                description: '3 transactions',
+                negative: true
+              },
+              {
+                section: 'Discounts & comps',
+                amount: '$0.00',
+                description: '2 transactions'
+              },
+              {
+                section: 'Net sales',
+                amount: '$1064.20',
+                description: '30 transactions'
+              },
+              {
+                section: 'Deferred Sales',
+                amount: '$0.00'
+              },
+              {
+                section: 'Gift card sales',
+                amount: '$0.00',
+                description: '5 transactions'
+              },
+              {
+                section: 'Taxes',
+                amount: '$1.59',
+                description: '28 transactions'
+              },
+              {
+                section: 'Tips',
+                amount: '$0.00',
+                description: '15 transactions'
+              }
+            ],
+            summarySection: [
+              {
+                name: 'Total sales',
+                amount: '$1065.79',
+                description: '32 transactions'
+              },
+              {
+                name: 'Total payments collected',
+                amount: '$637.88',
+                description: '32 transactions',
+                breakdown: [
+                  { method: 'Card', amount: '$51.39' },
+                  { method: 'Cash', amount: '$586.49' }
+                ]
+              },
+              {
+                name: 'Fees',
+                amount: '($1.90)',
+                negative: true
+              }
+            ]
+          }
+        },
+        visible: true,
+        order: 3
+      }
+    ]
+  },
+
   'sales-summary': {
     id: 'sales-summary',
     name: 'Sales Summary',

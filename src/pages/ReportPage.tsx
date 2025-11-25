@@ -182,7 +182,13 @@ export function ReportPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('ReportPage: useEffect triggered', { reportId, pathname: location.pathname });
+    console.log('=== ReportPage Debug ===');
+    console.log('reportId:', JSON.stringify(reportId));
+    console.log('reportId type:', typeof reportId);
+    console.log('reportId length:', reportId?.length);
+    console.log('pathname:', location.pathname);
+    console.log('Available templates:', Object.keys(REPORT_TEMPLATES));
+    console.log('Template exists for reportId:', !!REPORT_TEMPLATES[reportId || '']);
     
     if (!reportId) {
       console.log('ReportPage: No reportId provided');
