@@ -242,7 +242,38 @@ export function ReportPage() {
           selectedDimensions: customReport.dimensions || [],
           category: 'custom',
           blocks: [
-            // Convert blocks or create default ones
+            // Header block
+            {
+              id: 'header',
+              type: 'header' as const,
+              config: {
+                header: {
+                  title: customReport.name,
+                  description: customReport.description,
+                  showDataFreshness: true,
+                  showOptions: true,
+                  options: ['export', 'print']
+                }
+              },
+              visible: true,
+              order: 1
+            },
+            // Controls block
+            {
+              id: 'controls',
+              type: 'controls' as const,
+              config: {
+                controls: {
+                  primary: ['time_period', 'location'],
+                  secondary: ['group_by', 'metrics', 'filters'],
+                  showGroupBy: true,
+                  showMetricSelector: true
+                }
+              },
+              visible: true,
+              order: 2
+            },
+            // Visualization block
             {
               id: 'chart-1',
               type: 'visualization' as const,
@@ -265,8 +296,9 @@ export function ReportPage() {
                 }
               },
               visible: true,
-              order: 1
+              order: 3
             },
+            // Table block
             {
               id: 'table-1',
               type: 'table' as const,
@@ -283,7 +315,7 @@ export function ReportPage() {
                 }
               },
               visible: true,
-              order: 2
+              order: 4
             }
           ]
         };
