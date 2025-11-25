@@ -175,15 +175,19 @@ const mockCustomReports = [
 ];
 
 export function ReportPage() {
-  const { reportId } = useParams<{ reportId: string }>();
+  const params = useParams<{ reportId?: string; id?: string }>();
   const navigate = useNavigate();
   const location = useLocation();
   const [template, setTemplate] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  // Handle both route parameter names: reportId (for standard reports) and id (for custom reports)
+  const reportId = params.reportId || params.id;
+
   useEffect(() => {
     console.log('=== ReportPage Debug ===');
-    console.log('reportId:', JSON.stringify(reportId));
+    console.log('params:', JSON.stringify(params));
+    console.log('reportId (extracted):', JSON.stringify(reportId));
     console.log('reportId type:', typeof reportId);
     console.log('reportId length:', reportId?.length);
     console.log('pathname:', location.pathname);
