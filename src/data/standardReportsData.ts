@@ -3,9 +3,9 @@ import { StandardReport, ReportCategory, BusinessTypePreset } from '../types/sta
 export const standardReports: StandardReport[] = [
   // Sales Reports
   {
-    id: 'sales-summary',
+    id: 'sales-summary-v3',
     name: 'Sales Summary',
-    description: 'Overview of total sales, transactions, and key metrics',
+    description: 'Enhanced sales summary with detailed breakdown and migration notice',
     category: 'sales',
     icon: '📊',
     isDefault: true,
@@ -396,7 +396,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🍽️',
     categories: ['sales', 'accounting', 'payments', 'operations', 'profitability'],
     recommendedReports: [
-      'sales-summary', 'item-analysis', 'employee-performance', 
+      'sales-summary-v3', 'item-analysis', 'employee-performance', 
       'kitchen-performance', 'labor-vs-sales', 'section-sales', 'item-profitability', 'prime-cost-analysis'
     ]
   },
@@ -407,7 +407,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🍔',
     categories: ['sales', 'operations', 'payments', 'accounting', 'profitability'],
     recommendedReports: [
-      'sales-summary', 'sales-trends', 'item-analysis', 'modifier-sales',
+      'sales-summary-v3', 'sales-trends', 'item-analysis', 'modifier-sales',
       'employee-performance', 'payment-methods', 'kitchen-performance', 'item-profitability'
     ]
   },
@@ -418,7 +418,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '☕',
     categories: ['sales', 'operations', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'sales-trends', 'item-analysis', 'modifier-sales',
+      'sales-summary-v3', 'sales-trends', 'item-analysis', 'modifier-sales',
       'employee-performance', 'payment-methods'
     ]
   },
@@ -429,7 +429,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🍻',
     categories: ['sales', 'operations', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'sales-trends', 'item-analysis', 'employee-performance',
+      'sales-summary-v3', 'sales-trends', 'item-analysis', 'employee-performance',
       'section-sales', 'modifier-sales', 'comps'
     ]
   },
@@ -440,7 +440,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🛍️',
     categories: ['sales', 'inventory', 'payments', 'accounting', 'profitability'],
     recommendedReports: [
-      'sales-summary', 'item-analysis', 'category-performance', 'vendor-sales',
+      'sales-summary-v3', 'item-analysis', 'category-performance', 'vendor-sales',
       'inventory-by-category', 'cost-of-goods-sold', 'gift-cards', 'item-profitability', 'category-profitability'
     ]
   },
@@ -451,7 +451,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '💅',
     categories: ['sales', 'operations', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'employee-performance', 'service-charges',
+      'sales-summary-v3', 'employee-performance', 'service-charges',
       'gift-cards', 'future-bookings', 'team-performance'
     ]
   },
@@ -462,7 +462,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🚚',
     categories: ['sales', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'sales-trends', 'item-analysis', 'payment-methods',
+      'sales-summary-v3', 'sales-trends', 'item-analysis', 'payment-methods',
       'modifier-sales', 'reconciliation'
     ]
   },
@@ -473,7 +473,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '💼',
     categories: ['sales', 'operations', 'payments', 'accounting'],
     recommendedReports: [
-      'sales-summary', 'employee-performance', 'service-charges',
+      'sales-summary-v3', 'employee-performance', 'service-charges',
       'future-bookings', 'team-performance', 'fees'
     ]
   },
@@ -484,7 +484,7 @@ export const businessTypePresets: BusinessTypePreset[] = [
     icon: '🏢',
     categories: ['sales', 'accounting', 'payments', 'operations', 'inventory', 'profitability'],
     recommendedReports: [
-      'sales-summary', 'item-analysis', 'category-performance', 'employee-performance',
+      'sales-summary-v3', 'item-analysis', 'category-performance', 'employee-performance',
       'reconciliation', 'inventory-by-category', 'labor-vs-sales', 'prime-cost-analysis'
     ]
   },
