@@ -185,43 +185,26 @@ export function ReportPage() {
   const reportId = params.reportId || params.id;
 
   useEffect(() => {
-    console.log('=== ReportPage Debug ===');
-    console.log('params:', JSON.stringify(params));
-    console.log('reportId (extracted):', JSON.stringify(reportId));
-    console.log('reportId type:', typeof reportId);
-    console.log('reportId length:', reportId?.length);
-    console.log('pathname:', location.pathname);
-    console.log('Available templates:', Object.keys(REPORT_TEMPLATES));
-    console.log('Template exists for reportId:', !!REPORT_TEMPLATES[reportId || '']);
-    
     if (!reportId) {
-      console.log('ReportPage: No reportId provided');
       setLoading(false);
       return;
     }
 
     // Check if this is a custom report (from custom-reports path)
     const isCustomReport = location.pathname.includes('/custom-reports/view/');
-    console.log('ReportPage: isCustomReport:', isCustomReport);
     
     if (isCustomReport) {
       // Load custom report from localStorage and mock data
       const savedReports = JSON.parse(localStorage.getItem('customSavedReports') || '[]');
-      console.log('ReportPage: savedReports from localStorage:', savedReports);
-      console.log('ReportPage: mockCustomReports available:', mockCustomReports.length, 'reports');
-      console.log('ReportPage: looking for reportId:', reportId);
       
       // Check both saved reports and mock reports
       let customReport = savedReports.find((report: any) => report.id === reportId);
-      console.log('ReportPage: found in savedReports:', customReport);
       
       if (!customReport) {
         customReport = mockCustomReports.find((report: any) => report.id === reportId);
-        console.log('ReportPage: found in mockCustomReports:', customReport);
       }
       
       if (customReport) {
-        console.log('ReportPage: Using custom report:', customReport);
         // Convert custom report to template format
         const customTemplate = {
           id: customReport.id,
@@ -284,10 +267,7 @@ export function ReportPage() {
       }
     } else {
       // Load standard report template
-      console.log('ReportPage: Loading standard report template for:', reportId);
-      console.log('ReportPage: Available templates:', Object.keys(REPORT_TEMPLATES));
       const standardTemplate = REPORT_TEMPLATES[reportId];
-      console.log('ReportPage: Found template:', !!standardTemplate, standardTemplate?.name);
       if (standardTemplate) {
         setTemplate(standardTemplate);
       }
