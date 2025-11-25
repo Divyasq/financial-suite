@@ -3,9 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ReportCanvas } from '../components/reportBlocks/ReportCanvas';
 import { REPORT_TEMPLATES } from '../data/reportTemplates';
 
-// Debug: Log available templates on module load
-console.log('ReportPage: Module loaded, available templates:', Object.keys(REPORT_TEMPLATES));
-console.log('ReportPage: item-profitability template exists:', !!REPORT_TEMPLATES['item-profitability']);
+// ReportPage - handles both standard and custom reports
 
 // Mock custom reports data (same as in CustomReportsPage.tsx)
 const mockCustomReports = [
