@@ -1,6 +1,160 @@
 import { ReportTemplate } from '../types/reportBlocks';
 
 export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
+  'reconciliation': {
+    id: 'reconciliation',
+    name: 'Reconciliation',
+    description: 'See how your collected payments translate to your bank transfers',
+    type: 'dashboard',
+    grain: 'payments',
+    defaultGroupBy: 'payment_method',
+    defaultMetrics: ['total_collected', 'fees', 'net_transfers'],
+    category: 'accounting',
+    blocks: [
+      {
+        id: 'header',
+        type: 'header',
+        config: {
+          header: {
+            title: 'Reconciliation',
+            description: 'See how your collected payments translate to your bank transfers',
+            showDataFreshness: false,
+            showOptions: true,
+            options: ['export', 'print'],
+            showFeedback: true
+          }
+        },
+        visible: true,
+        order: 1
+      },
+      {
+        id: 'controls',
+        type: 'controls',
+        config: {
+          controls: {
+            primary: ['time_period', 'location'],
+            secondary: ['filters'],
+            showGroupBy: false,
+            showMetricSelector: false,
+            timeframe: 'Wed, January 01 – Wed, December 31, 2025',
+            showTimeframeFilter: true,
+            filterLabel: 'Filter by Timeframe: Reporting day'
+          }
+        },
+        visible: true,
+        order: 2
+      },
+      {
+        id: 'status',
+        type: 'metrics',
+        config: {
+          metrics: {
+            layout: 'status',
+            statusMessage: {
+              type: 'success',
+              icon: '✓',
+              title: 'All payments are matched to transfers',
+              description: 'The $14,628.09 you earned this period is fully accounted for in your transfers'
+            }
+          }
+        },
+        visible: true,
+        order: 3
+      },
+      {
+        id: 'reconciliation-breakdown',
+        type: 'metrics',
+        config: {
+          metrics: {
+            layout: 'reconciliation',
+            showTrends: false,
+            showComparisons: false,
+            reconciliationSections: [
+              {
+                id: 'net-sales',
+                name: 'Net sales',
+                amount: '$24,901.28',
+                isCollapsible: true,
+                isExpanded: false,
+                items: []
+              },
+              {
+                id: 'collected-liabilities',
+                name: 'Collected liabilities',
+                amount: '$5,682.51',
+                isCollapsible: true,
+                isExpanded: false,
+                items: []
+              },
+              {
+                id: 'refunds-by-amount',
+                name: 'Refunds by amount',
+                amount: '($7.00)',
+                negative: true,
+                isCollapsible: false,
+                items: []
+              },
+              {
+                id: 'deposits-redeemed',
+                name: 'Deposits redeemed',
+                amount: '($3,775.35)',
+                negative: true,
+                isCollapsible: false,
+                items: []
+              },
+              {
+                id: 'total-payments-collected',
+                name: 'Total payments collected',
+                amount: '$26,876.74',
+                isCollapsible: true,
+                isExpanded: false,
+                isBold: true,
+                items: []
+              },
+              {
+                id: 'non-transferable-payments',
+                name: 'Non-transferable payments',
+                amount: '($11,352.33)',
+                negative: true,
+                isCollapsible: true,
+                isExpanded: false,
+                items: []
+              },
+              {
+                id: 'fees-and-deductions',
+                name: 'Fees and deductions',
+                amount: '($896.32)',
+                negative: true,
+                isCollapsible: true,
+                isExpanded: false,
+                items: []
+              },
+              {
+                id: 'payments-eligible-for-transfer',
+                name: 'Payments eligible for transfer',
+                amount: '$14,628.09',
+                isCollapsible: false,
+                isBold: true,
+                items: []
+              },
+              {
+                id: 'bank-deposits-earned',
+                name: 'Bank deposits earned in this period',
+                amount: '$14,628.09',
+                isCollapsible: true,
+                isExpanded: false,
+                isBold: true,
+                items: []
+              }
+            ]
+          }
+        },
+        visible: true,
+        order: 4
+      }
+    ]
+  },
+
   'sales-summary-v3': {
     id: 'sales-summary-v3',
     name: 'Sales Summary v3',
