@@ -147,7 +147,7 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
   'sales-summary': {
     id: 'sales-summary',
     name: 'Sales Summary',
-    description: 'Overview of total sales, transactions, and key metrics',
+    description: 'Enhanced sales summary with detailed breakdown and migration notice',
     type: 'dashboard',
     grain: 'orders',
     defaultGroupBy: 'location',
@@ -160,10 +160,20 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         config: {
           header: {
             title: 'Sales Summary',
-            description: 'Overview of total sales, transactions, and key metrics',
+            description: 'Enhanced sales summary with detailed breakdown',
             showDataFreshness: true,
             showOptions: true,
-            options: ['export', 'print']
+            options: ['export', 'print'],
+            showMigrationNotice: true,
+            migrationNotice: {
+              title: 'System Migration Notice',
+              date: 'May 2026',
+              message: 'Starting May 2026, we\'re moving to a new, more powerful reporting system. The reports below will no longer be available in their current form.',
+              actions: [
+                { text: 'Auto-Generate New Reports (15)', type: 'secondary' },
+                { text: 'Explore New System', type: 'primary' }
+              ]
+            }
           }
         },
         visible: true,
@@ -177,7 +187,8 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
             primary: ['time_period', 'location'],
             secondary: ['filters'],
             showGroupBy: false,
-            showMetricSelector: false
+            showMetricSelector: false,
+            timeframe: 'Sat, Jun 21 – Fri, Jun 27, 2025'
           }
         },
         visible: true,
@@ -188,79 +199,90 @@ export const REPORT_TEMPLATES: Record<string, ReportTemplate> = {
         type: 'metrics',
         config: {
           metrics: {
-            layout: 'grid',
-            columns: 4,
+            layout: 'detailed',
             showTrends: true,
             showComparisons: true,
-            metrics: [
+            primaryMetrics: [
               {
-                id: 'gross-sales',
-                name: 'Gross Sales',
-                value: '$12,450',
-                trend: '+12.5%',
-                trendDirection: 'up',
-                comparison: 'vs last period'
+                id: 'total-sales',
+                name: 'Total sales',
+                value: '$1065.79',
+                description: '32 transactions',
+                showChart: true,
+                chartData: [200, 250, 180, 320, 280, 150, 220]
+              }
+            ],
+            detailedBreakdown: [
+              {
+                section: 'Gross sales',
+                amount: '$1641.20',
+                description: '28 transactions',
+                items: [
+                  { name: 'Items', amount: '$1634.00', description: '20 sales + 8 exchanges' },
+                  { name: 'Service charges', amount: '$7.20', description: '3 transactions' }
+                ]
               },
               {
-                id: 'net-sales',
-                name: 'Net Sales',
-                value: '$11,205',
-                trend: '+8.3%',
-                trendDirection: 'up',
-                comparison: 'vs last period'
+                section: 'Returns',
+                amount: '($577.00)',
+                description: '3 transactions',
+                negative: true
               },
               {
-                id: 'transactions',
-                name: 'Transactions',
-                value: '342',
-                trend: '+15.2%',
-                trendDirection: 'up',
-                comparison: 'vs last period'
+                section: 'Discounts & comps',
+                amount: '$0.00',
+                description: '2 transactions'
               },
               {
-                id: 'avg-order',
-                name: 'Avg Order Value',
-                value: '$36.40',
-                trend: '-2.1%',
-                trendDirection: 'down',
-                comparison: 'vs last period'
+                section: 'Net sales',
+                amount: '$1064.20',
+                description: '30 transactions'
+              },
+              {
+                section: 'Deferred Sales',
+                amount: '$0.00'
+              },
+              {
+                section: 'Gift card sales',
+                amount: '$0.00',
+                description: '5 transactions'
+              },
+              {
+                section: 'Taxes',
+                amount: '$1.59',
+                description: '28 transactions'
+              },
+              {
+                section: 'Tips',
+                amount: '$0.00',
+                description: '15 transactions'
+              }
+            ],
+            summarySection: [
+              {
+                name: 'Total sales',
+                amount: '$1065.79',
+                description: '32 transactions'
+              },
+              {
+                name: 'Total payments collected',
+                amount: '$637.88',
+                description: '32 transactions',
+                breakdown: [
+                  { method: 'Card', amount: '$51.39' },
+                  { method: 'Cash', amount: '$586.49' }
+                ]
+              },
+              {
+                name: 'Fees',
+                amount: '($1.90)',
+                negative: true
               }
             ]
           }
         },
         visible: true,
         order: 3
-      },
-      {
-        id: 'visualization',
-        type: 'visualization',
-        config: {
-          visualization: {
-            type: 'multiple',
-            charts: [
-              {
-                id: 'sales-trend',
-                type: 'line',
-                title: 'Sales Trend',
-                timeframe: 'day',
-                metrics: ['gross_sales', 'net_sales'],
-                size: 'large'
-              },
-              {
-                id: 'transaction-volume',
-                type: 'bar',
-                title: 'Transaction Volume',
-                timeframe: 'day',
-                metrics: ['transaction_count'],
-                size: 'medium'
-              }
-            ],
-            showLegend: true,
-            showTooltips: true
-          }
-        },
-        visible: true,
-        order: 4
       }
     ]
   },
