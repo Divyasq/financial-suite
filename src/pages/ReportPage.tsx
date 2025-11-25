@@ -5,7 +5,7 @@ import { REPORT_TEMPLATES } from '../data/reportTemplates';
 
 // ReportPage - handles both standard and custom reports
 
-// Mock custom reports data (same as in CustomReportsPage.tsx)
+// Mock custom reports data with proper metrics and dimensions for data generation
 const mockCustomReports = [
   {
     id: '1',
@@ -17,7 +17,9 @@ const mockCustomReports = [
     createdAt: '2025-01-15',
     lastModified: '2025-01-20',
     lastRun: '2 hours ago',
-    metrics: ['Gross Sales', 'Net Sales', 'Transaction Count', 'Average Order Value'],
+    metrics: ['gross_sales', 'net_sales', 'transaction_count', 'average_order_value'],
+    dimensions: ['location', 'order_created'],
+    grain: 'orders',
     filters: 3,
     isShared: true
   },
@@ -31,7 +33,9 @@ const mockCustomReports = [
     createdAt: '2025-01-10',
     lastModified: '2025-01-18',
     lastRun: '1 day ago',
-    metrics: ['Sales by Category', 'Units Sold', 'Profit Margin'],
+    metrics: ['item_sales', 'units_sold', 'profit_margin'],
+    dimensions: ['category', 'item_name'],
+    grain: 'items',
     filters: 5,
     isShared: false
   },
@@ -44,7 +48,9 @@ const mockCustomReports = [
     createdBy: 'Mike Johnson',
     createdAt: '2025-01-22',
     lastModified: '2025-01-25',
-    metrics: ['Customer Frequency', 'Repeat Purchase Rate', 'Customer Lifetime Value'],
+    metrics: ['new_visit_count', 'repeat_visit_count', 'amount_spend'],
+    dimensions: ['customer_type', 'order_created'],
+    grain: 'customers',
     filters: 2,
     isShared: false
   },
@@ -58,7 +64,9 @@ const mockCustomReports = [
     createdAt: '2025-01-05',
     lastModified: '2025-01-23',
     lastRun: '3 hours ago',
-    metrics: ['Monthly Revenue', 'YoY Growth', 'Revenue by Channel'],
+    metrics: ['gross_sales', 'net_sales', 'transaction_count'],
+    dimensions: ['order_created', 'channel'],
+    grain: 'orders',
     filters: 4,
     isShared: true
   },
@@ -72,7 +80,9 @@ const mockCustomReports = [
     createdAt: '2025-01-12',
     lastModified: '2025-01-24',
     lastRun: '5 hours ago',
-    metrics: ['Labor Cost %', 'Hours Worked', 'Productivity Score', 'Overtime Hours'],
+    metrics: ['labor_cost', 'labor_cost_percentage', 'gross_sales'],
+    dimensions: ['location', 'employee'],
+    grain: 'orders',
     filters: 6,
     isShared: false
   },
@@ -86,7 +96,9 @@ const mockCustomReports = [
     createdAt: '2025-01-08',
     lastModified: '2025-01-22',
     lastRun: '1 day ago',
-    metrics: ['Price Premium', 'Market Position', 'Competitor Gap', 'Revenue Impact'],
+    metrics: ['item_sales', 'profit_margin_percentage', 'units_sold'],
+    dimensions: ['item_name', 'category'],
+    grain: 'items',
     filters: 8,
     isShared: true
   },
@@ -100,7 +112,9 @@ const mockCustomReports = [
     createdAt: '2025-01-14',
     lastModified: '2025-01-21',
     lastRun: '6 hours ago',
-    metrics: ['Inventory Turnover', 'Waste %', 'Stock Levels', 'Reorder Alerts'],
+    metrics: ['units_sold', 'item_sales', 'profit_margin'],
+    dimensions: ['item_name', 'category'],
+    grain: 'items',
     filters: 4,
     isShared: false
   },
@@ -113,7 +127,9 @@ const mockCustomReports = [
     createdBy: 'Carlos Martinez',
     createdAt: '2025-01-19',
     lastModified: '2025-01-25',
-    metrics: ['Hourly Sales', 'Customer Count', 'Wait Times', 'Staff Efficiency'],
+    metrics: ['gross_sales', 'transaction_count', 'average_cover_count'],
+    dimensions: ['order_created', 'location'],
+    grain: 'orders',
     filters: 3,
     isShared: false
   },
@@ -127,7 +143,9 @@ const mockCustomReports = [
     createdAt: '2025-01-11',
     lastModified: '2025-01-20',
     lastRun: '4 hours ago',
-    metrics: ['Delivery Time', 'Driver Rating', 'Order Accuracy', 'Customer Feedback'],
+    metrics: ['gross_sales', 'transaction_count', 'tip'],
+    dimensions: ['channel', 'employee'],
+    grain: 'orders',
     filters: 5,
     isShared: true
   },
@@ -141,7 +159,9 @@ const mockCustomReports = [
     createdAt: '2025-01-06',
     lastModified: '2025-01-19',
     lastRun: '2 days ago',
-    metrics: ['Seasonal Sales', 'Item Popularity', 'Profit Margin', 'Customer Preference'],
+    metrics: ['item_sales', 'units_sold', 'profit_margin_percentage'],
+    dimensions: ['item_name', 'category'],
+    grain: 'items',
     filters: 7,
     isShared: false
   },
@@ -155,7 +175,9 @@ const mockCustomReports = [
     createdAt: '2025-01-13',
     lastModified: '2025-01-24',
     lastRun: '8 hours ago',
-    metrics: ['Payment Distribution', 'Processing Fees', 'Transaction Speed', 'Failed Payments'],
+    metrics: ['total_collected', 'fees', 'payment_amount'],
+    dimensions: ['payment_method', 'location'],
+    grain: 'payments',
     filters: 3,
     isShared: false
   },
@@ -168,7 +190,9 @@ const mockCustomReports = [
     createdBy: 'James Wilson',
     createdAt: '2025-01-17',
     lastModified: '2025-01-25',
-    metrics: ['Loyalty Enrollment', 'Reward Redemption', 'Repeat Visits', 'Program ROI'],
+    metrics: ['new_visit_count', 'repeat_visit_count', 'amount_spend'],
+    dimensions: ['customer_type', 'loyalty_visit'],
+    grain: 'customers',
     filters: 4,
     isShared: false
   }
@@ -211,7 +235,7 @@ export function ReportPage() {
           name: customReport.name,
           description: customReport.description,
           type: 'analysis' as const,
-          grain: customReport.grains?.[0] || 'orders',
+          grain: customReport.grain || 'orders',
           defaultGroupBy: customReport.dimensions?.[0] || null,
           defaultMetrics: customReport.metrics || [],
           selectedMetrics: customReport.metrics || [],
