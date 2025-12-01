@@ -57,7 +57,7 @@ export function DashboardHeader() {
             <div className="flex items-center space-x-3 ml-4">
               <button className="flex items-center space-x-2 hover:bg-gray-100 rounded-lg px-3 py-2 transition-colors">
                 <User className="h-5 w-5 text-gray-600" />
-                <span className="text-sm font-medium text-gray-900 hidden sm:block">Tech for Product</span>
+                <span className="text-sm font-medium text-gray-900 hidden sm:block">Divya's FS Demo</span>
               </button>
             </div>
           </div>

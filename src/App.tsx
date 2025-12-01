@@ -32,6 +32,16 @@ import { ReportPage } from './pages/ReportPage';
 import { CustomBuilderPage } from './pages/CustomBuilderPage';
 import { BenchmarkingPage } from './pages/BenchmarkingPage';
 import { TemplateGalleryPage } from './pages/TemplateGalleryPage';
+import { ScheduledExportsPage } from './pages/ScheduledExportsPage';
+import { ExternalDataPage } from './pages/ExternalDataPage';
+import { IntegrationSettingsPage } from './pages/IntegrationSettingsPage';
+import { IngredientTrackingPage } from './pages/IngredientTrackingPage';
+import { ForecastingPage } from './pages/ForecastingPage';
+import { AdvancedAnalyticsPage } from './pages/AdvancedAnalyticsPage';
+import { ProcurementPage } from './pages/ProcurementPage';
+import { BillPayPage } from './pages/BillPayPage';
+import { ProfitabilityAnalyticsPage } from './pages/ProfitabilityAnalyticsPage';
+import { CashFlowIntelligencePage } from './pages/CashFlowIntelligencePage';
 
 function App() {
   return (
@@ -63,6 +73,16 @@ function App() {
                             <Route path="financial-suite/custom-reports/edit/:id" element={<CustomReportBuilderPage />} />
                             <Route path="financial-suite/templates" element={<TemplateGalleryPage />} />
                             <Route path="financial-suite/benchmarking" element={<BenchmarkingPage />} />
+                            <Route path="financial-suite/scheduled-exports" element={<ScheduledExportsPage />} />
+                            <Route path="financial-suite/external-data" element={<ExternalDataPage />} />
+                            <Route path="financial-suite/integration-settings" element={<IntegrationSettingsPage />} />
+                            <Route path="financial-suite/ingredient-tracking" element={<IngredientTrackingPage />} />
+                            <Route path="financial-suite/forecasting" element={<ForecastingPage />} />
+                            <Route path="financial-suite/advanced-analytics" element={<AdvancedAnalyticsPage />} />
+                            <Route path="financial-suite/procurement" element={<ProcurementPage />} />
+                            <Route path="financial-suite/bill-pay" element={<BillPayPage />} />
+                            <Route path="financial-suite/profitability-analytics" element={<ProfitabilityAnalyticsPage />} />
+                            <Route path="financial-suite/cash-flow-intelligence" element={<CashFlowIntelligencePage />} />
                             <Route path="financial-suite/reports/sales-summary-v3" element={<ReportsPage />} />
                             <Route path="financial-suite/reports/reconciliation-v3" element={<ReportsPage />} />
                             <Route path="financial-suite/reports/:reportId" element={<ReportPage />} />

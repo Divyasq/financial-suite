@@ -52,10 +52,47 @@ const mainNavItems: NavItem[] = [
     icon: BarChart3,
     hasSubmenu: true,
     submenuItems: [
-      { id: 'financial-dashboard', label: 'Dashboard' },
-      { id: 'standard-reports', label: 'Standard Reports' },
-      { id: 'custom-reports', label: 'Custom Reports' },
-      { id: 'benchmarking', label: '🏆 Benchmarking' }
+      { id: 'financial-dashboard', label: '📊 Dashboard' },
+      { 
+        id: 'reports', 
+        label: '📈 Reports',
+        hasSubmenu: true,
+        submenuItems: [
+          { id: 'standard-reports', label: 'Standard Reports' },
+          { id: 'custom-reports', label: 'Custom Reports' },
+          { id: 'report-builder', label: 'Report Builder' },
+          { id: 'templates', label: 'Templates' }
+        ]
+      },
+      { id: 'analytics', label: '📊 Analytics', hasSubmenu: true, submenuItems: [
+        { id: 'benchmarking', label: 'Benchmarking' },
+        { id: 'advanced-analytics', label: '✨ Advanced Analytics' },
+        { id: 'forecasting', label: '✨ Forecasting' },
+        { id: 'ingredient-analytics', label: '✨ Ingredient Analytics' },
+        { id: 'profitability-analytics', label: '🎯 Profitability Analytics' },
+        { id: 'cash-flow-intelligence', label: '💰 Cash Flow Intelligence' }
+      ]},
+      { 
+        id: 'integrations', 
+        label: '🔗 Integrations',
+        hasSubmenu: true,
+        submenuItems: [
+          { id: 'integration-settings', label: 'Settings' },
+          { id: 'external-data', label: 'External Data' },
+          { id: 'data-sources', label: 'Data Sources' },
+          { id: 'data-uploads', label: 'Uploads' }
+        ]
+      },
+      { id: 'procurement', label: '📦 Procurement' },
+      { id: 'bill-pay', label: '💳 Bill Pay & AP' },
+      { 
+        id: 'automation', 
+        label: '⚙️ Automation',
+        hasSubmenu: true,
+        submenuItems: [
+          { id: 'scheduled-exports', label: 'Scheduled Exports' }
+        ]
+      }
     ]
   },
 
@@ -125,10 +162,28 @@ export function LeftNav() {
     if (subItem.hasSubmenu) {
       toggleSubmenuItem(subItem.id);
     } else {
+      // Financial Suite navigation
       if (subItem.id === 'financial-dashboard') navigate('/financial-suite');
       else if (subItem.id === 'standard-reports') navigate('/financial-suite/standard-reports');
       else if (subItem.id === 'custom-reports') navigate('/financial-suite/custom-reports');
+      else if (subItem.id === 'report-builder') navigate('/financial-suite/custom-reports/create');
+      else if (subItem.id === 'templates') navigate('/financial-suite/templates');
       else if (subItem.id === 'benchmarking') navigate('/financial-suite/benchmarking');
+      else if (subItem.id === 'advanced-analytics') navigate('/financial-suite/advanced-analytics');
+      else if (subItem.id === 'forecasting') navigate('/financial-suite/forecasting');
+      else if (subItem.id === 'ingredient-analytics') navigate('/financial-suite/ingredient-tracking');
+      else if (subItem.id === 'profitability-analytics') navigate('/financial-suite/profitability-analytics');
+      else if (subItem.id === 'cash-flow-intelligence') navigate('/financial-suite/cash-flow-intelligence');
+      else if (subItem.id === 'integration-settings') navigate('/financial-suite/integration-settings');
+      else if (subItem.id === 'external-data') navigate('/financial-suite/external-data');
+      else if (subItem.id === 'data-sources') navigate('/financial-suite/integration-settings?tab=sources');
+      else if (subItem.id === 'data-uploads') navigate('/financial-suite/integration-settings?tab=uploads');
+      else if (subItem.id === 'scheduled-exports') navigate('/financial-suite/scheduled-exports');
+      else if (subItem.id === 'procurement') navigate('/financial-suite/procurement');
+      else if (subItem.id === 'bill-pay') navigate('/financial-suite/bill-pay');
+      else if (subItem.id === 'alert-rules') navigate('/financial-suite/integration-settings?tab=alerts');
+      
+      // FS Prototype navigation
       else if (subItem.id === 'fs-dashboard') navigate('/fs-prototype');
       else if (subItem.id === 'fs-reports') toggleSubmenuItem(subItem.id);
       else if (subItem.id === 'fs-custom-reports') navigate('/fs-prototype/custom-reports');
@@ -281,7 +336,7 @@ export function LeftNav() {
           <button className="w-full flex items-center justify-between px-3 py-2 hover:bg-gray-100 rounded transition-colors">
             <div className="flex items-center space-x-3">
               <User className="h-4 w-4 text-gray-600" />
-              <span className="text-sm font-normal text-gray-900">Tech for Product</span>
+              <span className="text-sm font-normal text-gray-900">Divya's FS Demo</span>
             </div>
             <ChevronLeft className="h-4 w-4 text-gray-400 rotate-180" />
           </button>

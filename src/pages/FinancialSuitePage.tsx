@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChefHat, TrendingUp, Brain, Settings, Zap, AlertTriangle, ShoppingCart, CreditCard, Target, Activity } from 'lucide-react';
+import { mockAIInsights } from '../data/mockAdvancedAnalytics';
+import { mockIntegratedDashboardWidgets } from '../data/mockIntegratedAnalytics';
 
 interface MetricWidget {
   id: string;
@@ -55,7 +58,7 @@ const defaultMetricWidgets: MetricWidget[] = [
     breakdown: [
       { label: 'Similar Restaurants', value: '12', subtext: 'in 2-mile radius' },
       { label: 'Your Ranking', value: '#3', subtext: 'up from #5' },
-      { label: 'Top Performer', value: "Mario's Bistro", subtext: '4.8★ rating' },
+      { label: 'Top Performer', value: "Divya's Bistro", subtext: '4.8★ rating' },
       { label: '🔓 Unlock Details', value: 'Upgrade →', subtext: 'See full analysis' }
     ]
   },
@@ -162,6 +165,7 @@ const sampleActionAlerts: ActionAlert[] = [
   }
 ];
 
+// Updated with Divya C personalizations
 export function FinancialSuitePage() {
   const navigate = useNavigate();
   const [metricWidgets, setMetricWidgets] = useState<MetricWidget[]>(() => {
@@ -171,10 +175,10 @@ export function FinancialSuitePage() {
   const [showWidgetModal, setShowWidgetModal] = useState(false);
   const [widgetPrompt, setWidgetPrompt] = useState('');
   
-  // Action Center state
-  const [actionAlerts, setActionAlerts] = useState<ActionAlert[]>(() => {
-    const saved = localStorage.getItem('actionAlerts');
-    return saved ? JSON.parse(saved) : sampleActionAlerts;
+  // Action Center state - using AI insights instead of old alerts
+  const [aiInsights, setAiInsights] = useState(() => {
+    const saved = localStorage.getItem('aiInsights');
+    return saved ? JSON.parse(saved) : mockAIInsights;
   });
   const [showActionCenter, setShowActionCenter] = useState(true);
   const [showAlertModal, setShowAlertModal] = useState(false);
@@ -185,10 +189,10 @@ export function FinancialSuitePage() {
     localStorage.setItem('dashboardWidgets', JSON.stringify(metricWidgets));
   }, [metricWidgets]);
 
-  // Save alerts to localStorage whenever they change
+  // Save AI insights to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('actionAlerts', JSON.stringify(actionAlerts));
-  }, [actionAlerts]);
+    localStorage.setItem('aiInsights', JSON.stringify(aiInsights));
+  }, [aiInsights]);
 
   const handleWidgetClick = (widget: MetricWidget) => {
     navigate(widget.route);
@@ -208,20 +212,88 @@ export function FinancialSuitePage() {
   const handleCreateAlert = () => {
     if (!alertPrompt.trim()) return;
 
-    const newAlert = generateAlertFromPrompt(alertPrompt);
-    setActionAlerts(prev => [...prev, newAlert]);
+    const newAlert = generateAIInsightFromPrompt(alertPrompt);
+    setAiInsights(prev => [...prev, newAlert]);
     
     // Close modal and reset
     setShowAlertModal(false);
     setAlertPrompt('');
   };
 
-  const handleDeleteAlert = (alertId: string) => {
-    setActionAlerts(prev => prev.filter(alert => alert.id !== alertId));
+  const handleDeleteInsight = (insightId: string) => {
+    setAiInsights(prev => prev.filter(insight => insight.id !== insightId));
   };
 
   const handleDeleteWidget = (widgetId: string) => {
     setMetricWidgets(prev => prev.filter(widget => widget.id !== widgetId));
+  };
+
+  const generateAIInsightFromPrompt = (prompt: string) => {
+    const lowercasePrompt = prompt.toLowerCase();
+    const insightId = `insight_${Date.now()}`;
+    
+    // Generate configured alert type insight
+    if (lowercasePrompt.includes('comp') || lowercasePrompt.includes('discount')) {
+      const threshold = lowercasePrompt.match(/\$?(\d+)/)?.[1] || '500';
+      return {
+        id: insightId,
+        type: 'configured-alert' as const,
+        title: 'High Comps Alert',
+        description: `Configured alert: Comps exceeded $${threshold} threshold`,
+        insight: `Today's comps reached $${parseInt(threshold) + 100}, exceeding your configured $${threshold} alert threshold.`,
+        reasoning: [
+          `Comp amount: $${parseInt(threshold) + 100} (threshold: $${threshold})`,
+          'Multiple manager overrides detected',
+          'Higher than usual comp frequency'
+        ],
+        confidence: 1.0,
+        severity: 'critical' as const,
+        category: 'financial' as const,
+        timestamp: new Date().toISOString(),
+        dataPoints: [
+          { metric: 'Comps Today', value: `$${parseInt(threshold) + 100}`, trend: 'up' as const },
+          { metric: 'Threshold', value: `$${threshold}`, trend: 'stable' as const },
+          { metric: 'Transactions', value: '8', trend: 'up' as const }
+        ],
+        recommendations: [
+          {
+            action: 'Review comp transactions and reasons',
+            priority: 'high' as const,
+            estimatedImpact: 'Identify patterns',
+            timeframe: 'Today'
+          }
+        ],
+        alertRule: `Daily Comps >$${threshold}`,
+        isAutonomous: false
+      };
+    }
+    
+    // Default alert
+    return {
+      id: insightId,
+      type: 'configured-alert' as const,
+      title: 'Custom Alert',
+      description: prompt,
+      insight: `Alert triggered: ${prompt}`,
+      reasoning: ['Custom alert rule triggered'],
+      confidence: 1.0,
+      severity: 'info' as const,
+      category: 'operational' as const,
+      timestamp: new Date().toISOString(),
+      dataPoints: [
+        { metric: 'Status', value: 'Active', trend: 'stable' as const }
+      ],
+      recommendations: [
+        {
+          action: 'Investigate alert',
+          priority: 'medium' as const,
+          estimatedImpact: 'Resolve issue',
+          timeframe: 'Today'
+        }
+      ],
+      alertRule: 'Custom Rule',
+      isAutonomous: false
+    };
   };
 
   const generateAlertFromPrompt = (prompt: string): ActionAlert => {
@@ -659,7 +731,7 @@ export function FinancialSuitePage() {
         breakdown: [
           { label: 'Similar Restaurants', value: '12', subtext: 'in 2-mile radius' },
           { label: 'Your Ranking', value: '#3', subtext: 'up from #5' },
-          { label: 'Top Performer', value: "Mario's Bistro", subtext: '4.8★ rating' },
+          { label: 'Top Performer', value: "Divya's Bistro", subtext: '4.8★ rating' },
           { label: '🔓 Unlock Details', value: 'Upgrade →', subtext: 'See full analysis' }
         ]
       };
@@ -764,129 +836,213 @@ export function FinancialSuitePage() {
             <button onClick={handleViewReports} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">
               📊 View All Reports
             </button>
+            <button onClick={() => navigate('/financial-suite/scheduled-exports')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">
+              ⏰ Scheduled Exports
+            </button>
+            <button onClick={() => navigate('/financial-suite/external-data')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">
+              🌤️ External Data
+            </button>
+            <button onClick={() => navigate('/financial-suite/integration-settings')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">
+              ⚙️ Integration Settings
+            </button>
+            <button onClick={() => navigate('/financial-suite/ingredient-tracking')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-orange-300 bg-gradient-to-r from-orange-50 to-yellow-50 text-orange-600 hover:from-orange-100 hover:to-yellow-100 rounded-md font-medium transition-colors shadow-sm">
+              ✨ <ChefHat className="w-4 h-4 mx-1" /> Ingredient Tracking
+            </button>
+            <button onClick={() => navigate('/financial-suite/forecasting')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-indigo-300 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 hover:from-indigo-100 hover:to-purple-100 rounded-md font-medium transition-colors shadow-sm">
+              ✨ <TrendingUp className="w-4 h-4 mx-1" /> Forecasting
+            </button>
+            <button onClick={() => navigate('/financial-suite/procurement')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 hover:from-green-100 hover:to-emerald-100 rounded-md font-medium transition-colors shadow-sm">
+              <ShoppingCart className="w-4 h-4 mr-1" /> Procurement
+            </button>
+            <button onClick={() => navigate('/financial-suite/bill-pay')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-blue-300 bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-600 hover:from-blue-100 hover:to-cyan-100 rounded-md font-medium transition-colors shadow-sm">
+              <CreditCard className="w-4 h-4 mr-1" /> Bill Pay & AP
+            </button>
+            <button onClick={() => navigate('/financial-suite/profitability-analytics')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-emerald-300 bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-600 hover:from-emerald-100 hover:to-green-100 rounded-md font-medium transition-colors shadow-sm">
+              <Target className="w-4 h-4 mr-1" /> Profitability Analytics
+            </button>
+            <button onClick={() => navigate('/financial-suite/cash-flow-intelligence')} className="inline-flex items-center justify-center px-4 py-2 text-sm border border-teal-300 bg-gradient-to-r from-teal-50 to-cyan-50 text-teal-600 hover:from-teal-100 hover:to-cyan-100 rounded-md font-medium transition-colors shadow-sm">
+              <Activity className="w-4 h-4 mr-1" /> Cash Flow Intelligence
+            </button>
           </div>
         </div>
 
-        {/* Action Center */}
-        {actionAlerts.length > 0 && (
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <h2 className="text-lg font-semibold text-gray-900">🚨 Action Center</h2>
-                <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                  {actionAlerts.filter(alert => alert.severity === 'critical').length} Critical
-                </span>
-                <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  {actionAlerts.filter(alert => alert.severity === 'warning').length} Warning
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <button 
-                  onClick={() => setShowAlertModal(true)}
-                  className="inline-flex items-center justify-center px-3 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors"
-                >
-                  ➕ Add Alert
-                </button>
-                <button 
-                  onClick={() => setShowActionCenter(!showActionCenter)}
-                  className="text-sm text-gray-500 hover:text-gray-700"
-                >
-                  {showActionCenter ? '🔽 Collapse' : '🔼 Expand'}
-                </button>
-              </div>
+        {/* AI Action Center - Polished */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <h2 className="text-lg font-semibold text-gray-900">🧠 AI Action Center</h2>
+              <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                {aiInsights.filter(insight => insight.type === 'ai-generated').length} AI Insights
+              </span>
+              <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                {aiInsights.filter(insight => insight.type === 'configured-alert').length} Alerts
+              </span>
             </div>
-            
-            {showActionCenter && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {actionAlerts.map((alert) => {
-                  const getSeverityStyles = (severity: string) => {
-                    switch (severity) {
-                      case 'critical':
-                        return 'border-red-200 bg-red-50';
-                      case 'warning':
-                        return 'border-yellow-200 bg-yellow-50';
-                      case 'info':
-                        return 'border-blue-200 bg-blue-50';
-                      case 'success':
-                        return 'border-green-200 bg-green-50';
-                      default:
-                        return 'border-gray-200 bg-white';
-                    }
-                  };
-
-                  const getMetricColor = (severity: string) => {
-                    switch (severity) {
-                      case 'critical':
-                        return 'text-red-600';
-                      case 'warning':
-                        return 'text-yellow-600';
-                      case 'info':
-                        return 'text-blue-600';
-                      case 'success':
-                        return 'text-green-600';
-                      default:
-                        return 'text-gray-600';
-                    }
-                  };
-
-                  return (
-                    <div 
-                      key={alert.id}
-                      className={`rounded-lg border p-4 ${getSeverityStyles(alert.severity)} hover:shadow-md transition-shadow`}
-                    >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center">
-                          <span className="text-2xl mr-3">{alert.icon}</span>
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{alert.title}</h3>
-                            <p className="text-sm text-gray-600 mt-1">{alert.description}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          {alert.metric && (
-                            <span className={`text-lg font-bold ${getMetricColor(alert.severity)}`}>
-                              {alert.metric}
-                            </span>
-                          )}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteAlert(alert.id);
-                            }}
-                            className="text-gray-400 hover:text-red-600 transition-colors p-1"
-                            title="Remove alert"
-                          >
-                            ✕
-                          </button>
+            <div className="flex items-center space-x-3">
+              <button 
+                onClick={() => navigate('/financial-suite/advanced-analytics')}
+                className="inline-flex items-center justify-center px-3 py-2 text-sm border border-purple-300 bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-600 hover:from-purple-100 hover:to-indigo-100 rounded-md font-medium transition-colors"
+              >
+                <Brain className="w-4 h-4 mr-1" />
+                ✨ Advanced Analytics
+              </button>
+              <button 
+                onClick={() => setShowAlertModal(true)}
+                className="inline-flex items-center justify-center px-3 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors"
+              >
+                ➕ Add Alert
+              </button>
+              <button 
+                onClick={() => setShowActionCenter(!showActionCenter)}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                {showActionCenter ? 'Collapse' : 'Expand'}
+              </button>
+            </div>
+          </div>
+          
+          {showActionCenter && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* AI-Generated Insights - Simplified */}
+              {aiInsights.filter(insight => insight.type === 'ai-generated').map((insight) => (
+                <div 
+                  key={insight.id}
+                  className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 mr-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-full flex items-center justify-center">
+                          <Zap className="w-4 h-4 text-purple-600" />
                         </div>
                       </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500">{alert.timestamp}</span>
-                        <div className="flex space-x-2">
-                          <button
-                            onClick={() => navigate(alert.primaryAction.route)}
-                            className="px-3 py-1 text-xs bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                          >
-                            {alert.primaryAction.label}
-                          </button>
-                          {alert.secondaryAction && (
-                            <button
-                              onClick={() => navigate(alert.secondaryAction.route)}
-                              className="px-3 py-1 text-xs border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
-                            >
-                              {alert.secondaryAction.label}
-                            </button>
-                          )}
+                      <div className="flex-1">
+                        <div className="flex items-center mb-1">
+                          <h4 className="font-semibold text-gray-900 text-sm">{insight.title}</h4>
+                          <span className="ml-2 text-xs font-medium text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full">
+                            AI
+                          </span>
                         </div>
+                        <p className="text-sm text-gray-600 leading-relaxed">{insight.insight}</p>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
+                    <div className="flex items-center space-x-2 flex-shrink-0">
+                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                        {(insight.confidence * 100).toFixed(0)}%
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteInsight(insight.id);
+                        }}
+                        className="text-gray-400 hover:text-red-600 transition-colors p-1"
+                        title="Remove insight"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Simplified Data Points */}
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    {insight.dataPoints.map((point, index) => (
+                      <div key={index} className="text-center p-2 bg-gray-50 rounded">
+                        <p className="text-xs text-gray-500 mb-1">{point.metric}</p>
+                        <p className="text-sm font-semibold text-gray-900">{point.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Action Button */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500">{insight.timestamp}</span>
+                    <div className="flex space-x-2">
+                      <button className="px-3 py-1.5 text-xs bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors font-medium">
+                        Launch Express Menu
+                      </button>
+                      <button className="px-3 py-1.5 text-xs border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors">
+                        View Analysis
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Configured Alerts - Simplified */}
+              {aiInsights.filter(insight => insight.type === 'configured-alert').map((insight) => {
+                const getSeverityColor = (severity: string) => {
+                  switch (severity) {
+                    case 'critical': return 'border-red-200 bg-red-50';
+                    case 'warning': return 'border-yellow-200 bg-yellow-50';
+                    default: return 'border-blue-200 bg-blue-50';
+                  }
+                };
+
+                const getSeverityIcon = (severity: string) => {
+                  switch (severity) {
+                    case 'critical': return '🚨';
+                    case 'warning': return '⚠️';
+                    default: return 'ℹ️';
+                  }
+                };
+
+                return (
+                  <div 
+                    key={insight.id}
+                    className={`rounded-lg border p-5 hover:shadow-md transition-shadow ${getSeverityColor(insight.severity)}`}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-start">
+                        <div className="flex-shrink-0 mr-3">
+                          <span className="text-xl">{getSeverityIcon(insight.severity)}</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center mb-1">
+                            <h4 className="font-semibold text-gray-900 text-sm">{insight.title}</h4>
+                            <span className="ml-2 text-xs font-medium text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">
+                              Alert
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-600 leading-relaxed">{insight.insight}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteInsight(insight.id);
+                        }}
+                        className="text-gray-400 hover:text-red-600 transition-colors p-1 flex-shrink-0"
+                        title="Remove alert"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    
+                    {/* Simplified Data Points */}
+                    <div className="grid grid-cols-3 gap-3 mb-4">
+                      {insight.dataPoints.map((point, index) => (
+                        <div key={index} className="text-center p-2 bg-white bg-opacity-70 rounded">
+                          <p className="text-xs text-gray-500 mb-1">{point.metric}</p>
+                          <p className="text-sm font-semibold text-gray-900">{point.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Action Button */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">{insight.timestamp}</span>
+                      <div className="flex space-x-2">
+                        <button className="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors font-medium">
+                          {insight.id === 'ca-001' ? 'Send Offer' : insight.id === 'ca-002' ? 'Review Portions' : 'Take Action'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         {/* Key Metrics Dashboard */}
         <div className="mb-8">
@@ -1014,14 +1170,14 @@ export function FinancialSuitePage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
                 <div>
-                  <p className="font-medium text-gray-900">Weekly Performance Dashboard</p>
+                  <p className="font-medium text-gray-900">Divya C's Weekly Performance Dashboard</p>
                   <p className="text-sm text-gray-600">Created: 1 week ago</p>
                 </div>
                 <button className="inline-flex items-center justify-center px-3 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">Edit</button>
               </div>
               <div className="flex items-center justify-between py-2 border-b border-gray-100">
                 <div>
-                  <p className="font-medium text-gray-900">Product Category Analysis</p>
+                  <p className="font-medium text-gray-900">Divya C's Product Category Analysis</p>
                   <p className="text-sm text-gray-600">Created: 2 weeks ago</p>
                 </div>
                 <button className="inline-flex items-center justify-center px-3 py-2 text-sm border border-gray-300 bg-white text-blue-600 hover:bg-gray-50 rounded-md font-medium transition-colors">Edit</button>

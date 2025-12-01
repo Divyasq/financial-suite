@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock CSV Report Screenshots</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .report-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .report-header {
+            background: #1a73e8;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+
+        .report-meta {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            font-size: 12px;
+            color: #666;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .csv-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .csv-table th {
+            background: #f1f3f4;
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 2px solid #dadce0;
+            font-weight: 600;
+            color: #3c4043;
+        }
+
+        .csv-table td {
+            padding: 6px 12px;
+            border-bottom: 1px solid #f1f3f4;
+            color: #202124;
+        }
+
+        .csv-table tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .csv-table tr:hover {
+            background: #e8f0fe;
+        }
+
+        .number {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .positive {
+            color: #137333;
+        }
+
+        .negative {
+            color: #d93025;
+        }
+
+        .currency::before {
+            content: '$';
+        }
+
+        .percentage::after {
+            content: '%';
+        }
+
+        .report-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #202124;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="report-title">Mock CSV Report Screenshots</h1>
+
+    <!-- Sales Summary Report -->
+    <div class="report-container">
+        <div class="report-header">
+            Sales Summary Report
+        </div>
+        <div class="report-meta">
+            Generated: November 26, 2024 | Period: Last 30 Days | Location: All Locations
+        </div>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Gross Sales</th>
+                    <th>Net Sales</th>
+                    <th>Tax</th>
+                    <th>Tips</th>
+                    <th>Transaction Count</th>
+                    <th>Average Ticket</th>
+                    <th>Refunds</th>
+                    <th>Discounts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-11-25</td>
+                    <td class="number currency">3,456.78</td>
+                    <td class="number currency">3,123.45</td>
+                    <td class="number currency">276.89</td>
+                    <td class="number currency">456.44</td>
+                    <td class="number">127</td>
+                    <td class="number currency">27.22</td>
+                    <td class="number currency">45.67</td>
+                    <td class="number currency">123.45</td>
+                </tr>
+                <tr>
+                    <td>2024-11-24</td>
+                    <td class="number currency">4,123.56</td>
+                    <td class="number currency">3,721.20</td>
+                    <td class="number currency">330.98</td>
+                    <td class="number currency">567.89</td>
+                    <td class="number">156</td>
+                    <td class="number currency">26.43</td>
+                    <td class="number currency">67.89</td>
+                    <td class="number currency">234.56</td>
+                </tr>
+                <tr>
+                    <td>2024-11-23</td>
+                    <td class="number currency">5,789.12</td>
+                    <td class="number currency">5,234.56</td>
+                    <td class="number currency">462.78</td>
+                    <td class="number currency">789.23</td>
+                    <td class="number">198</td>
+                    <td class="number currency">29.24</td>
+                    <td class="number currency">89.12</td>
+                    <td class="number currency">345.67</td>
+                </tr>
+                <tr>
+                    <td>2024-11-22</td>
+                    <td class="number currency">6,234.89</td>
+                    <td class="number currency">5,631.40</td>
+                    <td class="number currency">498.78</td>
+                    <td class="number currency">834.56</td>
+                    <td class="number">213</td>
+                    <td class="number currency">29.27</td>
+                    <td class="number currency">104.71</td>
+                    <td class="number currency">456.78</td>
+                </tr>
+                <tr>
+                    <td>2024-11-21</td>
+                    <td class="number currency">7,456.34</td>
+                    <td class="number currency">6,734.71</td>
+                    <td class="number currency">596.05</td>
+                    <td class="number currency">923.67</td>
+                    <td class="number">267</td>
+                    <td class="number currency">27.92</td>
+                    <td class="number currency">125.58</td>
+                    <td class="number currency">567.89</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Item Performance Report -->
+    <div class="report-container">
+        <div class="report-header">
+            Item Performance Report
+        </div>
+        <div class="report-meta">
+            Generated: November 26, 2024 | Period: Last 7 Days | Category: All Items
+        </div>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Units Sold</th>
+                    <th>Gross Sales</th>
+                    <th>Net Sales</th>
+                    <th>Unit Cost</th>
+                    <th>Profit Margin</th>
+                    <th>Profit %</th>
+                    <th>Popularity Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Signature Burger</td>
+                    <td>Entrees</td>
+                    <td class="number">234</td>
+                    <td class="number currency">3,744.00</td>
+                    <td class="number currency">3,744.00</td>
+                    <td class="number currency">4.50</td>
+                    <td class="number currency">11.50</td>
+                    <td class="number percentage positive">71.9</td>
+                    <td class="number">1</td>
+                </tr>
+                <tr>
+                    <td>Caesar Salad</td>
+                    <td>Salads</td>
+                    <td class="number">189</td>
+                    <td class="number currency">2,267.00</td>
+                    <td class="number currency">2,267.00</td>
+                    <td class="number currency">3.25</td>
+                    <td class="number currency">8.75</td>
+                    <td class="number percentage positive">72.9</td>
+                    <td class="number">2</td>
+                </tr>
+                <tr>
+                    <td>Craft Beer Selection</td>
+                    <td>Beverages</td>
+                    <td class="number">156</td>
+                    <td class="number currency">1,092.00</td>
+                    <td class="number currency">1,092.00</td>
+                    <td class="number currency">2.00</td>
+                    <td class="number currency">5.00</td>
+                    <td class="number percentage positive">71.4</td>
+                    <td class="number">3</td>
+                </tr>
+                <tr>
+                    <td>Ribeye Steak</td>
+                    <td>Entrees</td>
+                    <td class="number">78</td>
+                    <td class="number currency">2,730.00</td>
+                    <td class="number currency">2,730.00</td>
+                    <td class="number currency">18.50</td>
+                    <td class="number currency">16.50</td>
+                    <td class="number percentage positive">47.1</td>
+                    <td class="number">4</td>
+                </tr>
+                <tr>
+                    <td>Chocolate Cake</td>
+                    <td>Desserts</td>
+                    <td class="number">145</td>
+                    <td class="number currency">1,305.00</td>
+                    <td class="number currency">1,305.00</td>
+                    <td class="number currency">2.75</td>
+                    <td class="number currency">6.25</td>
+                    <td class="number percentage positive">69.4</td>
+                    <td class="number">5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Payment Methods Report -->
+    <div class="report-container">
+        <div class="report-header">
+            Payment Methods Analysis
+        </div>
+        <div class="report-meta">
+            Generated: November 26, 2024 | Period: Last 30 Days | All Transactions
+        </div>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>Payment Method</th>
+                    <th>Transaction Count</th>
+                    <th>Total Amount</th>
+                    <th>Average Transaction</th>
+                    <th>Percentage of Sales</th>
+                    <th>Processing Fees</th>
+                    <th>Net Amount</th>
+                    <th>Refund Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Credit Card</td>
+                    <td class="number">1,456</td>
+                    <td class="number currency">42,567.89</td>
+                    <td class="number currency">29.23</td>
+                    <td class="number percentage">67.8</td>
+                    <td class="number currency">1,234.47</td>
+                    <td class="number currency">41,333.42</td>
+                    <td class="number">23</td>
+                </tr>
+                <tr>
+                    <td>Debit Card</td>
+                    <td class="number">678</td>
+                    <td class="number currency">15,234.56</td>
+                    <td class="number currency">22.47</td>
+                    <td class="number percentage">24.3</td>
+                    <td class="number currency">152.35</td>
+                    <td class="number currency">15,082.21</td>
+                    <td class="number">8</td>
+                </tr>
+                <tr>
+                    <td>Cash</td>
+                    <td class="number">234</td>
+                    <td class="number currency">3,456.78</td>
+                    <td class="number currency">14.77</td>
+                    <td class="number percentage">5.5</td>
+                    <td class="number currency">0.00</td>
+                    <td class="number currency">3,456.78</td>
+                    <td class="number">2</td>
+                </tr>
+                <tr>
+                    <td>Gift Card</td>
+                    <td class="number">89</td>
+                    <td class="number currency">1,234.56</td>
+                    <td class="number currency">13.87</td>
+                    <td class="number percentage">2.0</td>
+                    <td class="number currency">0.00</td>
+                    <td class="number currency">1,234.56</td>
+                    <td class="number">1</td>
+                </tr>
+                <tr>
+                    <td>Mobile Payment</td>
+                    <td class="number">67</td>
+                    <td class="number currency">789.12</td>
+                    <td class="number currency">11.78</td>
+                    <td class="number percentage">1.3</td>
+                    <td class="number currency">22.87</td>
+                    <td class="number currency">766.25</td>
+                    <td class="number">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Labor Cost Analysis -->
+    <div class="report-container">
+        <div class="report-header">
+            Labor Cost Analysis
+        </div>
+        <div class="report-meta">
+            Generated: November 26, 2024 | Period: Last 14 Days | All Employees
+        </div>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Role</th>
+                    <th>Hours Worked</th>
+                    <th>Regular Pay</th>
+                    <th>Overtime Pay</th>
+                    <th>Total Pay</th>
+                    <th>Sales per Hour</th>
+                    <th>Labor %</th>
+                    <th>Efficiency Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sarah Johnson</td>
+                    <td>Server</td>
+                    <td class="number">72.5</td>
+                    <td class="number currency">1,087.50</td>
+                    <td class="number currency">112.50</td>
+                    <td class="number currency">1,200.00</td>
+                    <td class="number currency">156.78</td>
+                    <td class="number percentage">10.5</td>
+                    <td class="number">94</td>
+                </tr>
+                <tr>
+                    <td>Mike Chen</td>
+                    <td>Kitchen</td>
+                    <td class="number">80.0</td>
+                    <td class="number currency">1,360.00</td>
+                    <td class="number currency">85.00</td>
+                    <td class="number currency">1,445.00</td>
+                    <td class="number currency">142.34</td>
+                    <td class="number percentage">12.7</td>
+                    <td class="number">87</td>
+                </tr>
+                <tr>
+                    <td>Emily Rodriguez</td>
+                    <td>Manager</td>
+                    <td class="number">85.0</td>
+                    <td class="number currency">2,125.00</td>
+                    <td class="number currency">0.00</td>
+                    <td class="number currency">2,125.00</td>
+                    <td class="number currency">267.89</td>
+                    <td class="number percentage">9.3</td>
+                    <td class="number">98</td>
+                </tr>
+                <tr>
+                    <td>David Park</td>
+                    <td>Bartender</td>
+                    <td class="number">65.0</td>
+                    <td class="number currency">1,137.50</td>
+                    <td class="number currency">37.50</td>
+                    <td class="number currency">1,175.00</td>
+                    <td class="number currency">189.23</td>
+                    <td class="number percentage">9.6</td>
+                    <td class="number">91</td>
+                </tr>
+                <tr>
+                    <td>Lisa Thompson</td>
+                    <td>Server</td>
+                    <td class="number">68.0</td>
+                    <td class="number currency">1,020.00</td>
+                    <td class="number currency">60.00</td>
+                    <td class="number currency">1,080.00</td>
+                    <td class="number currency">134.56</td>
+                    <td class="number percentage">11.8</td>
+                    <td class="number">82</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Customer Analytics Report -->
+    <div class="report-container">
+        <div class="report-header">
+            Customer Analytics Report
+        </div>
+        <div class="report-meta">
+            Generated: November 26, 2024 | Period: Last 90 Days | Customer Segments
+        </div>
+        <table class="csv-table">
+            <thead>
+                <tr>
+                    <th>Customer Segment</th>
+                    <th>Customer Count</th>
+                    <th>Total Visits</th>
+                    <th>Avg Visit Frequency</th>
+                    <th>Total Spend</th>
+                    <th>Avg Spend per Visit</th>
+                    <th>Customer Lifetime Value</th>
+                    <th>Churn Risk</th>
+                    <th>Growth Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>VIP Customers</td>
+                    <td class="number">127</td>
+                    <td class="number">1,456</td>
+                    <td class="number">11.5</td>
+                    <td class="number currency">45,678.90</td>
+                    <td class="number currency">31.37</td>
+                    <td class="number currency">2,847.50</td>
+                    <td class="number percentage negative">8.7</td>
+                    <td class="number percentage positive">12.3</td>
+                </tr>
+                <tr>
+                    <td>Regular Customers</td>
+                    <td class="number">456</td>
+                    <td class="number">2,134</td>
+                    <td class="number">4.7</td>
+                    <td class="number currency">34,567.80</td>
+                    <td class="number currency">16.20</td>
+                    <td class="number currency">758.20</td>
+                    <td class="number percentage negative">15.2</td>
+                    <td class="number percentage positive">8.9</td>
+                </tr>
+                <tr>
+                    <td>Occasional Visitors</td>
+                    <td class="number">789</td>
+                    <td class="number">1,234</td>
+                    <td class="number">1.6</td>
+                    <td class="number currency">18,234.50</td>
+                    <td class="number currency">14.78</td>
+                    <td class="number currency">231.10</td>
+                    <td class="number percentage negative">45.6</td>
+                    <td class="number percentage negative">-2.1</td>
+                </tr>
+                <tr>
+                    <td>New Customers</td>
+                    <td class="number">234</td>
+                    <td class="number">267</td>
+                    <td class="number">1.1</td>
+                    <td class="number currency">4,567.80</td>
+                    <td class="number currency">17.10</td>
+                    <td class="number currency">195.20</td>
+                    <td class="number percentage negative">67.8</td>
+                    <td class="number percentage positive">23.4</td>
+                </tr>
+                <tr>
+                    <td>At-Risk Customers</td>
+                    <td class="number">89</td>
+                    <td class="number">156</td>
+                    <td class="number">1.8</td>
+                    <td class="number currency">2,345.60</td>
+                    <td class="number currency">15.04</td>
+                    <td class="number currency">263.40</td>
+                    <td class="number percentage negative">89.2</td>
+                    <td class="number percentage negative">-15.7</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
